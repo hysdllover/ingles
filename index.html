@@ -245,7 +245,7 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
 
 /* ---------- state ---------- */
 const S={mode:"daily",level:"중급",topic:"",lesson:SAMPLE,lessons:[],words:[],books:[],topics:[],
-  settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true},
+  settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[]},
   sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -407,14 +407,20 @@ Reply with ONLY a JSON array: [{"word":"lowercase word","ipa":"/IPA/","pos":"n./
 /* ---------- side panel ---------- */
 function renderSide(){
   $("#modes").innerHTML=Object.entries(MODES).map(([k,m])=>`<button class="chip" data-mode="${k}" aria-pressed="${S.mode===k}">${m.name}</button>`).join("");
-  $("#presets").innerHTML=MODES[S.mode].topics.map(t=>`<button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button>`).join("")
-    +S.topics.filter(t=>t.mode===S.mode).map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t.name)}" aria-pressed="${S.topic===t.name}">${esc(t.name)}</button><button class="x" data-deltopic="${esc(t.id)}" aria-label="${esc(t.name)} 토픽 삭제">✕</button></span>`).join("");
+  const hid=S.settings.hiddenTopics||[];
+  const shown=MODES[S.mode].topics.filter(t=>!hid.includes(S.mode+"|"+t));
+  $("#presets").innerHTML=shown.map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button><button class="x" data-hidetopic="${esc(t)}" aria-label="${esc(t)} 토픽 삭제">✕</button></span>`).join("")
+    +S.topics.filter(t=>t.mode===S.mode).map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t.name)}" aria-pressed="${S.topic===t.name}">${esc(t.name)}</button><button class="x" data-deltopic="${esc(t.id)}" aria-label="${esc(t.name)} 토픽 삭제">✕</button></span>`).join("")
+    +(shown.length<MODES[S.mode].topics.length?`<button class="x" id="restoreTopics" style="text-decoration:underline">기본 토픽 복원</button>`:"");
   $("#levels").innerHTML=LEVELS.map(l=>`<button data-level="${l}" aria-pressed="${S.level===l}">${l}</button>`).join("");
   $("#examTargetBox").hidden=!["toeic","toefl","opic","ielts"].includes(S.mode);
 }
 $("#modes").onclick=e=>{const b=e.target.closest("[data-mode]");if(!b)return;S.mode=b.dataset.mode;S.topic="";renderSide()};
 async function saveTopic(name,mode){
-  name=(name||"").trim();if(!name||MODES[mode].topics.includes(name)||S.topics.some(t=>t.mode===mode&&t.name===name))return false;
+  name=(name||"").trim();if(!name)return false;
+  const key=mode+"|"+name,hid=S.settings.hiddenTopics||[];
+  if(MODES[mode].topics.includes(name)){if(!hid.includes(key))return false;S.settings.hiddenTopics=hid.filter(k=>k!==key);saveSettings();return true}
+  if(S.topics.some(t=>t.mode===mode&&t.name===name))return false;
   await store.put({id:uid("t"),type:"topic",mode,name,createdAt:Date.now()});return true;
 }
 $("#saveTopic").onclick=async()=>{const n=$("#topic").value.trim();if(!n){$("#topic").focus();return}
@@ -427,6 +433,8 @@ function armOrRun(btn,run){
 }
 $("#presets").onclick=e=>{
   const d=e.target.closest("[data-deltopic]");if(d){armOrRun(d,()=>store.del(d.dataset.deltopic));return}
+  const h=e.target.closest("[data-hidetopic]");if(h){armOrRun(h,()=>{const k=S.mode+"|"+h.dataset.hidetopic;S.settings.hiddenTopics=[...(S.settings.hiddenTopics||[]).filter(x=>x!==k),k];if(S.topic===h.dataset.hidetopic)S.topic="";saveSettings();renderSide()});return}
+  if(e.target.closest("#restoreTopics")){S.settings.hiddenTopics=(S.settings.hiddenTopics||[]).filter(k=>!k.startsWith(S.mode+"|"));saveSettings();renderSide();return}
   const b=e.target.closest("[data-topic]");if(!b)return;S.topic=b.dataset.topic;$("#topic").value=S.topic;renderSide()};
 $("#levels").onclick=e=>{const b=e.target.closest("[data-level]");if(!b)return;S.level=b.dataset.level;renderSide()};
 $("#topic").oninput=e=>{S.topic=e.target.value.trim()};
