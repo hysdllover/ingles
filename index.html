@@ -316,9 +316,7 @@ function speak(text,rate){
     try{
       speechSynthesis.cancel();
       const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate*0.95;
-      const pref=voices.filter(v=>v.lang.replace("_","-")===lang);
-      const v=pref.find(v=>/Samantha|Ava|Allison|Daniel|Serena|Google/.test(v.name))||pref[0];
-      if(v)u.voice=v;
+      /* 목소리를 지정하지 않음 → iOS 설정(손쉬운 사용 › 말하기 콘텐츠 › 음성)에서 고른 영어 음성을 사용 */
       speechSynthesis.speak(u);return;
     }catch(e){}
   }
@@ -447,9 +445,8 @@ function playDialogue(){
   const lines=S.lesson.dialogue||[];
   if(!("speechSynthesis" in window)){if(ttsCap)ttsCap.speak(lines.map((l,i)=>({text:l.en,voice:l.s==="A"?"buttery":"airy",language:"en"}))).catch(()=>{});return}
   speechSynthesis.cancel();
-  const pref=voices.filter(v=>v.lang.replace("_","-")===S.settings.accent);
   lines.forEach((l,i)=>{const u=new SpeechSynthesisUtterance(l.en);u.lang=S.settings.accent;u.rate=S.settings.rate*.95;
-    const v=pref[l.s==="A"?0:Math.min(1,pref.length-1)];if(v)u.voice=v;u.pitch=l.s==="A"?1:1.12;speechSynthesis.speak(u)});
+    u.pitch=l.s==="A"?1:1.12;speechSynthesis.speak(u)});
 }
 document.addEventListener("click",e=>{
   const s=e.target.closest("[data-say]");if(s){speak(s.dataset.say,s.dataset.rate?+s.dataset.rate*S.settings.rate:0);return}
