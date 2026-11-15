@@ -163,8 +163,6 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
         <div id="genBox">
         <span class="label">직접 입력</span>
         <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="text" id="topic" placeholder="예: 헬스장에서 PT 상담하기"><button class="btn small" id="saveTopic" style="flex:none">토픽 저장</button></div>
-        <span class="label">레벨</span>
-        <div class="seg" id="levels"></div>
         <div id="examTargetBox" hidden>
           <span class="label">목표 등급/점수</span>
           <input type="text" id="examTarget" placeholder="예: OPIc IH, TOEIC 850">
@@ -248,7 +246,7 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
 
 /* ---------- state ---------- */
 const BUNDLED=Array.isArray(window.BUNDLED_LESSONS)?window.BUNDLED_LESSONS.map(l=>({...l,bundled:true})):null;
-const S={mode:"daily",level:"중급",topic:"",lesson:BUNDLED&&BUNDLED.length?BUNDLED[0]:SAMPLE,lessons:[],words:[],books:[],topics:[],
+const S={mode:"daily",level:"고급",topic:"",lesson:BUNDLED&&BUNDLED.length?BUNDLED[0]:SAMPLE,lessons:[],words:[],books:[],topics:[],
   settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[],hiddenLessons:[]},
   sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
 const $=s=>document.querySelector(s);
@@ -319,7 +317,7 @@ async function generateLesson(){
   const target=$("#examTarget").value.trim();
   const accent=S.settings.accent==="en-GB"?"British":"American";
   const prompt=`You are a native ${accent} English coach for Korean learners.
-Topic: "${topic}" | Category: ${mode} | Learner level: ${S.level}${exam?` | Exam: ${mode}${target?` (target ${target})`:""}`:""}
+Topic: "${topic}" | Category: ${mode} | Learner level: 고급 (advanced; natural, idiomatic native speech, not textbook)${exam?` | Exam: ${mode}${target?` (target ${target})`:""}`:""}
 Create a study note. Use natural expressions locals actually say in ${accent} English, matched to the level.
 Reply with ONLY JSON:
 {"title":"Korean title (short)",
@@ -422,13 +420,12 @@ function renderSide(){
   $("#presets").innerHTML=shown.map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button><button class="x" data-hidetopic="${esc(t)}" aria-label="${esc(t)} 토픽 삭제">✕</button></span>`).join("")
     +S.topics.filter(t=>t.mode===S.mode).map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t.name)}" aria-pressed="${S.topic===t.name}">${esc(t.name)}</button><button class="x" data-deltopic="${esc(t.id)}" aria-label="${esc(t.name)} 토픽 삭제">✕</button></span>`).join("")
     +(shown.length<MODES[S.mode].topics.length?`<button class="x" id="restoreTopics" style="text-decoration:underline">기본 토픽 복원</button>`:"");
-  $("#levels").innerHTML=LEVELS.map(l=>`<button data-level="${l}" aria-pressed="${S.level===l}">${l}</button>`).join("");
   $("#examTargetBox").hidden=!["toeic","toefl","opic","ielts"].includes(S.mode);
   if(BUNDLED){
     $("#genBox").hidden=true;$("#bundledNote").hidden=false;
     const ls=S.lessons.filter(l=>l.mode===S.mode);
     document.querySelector("#presets").previousElementSibling.textContent="노트";
-    $("#presets").innerHTML=ls.length?ls.map(l=>`<button class="chip" data-lid="${esc(l.id)}" aria-pressed="${S.lesson?.id===l.id}">${esc(l.topic)} · ${esc(l.level)}</button>`).join(""):`<span class="muted">이 분야에는 아직 노트가 없어요.</span>`;
+    $("#presets").innerHTML=ls.length?ls.map(l=>`<button class="chip" data-lid="${esc(l.id)}" aria-pressed="${S.lesson?.id===l.id}">${esc(l.topic)}</button>`).join(""):`<span class="muted">이 분야에는 아직 노트가 없어요.</span>`;
     $("#modes").querySelectorAll("[data-mode]").forEach(b=>{const n=S.lessons.filter(l=>l.mode===b.dataset.mode).length;if(n)b.textContent+=` ${n}`});
   }
 }
@@ -454,7 +451,7 @@ $("#presets").onclick=e=>{
   const h=e.target.closest("[data-hidetopic]");if(h){armOrRun(h,()=>{const k=S.mode+"|"+h.dataset.hidetopic;S.settings.hiddenTopics=[...(S.settings.hiddenTopics||[]).filter(x=>x!==k),k];if(S.topic===h.dataset.hidetopic)S.topic="";saveSettings();renderSide()});return}
   if(e.target.closest("#restoreTopics")){S.settings.hiddenTopics=(S.settings.hiddenTopics||[]).filter(k=>!k.startsWith(S.mode+"|"));saveSettings();renderSide();return}
   const b=e.target.closest("[data-topic]");if(!b)return;S.topic=b.dataset.topic;$("#topic").value=S.topic;renderSide()};
-$("#levels").onclick=e=>{const b=e.target.closest("[data-level]");if(!b)return;S.level=b.dataset.level;renderSide()};
+if($("#levels"))$("#levels").onclick=e=>{const b=e.target.closest("[data-level]");if(!b)return;S.level=b.dataset.level;renderSide()};
 $("#topic").oninput=e=>{S.topic=e.target.value.trim()};
 $("#gen").onclick=()=>{S.lessonErr="";switchTab("learn");generateLesson()};
 function renderHistory(){
@@ -463,7 +460,7 @@ function renderHistory(){
   const hidN=(S.settings.hiddenLessons||[]).length;
   const restore=hidN?`<button class="x" id="restoreLessons" style="text-decoration:underline;margin-top:6px">숨긴 노트 ${hidN}개 복원</button>`:"";
   if(!S.lessons.length){h.innerHTML=restore+`<span class="muted">아직 저장된 노트가 없어요. 토픽을 고르고 ‘노트 만들기’를 눌러 보세요.</span>`;bindRestore();return}
-  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("")+restore;
+  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("")+restore;
   bindRestore();
 }
 function bindRestore(){const rb=$("#restoreLessons");if(rb)rb.onclick=async()=>{S.settings.hiddenLessons=[];await saveSettings();if(S.lesson?.sample&&S.lessons.length)S.lesson=S.lessons[0];renderHistory();renderSide();if(S.tab==="learn")renderLearn()}}
@@ -491,7 +488,7 @@ function renderLearn(){
   <div class="card">
     <div class="lesson-head">
       <div><h2><span class="hl">${esc(L.title)}</span></h2>
-        <div class="row"><span class="tag">${esc(MODES[L.mode]?.name||"")}</span><span class="tag">${esc(L.level)}</span><span class="tag">${esc(L.topic)}</span>${L.sample?`<span class="ex">예시 노트</span>`:""}</div></div>
+        <div class="row"><span class="tag">${esc(MODES[L.mode]?.name||"")}</span><span class="tag">${esc(L.topic)}</span>${L.sample?`<span class="ex">예시 노트</span>`:""}</div></div>
       <div class="row noprint">
         <button class="btn small" id="toPractice">발음 연습</button>
         <button class="btn small" id="dlSheet">A4 학습지</button>
@@ -806,7 +803,7 @@ async function downloadSheet(kind,list,name){
   let body="",title="";
   if(kind==="lesson"){
     title=L.title;
-    body=`<h1>${esc(L.title)}</h1><p class="meta">${esc(MODES[L.mode]?.name||"")} · ${esc(L.level)} · ${esc(L.topic)}</p>
+    body=`<h1>${esc(L.title)}</h1><p class="meta">${esc(MODES[L.mode]?.name||"")} · ${esc(L.topic)}</p>
     <h2>현지인 표현</h2>${(L.expressions||[]).map((x,i)=>`<div class="it"><b>${i+1}. ${esc(x.en)}</b>${ipa&&x.ipa?`<div class="ipa">${esc(x.ipa)}</div>`:""}<div>${esc(x.ko)}</div>${x.textbook?`<div class="s">교과서식: <s>${esc(x.textbook)}</s></div>`:""}<div class="s">${esc(x.nuance||"")}</div>${x.example?`<div class="s">예) ${esc(x.example.en)} — ${esc(x.example.ko)}</div>`:""}</div>`).join("")}
     ${L.dialogue?.length?`<h2>실전 대화</h2>${L.dialogue.map(d=>`<div class="dl"><b>${esc(d.s)}</b> ${esc(d.en)}<div class="s">${esc(d.ko)}</div></div>`).join("")}`:""}
     ${L.sounds?.length?`<h2>발음 포인트</h2>${L.sounds.map(s=>`<div class="s">/${esc(String(s.ipa).replace(/\//g,""))}/ ${esc(s.desc)}</div>`).join("")}`:""}

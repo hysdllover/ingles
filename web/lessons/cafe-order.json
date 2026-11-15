@@ -1,82 +1,642 @@
 {
-  "id": "b-cafe-order",
-  "createdAt": 1763190000000,
-  "mode": "daily",
-  "topic": "카페 주문",
-  "level": "중급",
-  "title": "카페에서 현지인처럼 주문하기",
-  "expressions": [
-    {"en": "Can I get a large iced latte?", "ipa": "/kæn aɪ ɡet ə lɑːrdʒ aɪst ˈlɑːteɪ/", "ko": "아이스 라떼 라지 하나 주세요.", "textbook": "I would like to order a large iced latte.", "nuance": "'Can I get ~?'이 가장 흔한 주문 표현. 'I want'는 무례하게 들릴 수 있어요.", "example": {"en": "Hi, can I get a large iced latte with oat milk?", "ko": "안녕하세요, 오트밀크로 아이스 라떼 라지 하나 주세요."}},
-    {"en": "For here or to go?", "ipa": "/fɔːr hɪr ɔːr tə ɡoʊ/", "ko": "드시고 가세요, 가져가세요?", "textbook": "Will you eat here or take it out?", "nuance": "미국식. 영국에서는 'Eat in or take away?'", "example": {"en": "To go, please.", "ko": "가져갈게요."}},
-    {"en": "Could you make it a little less sweet?", "ipa": "/kʊd juː meɪk ɪt ə ˈlɪtl les swiːt/", "ko": "조금 덜 달게 해 주실 수 있나요?", "textbook": "Please reduce the amount of sugar.", "nuance": "'Could you'로 부드럽게 요청. could you는 [쿠쥬]로 이어서 말해요.", "example": {"en": "Could you make it half sweet?", "ko": "당도 절반으로 해 주세요."}},
-    {"en": "I'm good, thanks.", "ipa": "/aɪm ɡʊd θæŋks/", "ko": "괜찮아요(필요 없어요).", "textbook": "No, I do not need anything else.", "nuance": "추가 주문·영수증 등을 정중히 거절할 때 가장 자연스러운 말.", "example": {"en": "Would you like a receipt? — I'm good, thanks.", "ko": "영수증 드릴까요? — 괜찮아요."}},
-    {"en": "What do you recommend?", "ipa": "/wʌt duː juː ˌrekəˈmend/", "ko": "뭐가 맛있어요?", "textbook": "Which menu item is the most delicious?", "nuance": "메뉴를 고르기 어려울 때 직원에게 묻는 가장 자연스러운 말.", "example": {"en": "It's my first time here. What do you recommend?", "ko": "여기 처음인데, 뭐가 맛있어요?"}},
-    {"en": "Can I get that with an extra shot?", "ipa": "/kæn aɪ ɡet ðæt wɪð ən ˈekstrə ʃɑːt/", "ko": "샷 추가해 주실래요?", "textbook": "Please add one more espresso shot.", "nuance": "'that'으로 방금 말한 음료를 가리켜요. 주문 끝에 덧붙이는 말.", "example": {"en": "Can I get that with an extra shot and no whip?", "ko": "샷 추가하고 휘핑 빼 주세요."}},
-    {"en": "Is it okay if I sit here for a while?", "ipa": "/ɪz ɪt oʊˈkeɪ ɪf aɪ sɪt hɪr fɔːr ə waɪl/", "ko": "여기 좀 오래 앉아 있어도 될까요?", "textbook": "May I stay at this table for a long time?", "nuance": "노트북 작업 등으로 오래 머물 때 미리 양해를 구하는 말.", "example": {"en": "Is it okay if I sit here for a while? I have some work to do.", "ko": "여기 좀 앉아 있어도 될까요? 할 일이 있어서요."}}
-  ],
-  "dialogue": [
-    {"s": "A", "en": "Hi there! What can I get started for you?", "ipa": "/haɪ ðer wʌt kæn aɪ ɡet ˈstɑːrtɪd fɔːr juː/", "ko": "안녕하세요! 뭐 준비해 드릴까요?"},
-    {"s": "B", "en": "What do you recommend?", "ipa": "/wʌt duː juː ˌrekəˈmend/", "ko": "뭐가 맛있어요?"},
-    {"s": "A", "en": "Our iced latte is really popular.", "ipa": "/ˈaʊər aɪst ˈlɑːteɪ ɪz ˈrɪəli ˈpɑːpjələr/", "ko": "아이스 라떼가 인기 많아요."},
-    {"s": "B", "en": "Can I get a large iced latte with oat milk?", "ipa": "/kæn aɪ ɡet ə lɑːrdʒ aɪst ˈlɑːteɪ wɪð oʊt mɪlk/", "ko": "오트밀크로 아이스 라떼 라지 주세요."},
-    {"s": "A", "en": "Sure. For here or to go?", "ipa": "/ʃʊr fɔːr hɪr ɔːr tə ɡoʊ/", "ko": "네. 드시고 가세요, 가져가세요?"},
-    {"s": "B", "en": "To go, please. Could you make it a little less sweet?", "ipa": "/tə ɡoʊ pliːz kʊd juː meɪk ɪt ə ˈlɪtl les swiːt/", "ko": "가져갈게요. 좀 덜 달게 해 주세요."},
-    {"s": "A", "en": "No problem. Anything else?", "ipa": "/noʊ ˈprɑːbləm ˈeniθɪŋ els/", "ko": "그럼요. 더 필요한 거 있으세요?"},
-    {"s": "B", "en": "I'm good, thanks.", "ipa": "/aɪm ɡʊd θæŋks/", "ko": "괜찮아요, 감사합니다."}
-  ],
-  "sounds": [
-    {"ipa": "t", "desc": "get a → [게러]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼 발음해요."},
-    {"ipa": "dʒ", "desc": "could you → [쿠쥬]. d와 y가 만나 'ㅈ' 소리로 이어져요."},
-    {"ipa": "æ", "desc": "thanks의 a는 입을 옆으로 크게 벌린 '애'."},
-    {"ipa": "l", "desc": "latte, little, less의 l은 혀끝을 윗니 뒤에 대고 시작해요."}
-  ],
-  "vocab": [
-    {"word": "nurse a coffee", "ipa": "/nɜːrs ə ˈkɔːfi/", "pos": "idiom", "ko": "커피 한 잔을 오래 붙잡고 마시다", "note": "카페에 오래 앉아 한 잔을 아껴 마실 때. 원어민끼리 자주 쓰는 표현.", "example": "I nursed one coffee for three hours.", "exampleKo": "커피 한 잔으로 세 시간 버텼어."},
-    {"word": "room for cream", "ipa": "/ruːm fər kriːm/", "pos": "phr.", "ko": "크림 넣을 공간", "note": "블랙커피를 받을 때 잔을 조금 비워 달라는 현지 표현.", "example": "Medium drip, with room for cream.", "exampleKo": "드립 미디엄, 크림 넣게 조금 비워 주세요."},
-    {"word": "a pick-me-up", "ipa": "/ə ˈpɪk mi ʌp/", "pos": "n.", "ko": "기운 나게 하는 것", "note": "오후에 마시는 커피 한 잔을 가볍게 부르는 말.", "example": "I need a little pick-me-up before the meeting.", "exampleKo": "회의 전에 기운 좀 차려야겠어."},
-    {"word": "jittery", "ipa": "/ˈdʒɪtəri/", "pos": "adj.", "ko": "(카페인 때문에) 손떨리는", "note": "커피를 많이 마셔 초조하고 떨리는 상태. 일상 회화에서 자주 써요.", "example": "Three shots made me so jittery.", "exampleKo": "샷 세 개 넣었더니 손이 덜덜 떨려."},
-    {"word": "caffeine crash", "ipa": "/kæˈfiːn kræʃ/", "pos": "n.", "ko": "카페인 효과가 끝나고 확 처지는 것", "note": "오후에 급격히 피곤해질 때 쓰는 구어 표현.", "example": "I always hit a caffeine crash around 3.", "exampleKo": "난 3시쯤 꼭 카페인 빠지면서 확 처져."},
-    {"word": "hit the spot", "ipa": "/hɪt ðə spɑːt/", "pos": "idiom", "ko": "딱 원하던 그 맛이다", "note": "먹거나 마신 게 딱 만족스러울 때. 매우 자연스러운 감탄 표현.", "example": "Man, this iced latte really hits the spot.", "exampleKo": "와, 이 아이스 라떼 진짜 딱이다."},
-    {"word": "barista's choice", "ipa": "/bəˈriːstəz tʃɔɪs/", "pos": "phr.", "ko": "바리스타 추천(알아서 주세요)", "note": "메뉴 선택을 바리스타에게 맡길 때. 스페셜티 카페에서 자주 들려요.", "example": "Surprise me. Barista's choice.", "exampleKo": "알아서 주세요. 바리스타 추천으로요."},
-    {"word": "oat milk upcharge", "ipa": "/oʊt mɪlk ˈʌptʃɑːrdʒ/", "pos": "n.", "ko": "오트밀크 추가 요금", "note": "미국 카페에서 대체 우유 변경 시 붙는 추가금. upcharge 자체가 현지 어휘.", "example": "Is there an upcharge for oat milk?", "exampleKo": "오트밀크로 바꾸면 추가금 있어요?"},
-    {"word": "the usual", "ipa": "/ðə ˈjuːʒuəl/", "pos": "n.", "ko": "늘 먹던 거", "note": "단골이 주문할 때. 'The usual?' 하고 직원이 먼저 묻기도 해요.", "example": "Hey, the usual today?", "exampleKo": "오늘도 늘 드시던 걸로요?"},
-    {"word": "to-go cup", "ipa": "/tə ˈɡoʊ kʌp/", "pos": "n.", "ko": "테이크아웃 컵", "note": "'take-out cup'보다 미국 카페에서 더 자연스럽게 쓰는 말.", "example": "Can I get a to-go cup for the rest?", "exampleKo": "남은 거 담을 테이크아웃 컵 주실래요?"}
-  ],
-  "glossary": {
-    "get": {"ipa": "/ɡet/", "pos": "v.", "ko": "(주문해서) 받다", "example": "Can I get a coffee?", "exampleKo": "커피 한 잔 주세요."},
-    "large": {"ipa": "/lɑːrdʒ/", "pos": "adj.", "ko": "큰 (라지 사이즈)", "example": "A large, please.", "exampleKo": "라지로 주세요."},
-    "iced": {"ipa": "/aɪst/", "pos": "adj.", "ko": "얼음을 넣은, 아이스", "example": "I'll have an iced tea.", "exampleKo": "아이스티 주세요."},
-    "latte": {"ipa": "/ˈlɑːteɪ/", "pos": "n.", "ko": "라떼", "example": "One hot latte, please.", "exampleKo": "따뜻한 라떼 하나요."},
-    "oat": {"ipa": "/oʊt/", "pos": "n.", "ko": "귀리", "example": "Do you have oat milk?", "exampleKo": "오트밀크 있어요?"},
-    "milk": {"ipa": "/mɪlk/", "pos": "n.", "ko": "우유", "example": "No milk, please.", "exampleKo": "우유는 빼 주세요."},
-    "here": {"ipa": "/hɪr/", "pos": "adv.", "ko": "여기에서", "example": "I'll have it here.", "exampleKo": "여기서 마실게요."},
-    "go": {"ipa": "/ɡoʊ/", "pos": "v.", "ko": "가다 (to go: 포장)", "example": "Two lattes to go.", "exampleKo": "라떼 두 잔 포장이요."},
-    "make": {"ipa": "/meɪk/", "pos": "v.", "ko": "만들다, ~하게 하다", "example": "Make it a large.", "exampleKo": "라지로 해 주세요."},
-    "little": {"ipa": "/ˈlɪtl/", "pos": "adj.", "ko": "조금", "example": "Just a little ice.", "exampleKo": "얼음 조금만요."},
-    "less": {"ipa": "/les/", "pos": "adv.", "ko": "덜", "example": "Less ice, please.", "exampleKo": "얼음 적게요."},
-    "sweet": {"ipa": "/swiːt/", "pos": "adj.", "ko": "단", "example": "It's too sweet.", "exampleKo": "너무 달아요."},
-    "half": {"ipa": "/hæf/", "pos": "adj.", "ko": "절반의", "example": "Half sweet, please.", "exampleKo": "당도 절반이요."},
-    "good": {"ipa": "/ɡʊd/", "pos": "adj.", "ko": "좋은 (I'm good: 괜찮아요)", "example": "I'm good for now.", "exampleKo": "지금은 괜찮아요."},
-    "thanks": {"ipa": "/θæŋks/", "pos": "int.", "ko": "고마워요", "example": "Thanks a lot!", "exampleKo": "정말 고마워요!"},
-    "receipt": {"ipa": "/rɪˈsiːt/", "pos": "n.", "ko": "영수증", "example": "Can I get a receipt?", "exampleKo": "영수증 주실래요?"},
-    "recommend": {"ipa": "/ˌrekəˈmend/", "pos": "v.", "ko": "추천하다", "example": "I recommend the cold brew.", "exampleKo": "콜드브루 추천해요."},
-    "extra": {"ipa": "/ˈekstrə/", "pos": "adj.", "ko": "추가의", "example": "Extra ice, please.", "exampleKo": "얼음 많이요."},
-    "shot": {"ipa": "/ʃɑːt/", "pos": "n.", "ko": "(에스프레소) 샷", "example": "Add one more shot.", "exampleKo": "샷 하나 추가요."},
-    "whip": {"ipa": "/wɪp/", "pos": "n.", "ko": "휘핑크림", "example": "No whip, please.", "exampleKo": "휘핑 빼 주세요."},
-    "sit": {"ipa": "/sɪt/", "pos": "v.", "ko": "앉다", "example": "Can I sit here?", "exampleKo": "여기 앉아도 돼요?"},
-    "while": {"ipa": "/waɪl/", "pos": "n.", "ko": "잠시, 한동안", "example": "I'll stay for a while.", "exampleKo": "잠시 있을게요."},
-    "work": {"ipa": "/wɜːrk/", "pos": "n.", "ko": "일", "example": "I have work to do.", "exampleKo": "할 일이 있어요."},
-    "first": {"ipa": "/fɜːrst/", "pos": "adj.", "ko": "처음의", "example": "It's my first visit.", "exampleKo": "처음 왔어요."},
-    "time": {"ipa": "/taɪm/", "pos": "n.", "ko": "번, 때", "example": "Second time here.", "exampleKo": "두 번째 왔어요."},
-    "started": {"ipa": "/ˈstɑːrtɪd/", "pos": "v.", "ko": "시작한 (get started: 준비하다)", "example": "What can I get started for you?", "exampleKo": "뭐 준비해 드릴까요?"},
-    "popular": {"ipa": "/ˈpɑːpjələr/", "pos": "adj.", "ko": "인기 있는", "example": "This is our most popular drink.", "exampleKo": "제일 인기 있는 음료예요."},
-    "really": {"ipa": "/ˈrɪəli/", "pos": "adv.", "ko": "정말", "example": "It's really good.", "exampleKo": "정말 맛있어요."},
-    "sure": {"ipa": "/ʃʊr/", "pos": "int.", "ko": "물론이죠", "example": "Sure, one moment.", "exampleKo": "네, 잠시만요."},
-    "please": {"ipa": "/pliːz/", "pos": "adv.", "ko": "~해 주세요", "example": "Water, please.", "exampleKo": "물 주세요."},
-    "problem": {"ipa": "/ˈprɑːbləm/", "pos": "n.", "ko": "문제 (no problem: 그럼요)", "example": "No problem at all.", "exampleKo": "전혀 문제없어요."},
-    "anything": {"ipa": "/ˈeniθɪŋ/", "pos": "pron.", "ko": "무엇이든", "example": "Anything else for you?", "exampleKo": "더 필요한 거 있으세요?"},
-    "else": {"ipa": "/els/", "pos": "adv.", "ko": "그 밖의", "example": "Something else?", "exampleKo": "다른 건요?"},
-    "okay": {"ipa": "/oʊˈkeɪ/", "pos": "adj.", "ko": "괜찮은", "example": "Is that okay?", "exampleKo": "괜찮으세요?"}
+ "id": "b-cafe-order",
+ "createdAt": 1763190000000,
+ "mode": "daily",
+ "topic": "카페 주문",
+ "level": "고급",
+ "title": "카페에서 원어민처럼 주문하기",
+ "expressions": [
+  {
+   "en": "I'll do a large iced latte.",
+   "ipa": "/aɪl duː ə lɑːrdʒ aɪst ˈlɑːteɪ/",
+   "ko": "아이스 라떼 라지로 할게요.",
+   "textbook": "I would like to order a large iced latte.",
+   "nuance": "'I'll do ~'는 원어민이 주문할 때 가장 흔히 쓰는 말. 'I'll have ~'보다 더 가볍고 일상적이에요.",
+   "example": {
+    "en": "I'll do a medium drip and a blueberry muffin.",
+    "ko": "드립 미디엄이랑 블루베리 머핀 할게요."
+   }
   },
-  "examTip": ""
+  {
+   "en": "Could I sub oat milk?",
+   "ipa": "/kʊd aɪ sʌb oʊt mɪlk/",
+   "ko": "오트밀크로 바꿀 수 있어요?",
+   "textbook": "Is it possible to change the milk to oat milk?",
+   "nuance": "sub는 substitute의 줄임말. 재료를 바꿔 달라고 할 때 현지에서 아주 자주 써요.",
+   "example": {
+    "en": "Could I sub almond milk in the mocha?",
+    "ko": "모카에 아몬드밀크로 바꿀 수 있어요?"
+   }
+  },
+  {
+   "en": "Go easy on the ice.",
+   "ipa": "/ɡoʊ ˈiːzi ɑːn ði aɪs/",
+   "ko": "얼음 조금만 넣어 주세요.",
+   "textbook": "Please put only a small amount of ice.",
+   "nuance": "'go easy on ~'은 '~를 적당히 해 달라'는 뜻. 시럽·소스·얼음 등에 두루 써요.",
+   "example": {
+    "en": "Go easy on the syrup, please.",
+    "ko": "시럽은 조금만 넣어 주세요."
+   }
+  },
+  {
+   "en": "Are you guys still doing the pumpkin spice?",
+   "ipa": "/ɑːr juː ɡaɪz stɪl ˈduːɪŋ ðə ˈpʌmpkɪn spaɪs/",
+   "ko": "펌킨 스파이스 아직 하나요?",
+   "textbook": "Is the pumpkin spice latte still available?",
+   "nuance": "'Are you still doing ~?'는 시즌 메뉴나 행사를 아직 하는지 물을 때 쓰는 자연스러운 말.",
+   "example": {
+    "en": "Are you guys still doing the buy-one-get-one?",
+    "ko": "원 플러스 원 아직 해요?"
+   }
+  },
+  {
+   "en": "I'll just grab a seat.",
+   "ipa": "/aɪl dʒʌst ɡræb ə siːt/",
+   "ko": "자리 잡고 있을게요.",
+   "textbook": "I will go and sit down at a table.",
+   "nuance": "grab은 '잠깐 가서 잡다'의 가벼운 느낌. grab a coffee, grab a bite처럼 일상 회화 필수 동사.",
+   "example": {
+    "en": "You order, I'll grab us a table.",
+    "ko": "너 주문해, 내가 자리 잡을게."
+   }
+  },
+  {
+   "en": "No rush.",
+   "ipa": "/noʊ rʌʃ/",
+   "ko": "천천히 하세요.",
+   "textbook": "You do not need to hurry.",
+   "nuance": "바쁜 직원에게 여유를 줄 때 쓰는 배려 표현. 'Take your time'보다 짧고 자연스러워요.",
+   "example": {
+    "en": "No rush, I'm not in a hurry.",
+    "ko": "천천히 하세요, 저 안 바빠요."
+   }
+  },
+  {
+   "en": "I'm all set, thanks.",
+   "ipa": "/aɪm ɔːl set θæŋks/",
+   "ko": "다 됐어요, 고마워요.",
+   "textbook": "I do not need anything else, thank you.",
+   "nuance": "추가로 필요한 게 없을 때. 미국에서 계산대·식당에서 매우 자주 써요.",
+   "example": {
+    "en": "Do you need a bag? — I'm all set, thanks.",
+    "ko": "봉투 필요하세요? — 괜찮아요, 고마워요."
+   }
+  }
+ ],
+ "dialogue": [
+  {
+   "s": "A",
+   "en": "Hey! What can I get started for you?",
+   "ipa": "/heɪ wʌt kæn aɪ ɡet ˈstɑːrtɪd fɔːr juː/",
+   "ko": "안녕하세요! 뭐 준비해 드릴까요?"
+  },
+  {
+   "s": "B",
+   "en": "Are you guys still doing the pumpkin spice?",
+   "ipa": "/ɑːr juː ɡaɪz stɪl ˈduːɪŋ ðə ˈpʌmpkɪn spaɪs/",
+   "ko": "펌킨 스파이스 아직 하나요?"
+  },
+  {
+   "s": "A",
+   "en": "Sorry, that wrapped up last week.",
+   "ipa": "/ˈsɑːri ðæt ræpt ʌp læst wiːk/",
+   "ko": "죄송해요, 지난주에 끝났어요."
+  },
+  {
+   "s": "B",
+   "en": "No worries. I'll do a large iced latte, then.",
+   "ipa": "/noʊ ˈwɜːriz aɪl duː ə lɑːrdʒ aɪst ˈlɑːteɪ ðen/",
+   "ko": "괜찮아요. 그럼 아이스 라떼 라지로 할게요."
+  },
+  {
+   "s": "A",
+   "en": "Any milk preference?",
+   "ipa": "/ˈeni mɪlk ˈprefrəns/",
+   "ko": "우유 원하시는 거 있으세요?"
+  },
+  {
+   "s": "B",
+   "en": "Could I sub oat milk? And go easy on the ice.",
+   "ipa": "/kʊd aɪ sʌb oʊt mɪlk ænd ɡoʊ ˈiːzi ɑːn ði aɪs/",
+   "ko": "오트밀크로 바꿀 수 있어요? 얼음은 조금만요."
+  },
+  {
+   "s": "A",
+   "en": "You got it. It'll be a couple minutes.",
+   "ipa": "/juː ɡɑːt ɪt ɪtl biː ə ˈkʌpl ˈmɪnɪts/",
+   "ko": "알겠습니다. 몇 분 걸려요."
+  },
+  {
+   "s": "B",
+   "en": "No rush. I'll just grab a seat.",
+   "ipa": "/noʊ rʌʃ aɪl dʒʌst ɡræb ə siːt/",
+   "ko": "천천히 하세요. 자리 잡고 있을게요."
+  }
+ ],
+ "sounds": [
+  {
+   "ipa": "l",
+   "desc": "I'll의 l은 혀끝을 윗니 뒤에 붙인 채 끝내요. [아일]이 아니라 [아이(을)]처럼 짧게."
+  },
+  {
+   "ipa": "æ",
+   "desc": "grab, thanks의 a는 입을 옆으로 크게 벌린 '애'."
+  },
+  {
+   "ipa": "ʌ",
+   "desc": "sub, rush, just의 u는 힘을 뺀 짧은 '어'."
+  },
+  {
+   "ipa": "t",
+   "desc": "get it, got it → [게릿], [가릿]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼."
+  }
+ ],
+ "vocab": [
+  {
+   "word": "nurse a coffee",
+   "ipa": "/nɜːrs ə ˈkɔːfi/",
+   "pos": "idiom",
+   "ko": "커피 한 잔을 오래 붙잡고 마시다",
+   "note": "카페에 오래 앉아 한 잔을 아껴 마실 때. 원어민끼리 자주 쓰는 표현.",
+   "example": "I nursed one coffee for three hours.",
+   "exampleKo": "커피 한 잔으로 세 시간 버텼어."
+  },
+  {
+   "word": "room for cream",
+   "ipa": "/ruːm fər kriːm/",
+   "pos": "phr.",
+   "ko": "크림 넣을 공간",
+   "note": "블랙커피를 받을 때 잔을 조금 비워 달라는 현지 표현.",
+   "example": "Medium drip, with room for cream.",
+   "exampleKo": "드립 미디엄, 크림 넣게 조금 비워 주세요."
+  },
+  {
+   "word": "a pick-me-up",
+   "ipa": "/ə ˈpɪk mi ʌp/",
+   "pos": "n.",
+   "ko": "기운 나게 하는 것",
+   "note": "오후에 마시는 커피 한 잔을 가볍게 부르는 말.",
+   "example": "I need a little pick-me-up before the meeting.",
+   "exampleKo": "회의 전에 기운 좀 차려야겠어."
+  },
+  {
+   "word": "jittery",
+   "ipa": "/ˈdʒɪtəri/",
+   "pos": "adj.",
+   "ko": "(카페인 때문에) 손떨리는",
+   "note": "커피를 많이 마셔 초조하고 떨리는 상태. 일상 회화에서 자주 써요.",
+   "example": "Three shots made me so jittery.",
+   "exampleKo": "샷 세 개 넣었더니 손이 덜덜 떨려."
+  },
+  {
+   "word": "caffeine crash",
+   "ipa": "/kæˈfiːn kræʃ/",
+   "pos": "n.",
+   "ko": "카페인 효과가 끝나고 확 처지는 것",
+   "note": "오후에 급격히 피곤해질 때 쓰는 구어 표현.",
+   "example": "I always hit a caffeine crash around 3.",
+   "exampleKo": "난 3시쯤 꼭 카페인 빠지면서 확 처져."
+  },
+  {
+   "word": "hit the spot",
+   "ipa": "/hɪt ðə spɑːt/",
+   "pos": "idiom",
+   "ko": "딱 원하던 그 맛이다",
+   "note": "먹거나 마신 게 딱 만족스러울 때. 매우 자연스러운 감탄 표현.",
+   "example": "Man, this iced latte really hits the spot.",
+   "exampleKo": "와, 이 아이스 라떼 진짜 딱이다."
+  },
+  {
+   "word": "barista's choice",
+   "ipa": "/bəˈriːstəz tʃɔɪs/",
+   "pos": "phr.",
+   "ko": "바리스타 추천(알아서 주세요)",
+   "note": "메뉴 선택을 바리스타에게 맡길 때. 스페셜티 카페에서 자주 들려요.",
+   "example": "Surprise me. Barista's choice.",
+   "exampleKo": "알아서 주세요. 바리스타 추천으로요."
+  },
+  {
+   "word": "oat milk upcharge",
+   "ipa": "/oʊt mɪlk ˈʌptʃɑːrdʒ/",
+   "pos": "n.",
+   "ko": "오트밀크 추가 요금",
+   "note": "미국 카페에서 대체 우유 변경 시 붙는 추가금. upcharge 자체가 현지 어휘.",
+   "example": "Is there an upcharge for oat milk?",
+   "exampleKo": "오트밀크로 바꾸면 추가금 있어요?"
+  },
+  {
+   "word": "the usual",
+   "ipa": "/ðə ˈjuːʒuəl/",
+   "pos": "n.",
+   "ko": "늘 먹던 거",
+   "note": "단골이 주문할 때. 'The usual?' 하고 직원이 먼저 묻기도 해요.",
+   "example": "Hey, the usual today?",
+   "exampleKo": "오늘도 늘 드시던 걸로요?"
+  },
+  {
+   "word": "to-go cup",
+   "ipa": "/tə ˈɡoʊ kʌp/",
+   "pos": "n.",
+   "ko": "테이크아웃 컵",
+   "note": "'take-out cup'보다 미국 카페에서 더 자연스럽게 쓰는 말.",
+   "example": "Can I get a to-go cup for the rest?",
+   "exampleKo": "남은 거 담을 테이크아웃 컵 주실래요?"
+  }
+ ],
+ "glossary": {
+  "get": {
+   "ipa": "/ɡet/",
+   "pos": "v.",
+   "ko": "(주문해서) 받다",
+   "example": "Can I get a coffee?",
+   "exampleKo": "커피 한 잔 주세요."
+  },
+  "large": {
+   "ipa": "/lɑːrdʒ/",
+   "pos": "adj.",
+   "ko": "큰 (라지 사이즈)",
+   "example": "A large, please.",
+   "exampleKo": "라지로 주세요."
+  },
+  "iced": {
+   "ipa": "/aɪst/",
+   "pos": "adj.",
+   "ko": "얼음을 넣은, 아이스",
+   "example": "I'll have an iced tea.",
+   "exampleKo": "아이스티 주세요."
+  },
+  "latte": {
+   "ipa": "/ˈlɑːteɪ/",
+   "pos": "n.",
+   "ko": "라떼",
+   "example": "One hot latte, please.",
+   "exampleKo": "따뜻한 라떼 하나요."
+  },
+  "oat": {
+   "ipa": "/oʊt/",
+   "pos": "n.",
+   "ko": "귀리",
+   "example": "Do you have oat milk?",
+   "exampleKo": "오트밀크 있어요?"
+  },
+  "milk": {
+   "ipa": "/mɪlk/",
+   "pos": "n.",
+   "ko": "우유",
+   "example": "No milk, please.",
+   "exampleKo": "우유는 빼 주세요."
+  },
+  "here": {
+   "ipa": "/hɪr/",
+   "pos": "adv.",
+   "ko": "여기에서",
+   "example": "I'll have it here.",
+   "exampleKo": "여기서 마실게요."
+  },
+  "go": {
+   "ipa": "/ɡoʊ/",
+   "pos": "v.",
+   "ko": "가다 (to go: 포장)",
+   "example": "Two lattes to go.",
+   "exampleKo": "라떼 두 잔 포장이요."
+  },
+  "make": {
+   "ipa": "/meɪk/",
+   "pos": "v.",
+   "ko": "만들다, ~하게 하다",
+   "example": "Make it a large.",
+   "exampleKo": "라지로 해 주세요."
+  },
+  "little": {
+   "ipa": "/ˈlɪtl/",
+   "pos": "adj.",
+   "ko": "조금",
+   "example": "Just a little ice.",
+   "exampleKo": "얼음 조금만요."
+  },
+  "less": {
+   "ipa": "/les/",
+   "pos": "adv.",
+   "ko": "덜",
+   "example": "Less ice, please.",
+   "exampleKo": "얼음 적게요."
+  },
+  "sweet": {
+   "ipa": "/swiːt/",
+   "pos": "adj.",
+   "ko": "단",
+   "example": "It's too sweet.",
+   "exampleKo": "너무 달아요."
+  },
+  "half": {
+   "ipa": "/hæf/",
+   "pos": "adj.",
+   "ko": "절반의",
+   "example": "Half sweet, please.",
+   "exampleKo": "당도 절반이요."
+  },
+  "good": {
+   "ipa": "/ɡʊd/",
+   "pos": "adj.",
+   "ko": "좋은 (I'm good: 괜찮아요)",
+   "example": "I'm good for now.",
+   "exampleKo": "지금은 괜찮아요."
+  },
+  "thanks": {
+   "ipa": "/θæŋks/",
+   "pos": "int.",
+   "ko": "고마워요",
+   "example": "Thanks a lot!",
+   "exampleKo": "정말 고마워요!"
+  },
+  "receipt": {
+   "ipa": "/rɪˈsiːt/",
+   "pos": "n.",
+   "ko": "영수증",
+   "example": "Can I get a receipt?",
+   "exampleKo": "영수증 주실래요?"
+  },
+  "recommend": {
+   "ipa": "/ˌrekəˈmend/",
+   "pos": "v.",
+   "ko": "추천하다",
+   "example": "I recommend the cold brew.",
+   "exampleKo": "콜드브루 추천해요."
+  },
+  "extra": {
+   "ipa": "/ˈekstrə/",
+   "pos": "adj.",
+   "ko": "추가의",
+   "example": "Extra ice, please.",
+   "exampleKo": "얼음 많이요."
+  },
+  "shot": {
+   "ipa": "/ʃɑːt/",
+   "pos": "n.",
+   "ko": "(에스프레소) 샷",
+   "example": "Add one more shot.",
+   "exampleKo": "샷 하나 추가요."
+  },
+  "whip": {
+   "ipa": "/wɪp/",
+   "pos": "n.",
+   "ko": "휘핑크림",
+   "example": "No whip, please.",
+   "exampleKo": "휘핑 빼 주세요."
+  },
+  "sit": {
+   "ipa": "/sɪt/",
+   "pos": "v.",
+   "ko": "앉다",
+   "example": "Can I sit here?",
+   "exampleKo": "여기 앉아도 돼요?"
+  },
+  "while": {
+   "ipa": "/waɪl/",
+   "pos": "n.",
+   "ko": "잠시, 한동안",
+   "example": "I'll stay for a while.",
+   "exampleKo": "잠시 있을게요."
+  },
+  "work": {
+   "ipa": "/wɜːrk/",
+   "pos": "n.",
+   "ko": "일",
+   "example": "I have work to do.",
+   "exampleKo": "할 일이 있어요."
+  },
+  "first": {
+   "ipa": "/fɜːrst/",
+   "pos": "adj.",
+   "ko": "처음의",
+   "example": "It's my first visit.",
+   "exampleKo": "처음 왔어요."
+  },
+  "time": {
+   "ipa": "/taɪm/",
+   "pos": "n.",
+   "ko": "번, 때",
+   "example": "Second time here.",
+   "exampleKo": "두 번째 왔어요."
+  },
+  "started": {
+   "ipa": "/ˈstɑːrtɪd/",
+   "pos": "v.",
+   "ko": "시작한 (get started: 준비하다)",
+   "example": "What can I get started for you?",
+   "exampleKo": "뭐 준비해 드릴까요?"
+  },
+  "popular": {
+   "ipa": "/ˈpɑːpjələr/",
+   "pos": "adj.",
+   "ko": "인기 있는",
+   "example": "This is our most popular drink.",
+   "exampleKo": "제일 인기 있는 음료예요."
+  },
+  "really": {
+   "ipa": "/ˈrɪəli/",
+   "pos": "adv.",
+   "ko": "정말",
+   "example": "It's really good.",
+   "exampleKo": "정말 맛있어요."
+  },
+  "sure": {
+   "ipa": "/ʃʊr/",
+   "pos": "int.",
+   "ko": "물론이죠",
+   "example": "Sure, one moment.",
+   "exampleKo": "네, 잠시만요."
+  },
+  "please": {
+   "ipa": "/pliːz/",
+   "pos": "adv.",
+   "ko": "~해 주세요",
+   "example": "Water, please.",
+   "exampleKo": "물 주세요."
+  },
+  "problem": {
+   "ipa": "/ˈprɑːbləm/",
+   "pos": "n.",
+   "ko": "문제 (no problem: 그럼요)",
+   "example": "No problem at all.",
+   "exampleKo": "전혀 문제없어요."
+  },
+  "anything": {
+   "ipa": "/ˈeniθɪŋ/",
+   "pos": "pron.",
+   "ko": "무엇이든",
+   "example": "Anything else for you?",
+   "exampleKo": "더 필요한 거 있으세요?"
+  },
+  "else": {
+   "ipa": "/els/",
+   "pos": "adv.",
+   "ko": "그 밖의",
+   "example": "Something else?",
+   "exampleKo": "다른 건요?"
+  },
+  "okay": {
+   "ipa": "/oʊˈkeɪ/",
+   "pos": "adj.",
+   "ko": "괜찮은",
+   "example": "Is that okay?",
+   "exampleKo": "괜찮으세요?"
+  },
+  "do": {
+   "ipa": "/duː/",
+   "pos": "v.",
+   "ko": "(주문에서) ~로 하다",
+   "example": "I'll do a small mocha.",
+   "exampleKo": "모카 스몰로 할게요."
+  },
+  "sub": {
+   "ipa": "/sʌb/",
+   "pos": "v.",
+   "ko": "(재료를) 바꾸다",
+   "example": "Can I sub fries for salad?",
+   "exampleKo": "감자튀김을 샐러드로 바꿀 수 있어요?"
+  },
+  "easy": {
+   "ipa": "/ˈiːzi/",
+   "pos": "adj.",
+   "ko": "쉬운 (go easy on: 적당히 하다)",
+   "example": "Go easy on the sauce.",
+   "exampleKo": "소스는 조금만요."
+  },
+  "ice": {
+   "ipa": "/aɪs/",
+   "pos": "n.",
+   "ko": "얼음",
+   "example": "Light ice, please.",
+   "exampleKo": "얼음 적게요."
+  },
+  "guys": {
+   "ipa": "/ɡaɪz/",
+   "pos": "n.",
+   "ko": "(you guys) 여러분, 이 가게",
+   "example": "Do you guys have Wi-Fi?",
+   "exampleKo": "여기 와이파이 있어요?"
+  },
+  "still": {
+   "ipa": "/stɪl/",
+   "pos": "adv.",
+   "ko": "아직",
+   "example": "Are you still open?",
+   "exampleKo": "아직 영업해요?"
+  },
+  "pumpkin": {
+   "ipa": "/ˈpʌmpkɪn/",
+   "pos": "n.",
+   "ko": "호박",
+   "example": "It's pumpkin season.",
+   "exampleKo": "호박 시즌이에요."
+  },
+  "spice": {
+   "ipa": "/spaɪs/",
+   "pos": "n.",
+   "ko": "향신료",
+   "example": "I love the spice blend.",
+   "exampleKo": "향신료 조합이 좋아요."
+  },
+  "grab": {
+   "ipa": "/ɡræb/",
+   "pos": "v.",
+   "ko": "(가볍게) 잡다, 사다",
+   "example": "Let's grab lunch.",
+   "exampleKo": "점심 먹자."
+  },
+  "seat": {
+   "ipa": "/siːt/",
+   "pos": "n.",
+   "ko": "자리",
+   "example": "Is this seat taken?",
+   "exampleKo": "여기 자리 있어요?"
+  },
+  "rush": {
+   "ipa": "/rʌʃ/",
+   "pos": "n.",
+   "ko": "서두름",
+   "example": "What's the rush?",
+   "exampleKo": "뭐가 그렇게 급해?"
+  },
+  "set": {
+   "ipa": "/set/",
+   "pos": "adj.",
+   "ko": "준비된 (all set: 다 됐어요)",
+   "example": "Are you all set?",
+   "exampleKo": "다 되셨어요?"
+  },
+  "wrapped": {
+   "ipa": "/ræpt/",
+   "pos": "v.",
+   "ko": "(wrap up) 끝나다",
+   "example": "The event wrapped up early.",
+   "exampleKo": "행사가 일찍 끝났어."
+  },
+  "worries": {
+   "ipa": "/ˈwɜːriz/",
+   "pos": "n.",
+   "ko": "(no worries) 괜찮아요",
+   "example": "No worries at all.",
+   "exampleKo": "전혀 괜찮아요."
+  },
+  "preference": {
+   "ipa": "/ˈprefrəns/",
+   "pos": "n.",
+   "ko": "선호",
+   "example": "Any seating preference?",
+   "exampleKo": "원하시는 자리 있으세요?"
+  },
+  "couple": {
+   "ipa": "/ˈkʌpl/",
+   "pos": "n.",
+   "ko": "두어 개, 몇",
+   "example": "Give me a couple minutes.",
+   "exampleKo": "몇 분만 줘."
+  },
+  "minutes": {
+   "ipa": "/ˈmɪnɪts/",
+   "pos": "n.",
+   "ko": "분",
+   "example": "Five minutes, tops.",
+   "exampleKo": "길어야 5분이요."
+  },
+  "hurry": {
+   "ipa": "/ˈhɜːri/",
+   "pos": "n.",
+   "ko": "서두름",
+   "example": "I'm in a hurry.",
+   "exampleKo": "저 급해요."
+  },
+  "bag": {
+   "ipa": "/bæɡ/",
+   "pos": "n.",
+   "ko": "봉투",
+   "example": "No bag, thanks.",
+   "exampleKo": "봉투는 괜찮아요."
+  },
+  "drip": {
+   "ipa": "/drɪp/",
+   "pos": "n.",
+   "ko": "드립 커피",
+   "example": "Just a drip coffee.",
+   "exampleKo": "그냥 드립 커피요."
+  },
+  "syrup": {
+   "ipa": "/ˈsɪrəp/",
+   "pos": "n.",
+   "ko": "시럽",
+   "example": "No syrup, please.",
+   "exampleKo": "시럽 빼 주세요."
+  },
+  "table": {
+   "ipa": "/ˈteɪbl/",
+   "pos": "n.",
+   "ko": "테이블",
+   "example": "Let's get a table outside.",
+   "exampleKo": "밖에 자리 잡자."
+  }
+ },
+ "examTip": ""
 }
