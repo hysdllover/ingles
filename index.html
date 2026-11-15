@@ -103,9 +103,18 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
 .selbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(248,249,250,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--rule);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
 .selbar select{width:auto;min-width:120px}
 .history{display:grid;max-height:280px;overflow:auto}
-.history button{text-align:left;background:none;border:0;padding:8px 4px;cursor:pointer;border-bottom:1px solid var(--rule);font-size:12.5px;border-radius:0}
-.history button:last-child{border-bottom:0}
-.history button:hover{background:rgba(58,67,76,.04)}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;border-bottom:1px solid var(--rule)}
+.hrow:last-child{border-bottom:0}
+.hrow .open{text-align:left;background:none;border:0;padding:8px 4px;cursor:pointer;font-size:12.5px;border-radius:0}
+.hrow .open:hover{background:rgba(58,67,76,.04)}
+.hrow .open[aria-current="true"]{background:var(--stroke),var(--blue-soft)}
+.x{border:0;background:none;color:var(--lead);cursor:pointer;padding:4px 6px;font-size:12px;line-height:1;border-radius:0}
+.x:hover{color:#9A5F66}
+.x.armed{background:var(--pc-rose);color:#6B3E44}
+.tchip{display:inline-flex;align-items:center;border:1px solid var(--rule-2);border-radius:0}
+.tchip .chip{border:0}
+.tchip .x{padding:3px 7px 3px 2px}
+.tchip:has(.chip[aria-pressed="true"]){background:var(--stroke),var(--blue-soft)}
 .loading{font:400 19px var(--f-hand);color:var(--lead)}
 .loading::after{content:"";display:inline-block;width:40px;height:2px;margin-left:8px;vertical-align:middle;background:repeating-linear-gradient(90deg,var(--graphite) 0 6px,transparent 6px 10px);animation:draw 1.2s linear infinite}
 @keyframes draw{from{background-position:0}to{background-position:40px}}
@@ -145,7 +154,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
         <span class="label">추천 토픽</span>
         <div class="row" id="presets"></div>
         <span class="label">직접 입력</span>
-        <input type="text" id="topic" placeholder="예: 헬스장에서 PT 상담하기">
+        <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="text" id="topic" placeholder="예: 헬스장에서 PT 상담하기"><button class="btn small" id="saveTopic" style="flex:none">토픽 저장</button></div>
         <span class="label">레벨</span>
         <div class="seg" id="levels"></div>
         <div id="examTargetBox" hidden>
@@ -220,7 +229,7 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
 };
 
 /* ---------- state ---------- */
-const S={mode:"daily",level:"중급",topic:"",lesson:SAMPLE,lessons:[],words:[],books:[],
+const S={mode:"daily",level:"중급",topic:"",lesson:SAMPLE,lessons:[],words:[],books:[],topics:[],
   settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true},
   sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
 const $=s=>document.querySelector(s);
@@ -262,9 +271,10 @@ function ingest(docs){
   S.lessons=docs.filter(d=>d.type==="lesson").sort((a,b)=>b.createdAt-a.createdAt);
   S.words=docs.filter(d=>d.type==="word").sort((a,b)=>b.createdAt-a.createdAt);
   S.books=docs.filter(d=>d.type==="book").sort((a,b)=>a.createdAt-b.createdAt);
+  S.topics=docs.filter(d=>d.type==="topic").sort((a,b)=>a.createdAt-b.createdAt);
   const st=docs.find(d=>d.id==="settings");
   if(st){const f=S.settings.fontId;Object.assign(S.settings,st);if(st.fontId&&st.fontId!==f)loadFontFromAsset(st.fontId,st.fontName)}
-  applySettings();renderHistory();renderBookSelect();
+  applySettings();renderHistory();renderBookSelect();renderSide();
   if(S.tab==="words")renderWords();
   if(S.tab==="settings")renderSettings();
 }
@@ -298,7 +308,7 @@ Reply with ONLY JSON:
     const r=await sampleFn.json(prompt);
     const doc={id:uid("l"),type:"lesson",topic,mode:S.mode,level:S.level,createdAt:Date.now(),
       title:r.title||topic,expressions:r.expressions||[],dialogue:r.dialogue||[],sounds:r.sounds||[],examTip:r.examTip||""};
-    S.lesson=doc;S.pIdx=0;S.heard="";S.coach=null;await store.put(doc);
+    S.lesson=doc;S.pIdx=0;S.heard="";S.coach=null;await store.put(doc);await saveTopic(topic,S.mode);
   }catch(e){S.lessonErr=errMsg(e)}
   S.busy=false;renderLearn();
 }
@@ -380,21 +390,39 @@ Reply with ONLY a JSON array: [{"word":"lowercase word","ipa":"/IPA/","pos":"n./
 /* ---------- side panel ---------- */
 function renderSide(){
   $("#modes").innerHTML=Object.entries(MODES).map(([k,m])=>`<button class="chip" data-mode="${k}" aria-pressed="${S.mode===k}">${m.name}</button>`).join("");
-  $("#presets").innerHTML=MODES[S.mode].topics.map(t=>`<button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button>`).join("");
+  $("#presets").innerHTML=MODES[S.mode].topics.map(t=>`<button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button>`).join("")
+    +S.topics.filter(t=>t.mode===S.mode).map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t.name)}" aria-pressed="${S.topic===t.name}">${esc(t.name)}</button><button class="x" data-deltopic="${esc(t.id)}" aria-label="${esc(t.name)} 토픽 삭제">✕</button></span>`).join("");
   $("#levels").innerHTML=LEVELS.map(l=>`<button data-level="${l}" aria-pressed="${S.level===l}">${l}</button>`).join("");
   $("#examTargetBox").hidden=!["toeic","toefl","opic","ielts"].includes(S.mode);
 }
 $("#modes").onclick=e=>{const b=e.target.closest("[data-mode]");if(!b)return;S.mode=b.dataset.mode;S.topic="";renderSide()};
-$("#presets").onclick=e=>{const b=e.target.closest("[data-topic]");if(!b)return;S.topic=b.dataset.topic;$("#topic").value=S.topic;renderSide()};
+async function saveTopic(name,mode){
+  name=(name||"").trim();if(!name||MODES[mode].topics.includes(name)||S.topics.some(t=>t.mode===mode&&t.name===name))return false;
+  await store.put({id:uid("t"),type:"topic",mode,name,createdAt:Date.now()});return true;
+}
+$("#saveTopic").onclick=async()=>{const n=$("#topic").value.trim();if(!n){$("#topic").focus();return}
+  S.topic=n;const ok=await saveTopic(n,S.mode);setStatus(ok?`‘${n}’ 토픽을 ${MODES[S.mode].name}에 저장했어요`:"이미 있는 토픽이에요");renderSide()};
+/* 두 번 눌러 삭제 */
+function armOrRun(btn,run){
+  if(btn.classList.contains("armed")){run();return}
+  document.querySelectorAll(".x.armed").forEach(x=>{x.classList.remove("armed");x.textContent="✕"});
+  btn.classList.add("armed");btn.textContent="삭제";setTimeout(()=>{if(btn.isConnected){btn.classList.remove("armed");btn.textContent="✕"}},2500);
+}
+$("#presets").onclick=e=>{
+  const d=e.target.closest("[data-deltopic]");if(d){armOrRun(d,()=>store.del(d.dataset.deltopic));return}
+  const b=e.target.closest("[data-topic]");if(!b)return;S.topic=b.dataset.topic;$("#topic").value=S.topic;renderSide()};
 $("#levels").onclick=e=>{const b=e.target.closest("[data-level]");if(!b)return;S.level=b.dataset.level;renderSide()};
 $("#topic").oninput=e=>{S.topic=e.target.value.trim()};
 $("#gen").onclick=()=>{S.lessonErr="";switchTab("learn");generateLesson()};
 function renderHistory(){
   const h=$("#history");
   if(!S.lessons.length){h.innerHTML=`<span class="muted">아직 저장된 노트가 없어요. 토픽을 고르고 ‘노트 만들기’를 눌러 보세요.</span>`;return}
-  h.innerHTML=S.lessons.map(l=>`<button data-lid="${esc(l.id)}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button>`).join("");
+  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("");
 }
-$("#history").onclick=e=>{const b=e.target.closest("[data-lid]");if(!b)return;S.lesson=S.lessons.find(l=>l.id===b.dataset.lid);S.pIdx=0;S.heard="";S.coach=null;switchTab("learn")};
+$("#history").onclick=e=>{
+  const d=e.target.closest("[data-dellesson]");
+  if(d){armOrRun(d,async()=>{const id=d.dataset.dellesson;await store.del(id);if(S.lesson?.id===id){S.lesson=S.lessons.find(l=>l.id!==id)||SAMPLE;if(S.tab==="learn")renderLearn()}});return}
+  const b=e.target.closest("[data-lid]");if(!b)return;S.lesson=S.lessons.find(l=>l.id===b.dataset.lid);S.pIdx=0;S.heard="";S.coach=null;renderHistory();switchTab("learn")};
 
 /* ---------- learn view ---------- */
 function renderLearn(){
