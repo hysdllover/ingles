@@ -1,6 +1,6 @@
 """index.html(claude.ai 아티팩트 버전) → docs/ (GitHub Pages 버전) 생성.
 사용: python3 web/build.py"""
-import pathlib, re, shutil
+import json, pathlib, re, shutil
 
 root = pathlib.Path(__file__).resolve().parent.parent
 src = (root / "index.html").read_text(encoding="utf-8")
@@ -30,11 +30,22 @@ head = f"""<!doctype html>
 {''.join(links).strip()}
 <style>:root{{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}}body{{margin:0}}img{{max-width:100%}}[hidden]{{display:none!important}}</style>
 <script src="shim.js"></script>
+<script src="lessons.js"></script>
 </head>
 <body>
 """
 (out / "index.html").write_text(head + body.strip() + "\n</body>\n</html>\n", encoding="utf-8")
-for f in ["shim.js", "anthropic-sdk.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"]:
+for f in ["shim.js", "manifest.webmanifest", "icon-180.png", "icon-192.png", "icon-512.png"]:
     shutil.copy(root / "web" / f, out / f)
 (out / ".nojekyll").write_text("")
+# 내장 노트: web/lessons/*.json → docs/lessons.js
+lessons = []
+for f in sorted((root / "web" / "lessons").glob("*.json")):
+    l = json.loads(f.read_text(encoding="utf-8"))
+    l.setdefault("id", "b-" + f.stem)
+    l["type"] = "lesson"
+    lessons.append(l)
+lessons.sort(key=lambda l: l.get("createdAt", 0), reverse=True)
+(out / "lessons.js").write_text("window.BUNDLED_LESSONS=" + json.dumps(lessons, ensure_ascii=False) + ";\n", encoding="utf-8")
+print(len(lessons), "lessons")
 print("built", out / "index.html")

@@ -17,6 +17,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=IBM+Plex+Sans+KR:wght@300&display=swap">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <script src="shim.js"></script>
+<script src="lessons.js"></script>
 </head>
 <body>
 <style>
@@ -177,6 +178,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
         <div class="row" id="modes"></div>
         <span class="label">추천 토픽</span>
         <div class="row" id="presets"></div>
+        <div id="genBox">
         <span class="label">직접 입력</span>
         <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="text" id="topic" placeholder="예: 헬스장에서 PT 상담하기"><button class="btn small" id="saveTopic" style="flex:none">토픽 저장</button></div>
         <span class="label">레벨</span>
@@ -189,9 +191,11 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
           <span class="muted" id="aiNote"></span>
           <button class="btn fill" id="gen">노트 만들기</button>
         </div>
+        </div>
+        <p class="muted" id="bundledNote" hidden style="margin:12px 0 0">새 토픽은 Claude 대화에서 요청하면 이 앱에 추가돼요.</p>
       </section>
       <section class="card">
-        <h3>지난 노트</h3>
+        <h3 id="histTitle">지난 노트</h3>
         <div class="history" id="history"><span class="muted">아직 저장된 노트가 없어요.</span></div>
       </section>
     </aside>
@@ -261,8 +265,9 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
 };
 
 /* ---------- state ---------- */
-const S={mode:"daily",level:"중급",topic:"",lesson:SAMPLE,lessons:[],words:[],books:[],topics:[],
-  settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[]},
+const BUNDLED=Array.isArray(window.BUNDLED_LESSONS)?window.BUNDLED_LESSONS.map(l=>({...l,bundled:true})):null;
+const S={mode:"daily",level:"중급",topic:"",lesson:BUNDLED&&BUNDLED.length?BUNDLED[0]:SAMPLE,lessons:[],words:[],books:[],topics:[],
+  settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[],hiddenLessons:[]},
   sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -300,7 +305,8 @@ function loadLocal(){ingest(lsGet())}
 function upsertLocal(doc){const a=lsGet().filter(d=>d.id!==doc.id);a.push(doc);lsSet(a);ingest(a)}
 function removeLocal(id){const a=lsGet().filter(d=>d.id!==id);lsSet(a);ingest(a)}
 function ingest(docs){
-  S.lessons=docs.filter(d=>d.type==="lesson").sort((a,b)=>b.createdAt-a.createdAt);
+  const hidL=(docs.find(d=>d.id==="settings")||S.settings).hiddenLessons||[];
+  S.lessons=[...(BUNDLED||[]).filter(l=>!hidL.includes(l.id)),...docs.filter(d=>d.type==="lesson").sort((a,b)=>b.createdAt-a.createdAt)];
   S.words=docs.filter(d=>d.type==="word").sort((a,b)=>b.createdAt-a.createdAt);
   S.books=docs.filter(d=>d.type==="book").sort((a,b)=>a.createdAt-b.createdAt);
   S.topics=docs.filter(d=>d.type==="topic").sort((a,b)=>a.createdAt-b.createdAt);
@@ -316,9 +322,8 @@ function setStatus(t){$("#status").textContent=t}
 /* ---------- Claude ---------- */
 let sampleFn=null;
 function updateAiNote(){const n=$("#aiNote");
-  if(window.__WEB__&&!window.__WEB__.hasKey())n.innerHTML=`<a href="#" id="toKey" style="color:inherit">설정에서 API 키를 넣어 주세요</a>`;
-  else n.textContent=sampleFn?"":"Claude 연결 없음: 예시 노트만 볼 수 있어요";
-  const k=$("#toKey");if(k)k.onclick=e=>{e.preventDefault();switchTab("settings")}}
+  n.textContent=BUNDLED?"":sampleFn?"":"Claude 연결 없음: 예시 노트만 볼 수 있어요";
+}
 claude.use("sample").then(s=>{sampleFn=s;updateAiNote()}).catch(()=>{});
 setTimeout(()=>{if(!sampleFn&&!$("#aiNote").textContent)$("#aiNote").textContent="Claude 연결 확인 중…"},1500);
 const ERR={not_granted:"Claude 사용이 허용되지 않았어요. 아티팩트 권한 메뉴에서 켜 주세요.",rate_limited:"요청이 많아요. 잠시 뒤 다시 눌러 주세요.",invalid_json:"응답 형식이 어긋났어요. 한 번 더 눌러 주세요.",cancelled:"취소했어요."};
@@ -409,10 +414,12 @@ $("#selAdd").onclick=async()=>{
   if(!list.length){$("#selClear").click();return}
   const btn=$("#selAdd");btn.disabled=true;btn.textContent="정리 중…";
   let info={};
-  if(sampleFn){
+  const gl=glossary();list.forEach(([w])=>{if(gl[w])info[w]=gl[w]});
+  const need=list.filter(([w])=>!info[w]);
+  if(sampleFn&&need.length){
     try{
       const arr=await sampleFn.json(`For Korean learners, give dictionary entries for these words. Pronunciation: ${IPA_STYLE()}., each in the context sentence given.
-${list.map(([w,src])=>`- ${w} | context: ${src}`).join("\n")}
+${need.map(([w,src])=>`- ${w} | context: ${src}`).join("\n")}
 Reply with ONLY a JSON array: [{"word":"lowercase word","ipa":"/IPA/","pos":"n./v./adj./adv./phr. etc","ko":"Korean meaning in this context","example":"short natural example","exampleKo":"Korean","tip":"Korean: collocation or pronunciation tip, one line"}]`,{modelTier:"quick"});
       (Array.isArray(arr)?arr:[]).forEach(o=>{if(o&&o.word)info[String(o.word).toLowerCase()]=o});
     }catch(e){setStatus(errMsg(e)+" 단어만 저장했어요.")}
@@ -435,6 +442,13 @@ function renderSide(){
     +(shown.length<MODES[S.mode].topics.length?`<button class="x" id="restoreTopics" style="text-decoration:underline">기본 토픽 복원</button>`:"");
   $("#levels").innerHTML=LEVELS.map(l=>`<button data-level="${l}" aria-pressed="${S.level===l}">${l}</button>`).join("");
   $("#examTargetBox").hidden=!["toeic","toefl","opic","ielts"].includes(S.mode);
+  if(BUNDLED){
+    $("#genBox").hidden=true;$("#bundledNote").hidden=false;
+    const ls=S.lessons.filter(l=>l.mode===S.mode);
+    document.querySelector("#presets").previousElementSibling.textContent="노트";
+    $("#presets").innerHTML=ls.length?ls.map(l=>`<button class="chip" data-lid="${esc(l.id)}" aria-pressed="${S.lesson?.id===l.id}">${esc(l.topic)} · ${esc(l.level)}</button>`).join(""):`<span class="muted">이 분야에는 아직 노트가 없어요.</span>`;
+    $("#modes").querySelectorAll("[data-mode]").forEach(b=>{const n=S.lessons.filter(l=>l.mode===b.dataset.mode).length;if(n)b.textContent+=` ${n}`});
+  }
 }
 $("#modes").onclick=e=>{const b=e.target.closest("[data-mode]");if(!b)return;S.mode=b.dataset.mode;S.topic="";renderSide()};
 async function saveTopic(name,mode){
@@ -452,6 +466,7 @@ function armOrRun(btn,run){
   document.querySelectorAll(".x.armed").forEach(x=>{x.classList.remove("armed");x.textContent="✕"});
   btn.classList.add("armed");btn.textContent="삭제";setTimeout(()=>{if(btn.isConnected){btn.classList.remove("armed");btn.textContent="✕"}},2500);
 }
+$("#presets").addEventListener("click",e=>{const b=e.target.closest("[data-lid]");if(!b)return;openLesson(b.dataset.lid)});
 $("#presets").onclick=e=>{
   const d=e.target.closest("[data-deltopic]");if(d){armOrRun(d,()=>store.del(d.dataset.deltopic));return}
   const h=e.target.closest("[data-hidetopic]");if(h){armOrRun(h,()=>{const k=S.mode+"|"+h.dataset.hidetopic;S.settings.hiddenTopics=[...(S.settings.hiddenTopics||[]).filter(x=>x!==k),k];if(S.topic===h.dataset.hidetopic)S.topic="";saveSettings();renderSide()});return}
@@ -462,13 +477,27 @@ $("#topic").oninput=e=>{S.topic=e.target.value.trim()};
 $("#gen").onclick=()=>{S.lessonErr="";switchTab("learn");generateLesson()};
 function renderHistory(){
   const h=$("#history");
-  if(!S.lessons.length){h.innerHTML=`<span class="muted">아직 저장된 노트가 없어요. 토픽을 고르고 ‘노트 만들기’를 눌러 보세요.</span>`;return}
-  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("");
+  if(BUNDLED)$("#histTitle").textContent="노트 목록";
+  const hidN=(S.settings.hiddenLessons||[]).length;
+  const restore=hidN?`<button class="x" id="restoreLessons" style="text-decoration:underline;margin-top:6px">숨긴 노트 ${hidN}개 복원</button>`:"";
+  if(!S.lessons.length){h.innerHTML=restore+`<span class="muted">아직 저장된 노트가 없어요. 토픽을 고르고 ‘노트 만들기’를 눌러 보세요.</span>`;bindRestore();return}
+  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("")+restore;
+  bindRestore();
 }
+function bindRestore(){const rb=$("#restoreLessons");if(rb)rb.onclick=async()=>{S.settings.hiddenLessons=[];await saveSettings();if(S.lesson?.sample&&S.lessons.length)S.lesson=S.lessons[0];renderHistory();renderSide();if(S.tab==="learn")renderLearn()}}
 $("#history").onclick=e=>{
   const d=e.target.closest("[data-dellesson]");
-  if(d){armOrRun(d,async()=>{const id=d.dataset.dellesson;await store.del(id);if(S.lesson?.id===id){S.lesson=S.lessons.find(l=>l.id!==id)||SAMPLE;if(S.tab==="learn")renderLearn()}});return}
-  const b=e.target.closest("[data-lid]");if(!b)return;S.lesson=S.lessons.find(l=>l.id===b.dataset.lid);S.pIdx=0;S.heard="";S.coach=null;renderHistory();switchTab("learn")};
+  if(d){armOrRun(d,()=>deleteLesson(d.dataset.dellesson));return}
+  const b=e.target.closest("[data-lid]");if(!b)return;openLesson(b.dataset.lid)};
+function openLesson(id){const l=S.lessons.find(x=>x.id===id);if(!l)return;S.lesson=l;S.mode=l.mode||S.mode;S.pIdx=0;S.heard="";S.coach=null;renderHistory();renderSide();switchTab("learn")}
+async function deleteLesson(id){
+  const l=S.lessons.find(x=>x.id===id);
+  if(l&&l.bundled){S.settings.hiddenLessons=[...(S.settings.hiddenLessons||[]).filter(x=>x!==id),id];await saveSettings()}
+  else await store.del(id);
+  if(S.lesson?.id===id){S.lesson=S.lessons.find(x=>x.id!==id)||SAMPLE}
+  renderHistory();renderSide();if(S.tab==="learn")renderLearn();
+}
+function glossary(){const g={};for(const l of S.lessons){for(const [k,v] of Object.entries(l.glossary||{}))g[k.toLowerCase()]={word:k,...v};for(const v of l.vocab||[])g[String(v.word).toLowerCase()]={...v,tip:v.note||v.tip||""}}return g}
 
 /* ---------- learn view ---------- */
 function renderLearn(){
@@ -507,13 +536,13 @@ function renderLearn(){
     </div>`).join("")}
   </div>
   ${L.dialogue?.length?`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">실전 대화</h3><button class="btn small noprint" id="playAll">전체 듣기</button></div>
-    <div class="dlg" style="margin-top:10px">${L.dialogue.map(d=>`<div class="line"><span class="spk">${esc(d.s)}</span><div><div>${tokens(d.en,d.en)}</div>${st.showKo?`<div class="ko">${esc(d.ko)}</div>`:""}</div><button class="icon noprint" data-say="${esc(d.en)}" aria-label="듣기">${ICON.play}</button></div>`).join("")}</div></div>`:""}
+    <div class="dlg" style="margin-top:10px">${L.dialogue.map(d=>`<div class="line"><span class="spk">${esc(d.s)}</span><div><div>${tokens(d.en,d.en)}</div>${st.showIpa&&d.ipa?`<div class="ipa">${esc(d.ipa)}</div>`:""}${st.showKo?`<div class="ko">${esc(d.ko)}</div>`:""}</div><button class="icon noprint" data-say="${esc(d.en)}" aria-label="듣기">${ICON.play}</button></div>`).join("")}</div></div>`:""}
   ${renderVocab(L)}
   ${L.sounds?.length?`<div class="card"><h3>발음 포인트</h3><div class="sounds">${L.sounds.map(s=>`<div class="sound"><b>/${esc(String(s.ipa).replace(/\//g,""))}/</b><span>${esc(s.desc)}</span></div>`).join("")}</div></div>`:""}
   ${L.examTip?`<div class="card"><h3>시험 전략</h3><div class="note">${esc(L.examTip)}</div></div>`:""}`;
   $("#toPractice").onclick=()=>switchTab("practice");
   $("#dlSheet").onclick=()=>downloadSheet("lesson");
-  const d=$("#delLesson");if(d){let armed=false;d.onclick=async()=>{if(!armed){armed=true;d.style.background="var(--pc-rose)";d.title="한 번 더 누르면 삭제";setTimeout(()=>{armed=false;d.style.background=""},2500);return}await store.del(L.id);S.lesson=S.lessons[0]||SAMPLE;renderLearn()}}
+  const d=$("#delLesson");if(d){let armed=false;d.onclick=async()=>{if(!armed){armed=true;d.style.background="var(--pc-rose)";d.title="한 번 더 누르면 삭제";setTimeout(()=>{armed=false;d.style.background=""},2500);return}deleteLesson(L.id)}}
   const pa=$("#playAll");if(pa)pa.onclick=()=>playDialogue();
   bindVocab(L);
 }
@@ -535,7 +564,7 @@ let vBook="";
 const hasWord=(w,book)=>S.words.some(x=>x.word===String(w).toLowerCase()&&(x.book||"")===book);
 function renderVocab(L){
   const v=L.vocab||[];
-  if(!v.length)return `<div class="card noprint"><div class="vhead"><h3 style="margin:0">관련 어휘</h3><button class="btn small" id="genVocab" ${sampleFn?"":"disabled"}>관련 어휘 만들기</button></div><p class="muted" style="margin:0">이 노트에는 아직 관련 어휘가 없어요.</p></div>`;
+  if(!v.length)return `<div class="card noprint"><div class="vhead"><h3 style="margin:0">관련 어휘</h3>${sampleFn?`<button class="btn small" id="genVocab">관련 어휘 만들기</button>`:""}</div><p class="muted" style="margin:0">이 노트에는 아직 관련 어휘가 없어요.</p></div>`;
   const left=v.filter(x=>!hasWord(x.word,vBook)).length;
   return `<div class="card"><div class="vhead"><h3 style="margin:0">관련 어휘 <span class="muted">${v.length}</span></h3>
     <div class="row noprint"><select id="vBook" aria-label="담을 단어장">${bookOptions(vBook)}</select><button class="btn small fill" id="vAll" ${left?"":"disabled"}>${left?`모두 담기 ${left}`:"모두 담음"}</button></div></div>
@@ -568,7 +597,7 @@ Reply with ONLY a JSON array: [{"word":"native-only word, idiom, phrasal verb, s
 
 /* ---------- practice ---------- */
 function practiceItems(){const L=S.lesson;if(!L)return[];
-  return [...(L.expressions||[]).map(x=>({en:x.en,ipa:x.ipa,ko:x.ko})),...(L.dialogue||[]).map(d=>({en:d.en,ipa:"",ko:d.ko})),...(L.vocab||[]).map(v=>({en:v.word,ipa:v.ipa,ko:v.ko}))]}
+  return [...(L.expressions||[]).map(x=>({en:x.en,ipa:x.ipa,ko:x.ko})),...(L.dialogue||[]).map(d=>({en:d.en,ipa:d.ipa||"",ko:d.ko})),...(L.vocab||[]).map(v=>({en:v.word,ipa:v.ipa,ko:v.ko}))]}
 const norm=s=>s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'\s]/g," ").split(/\s+/).filter(Boolean);
 function diff(target,heard){
   const a=norm(target),b=norm(heard),n=a.length,m=b.length;
@@ -604,7 +633,7 @@ function renderPractice(){
     <div class="row" style="margin-top:12px">
       <button class="btn small" data-say="${esc(it.en)}">${ICON.play} 듣기</button>
       <button class="btn small" data-say="${esc(it.en)}" data-rate=".7">천천히</button>
-      ${it.ipa?"":`<button class="btn small" id="getIpa">발음기호 보기</button>`}
+      ${it.ipa||!sampleFn?"":`<button class="btn small" id="getIpa">발음기호 보기</button>`}
     </div>
   </div>
   <div class="card">
@@ -623,7 +652,7 @@ function renderPractice(){
     </div>
     <p class="diff" style="font-size:15px;margin:12px 0 4px">${r.out.filter(o=>o.t!=="extra").map(o=>`<span class="${o.t}" ${o.h?`title="들린 소리: ${esc(o.h)}"`:""}>${esc(o.w)}${o.h?` <small class="muted">(${esc(o.h)})</small>`:""}</span>`).join("")}</p>
     ${r.out.some(o=>o.t==="extra")?`<p class="muted">추가로 들린 단어: ${r.out.filter(o=>o.t==="extra").map(o=>esc(o.w)).join(", ")}</p>`:""}
-    <div class="row" style="margin-top:10px"><button class="btn small" id="coachBtn" ${sampleFn?"":"disabled"}>Claude 발음 코칭</button></div>
+    ${sampleFn?`<div class="row" style="margin-top:10px"><button class="btn small" id="coachBtn">Claude 발음 코칭</button></div>`:""}
     <div id="coachOut">${renderCoach()}</div>
   </div>`:""}`;
   $("#pPrev").onclick=()=>{S.pIdx--;S.heard="";S.coach=null;renderPractice()};
@@ -728,7 +757,7 @@ async function saveFontLocal(buf,name){try{const d=await idb();d.transaction("f"
 async function loadFontLocal(){try{const d=await idb();const g=d.transaction("f").objectStore("f").get("font");
   g.onsuccess=async()=>{const v=g.result;if(!v)return;const f=new FontFace("UserFont",v.buf);await f.load();document.fonts.add(f);if(!S.settings.fontName){S.settings.fontName=v.name;if(S.tab==="settings")renderSettings()}}}catch(e){}}
 loadFontLocal();
-function saveSettings(){store.put({id:"settings",type:"settings",...S.settings})}
+function saveSettings(){return store.put({id:"settings",type:"settings",...S.settings})}
 function renderSettings(){
   const st=S.settings,v=$("#v-settings");
   v.innerHTML=`<div class="card"><h2>설정</h2>
@@ -741,12 +770,7 @@ function renderSettings(){
     <span class="label">글자 크기 · ${st.fontScale}px</span>
     <input type="range" id="fs" min="12" max="17" step=".5" value="${st.fontScale}" style="width:100%;accent-color:var(--blue)">
   </div>
-  ${window.__WEB__?`<div class="card"><h3>Claude API 키</h3>
-    <p class="muted" style="margin:0 0 8px">노트·어휘 생성과 발음 코칭에 필요해요. 키는 이 기기에만 저장되고 Anthropic으로만 전송돼요. 사용량만큼 Anthropic 계정에 요금이 청구됩니다.</p>
-    <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="password" id="apiKey" autocomplete="off" placeholder="${window.__WEB__.hasKey()?"저장됨 · 바꾸려면 새 키 입력":"sk-ant-..."}" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--rule-2);padding:7px 2px;font-size:16px;outline:none"><button class="btn small" id="saveKey" style="flex:none">저장</button>${window.__WEB__.hasKey()?`<button class="btn small" id="delKey" style="flex:none">삭제</button>`:""}</div>
-    <p class="muted" style="margin:8px 0 0;font-size:11px">키 발급: console.anthropic.com › API Keys</p>
-  </div>
-  <div class="card"><h3>백업</h3>
+  ${window.__WEB__?`<div class="card"><h3>백업</h3>
     <p class="muted" style="margin:0 0 8px">노트·단어장·토픽·설정을 파일로 내보내고, 다른 기기에서 가져올 수 있어요.</p>
     <div class="row"><button class="btn small" id="exportBk">내보내기</button><label class="btn small" for="importBk" style="cursor:pointer">가져오기</label><input type="file" id="importBk" accept=".json,application/json" hidden></div>
     <p class="muted" id="bkMsg" style="margin:8px 0 0"></p>
@@ -761,8 +785,6 @@ function renderSettings(){
   </div>`;
   v.querySelectorAll("[data-acc]").forEach(b=>b.onclick=()=>{st.accent=b.dataset.acc;saveSettings();renderSettings()});
   if(window.__WEB__){
-    $("#saveKey").onclick=()=>{const k=$("#apiKey").value.trim();if(!k)return;window.__WEB__.setKey(k);updateAiNote();renderSettings();setStatus("API 키를 저장했어요")};
-    const dk=$("#delKey");if(dk)dk.onclick=()=>{window.__WEB__.setKey("");updateAiNote();renderSettings()};
     $("#exportBk").onclick=async()=>{const dl=await claude.use("downloads");const d=new Date().toISOString().slice(0,10);
       try{await dl.save({filename:`연필영어노트-백업-${d}.json`,data:new Blob([JSON.stringify(lsGet())],{type:"application/json"})});$("#bkMsg").textContent="백업 파일을 저장했어요."}catch(e){if(e?.code!=="cancelled")$("#bkMsg").textContent="저장하지 못했어요."}};
     $("#importBk").onchange=async e=>{const f=e.target.files[0];if(!f)return;
