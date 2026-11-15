@@ -202,10 +202,10 @@ const ICON={
 const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 주문",level:"중급",createdAt:0,
  title:"카페에서 현지인처럼 주문하기",
  expressions:[
-  {en:"Can I get a large iced latte?",ipa:"/kən aɪ ˈɡɛɾ‿ə lɑrdʒ aɪst ˈlɑteɪ/",ko:"아이스 라떼 라지 하나 주세요.",textbook:"I would like to order a large iced latte.",nuance:"'Can I get ~?'이 가장 흔한 주문 표현. 'I want'는 무례하게 들릴 수 있어요.",example:{en:"Hi, can I get a large iced latte with oat milk?",ko:"안녕하세요, 오트밀크로 아이스 라떼 라지 하나 주세요."}},
-  {en:"For here or to go?",ipa:"/fər ˈhɪr ɔr tə ˈɡoʊ/",ko:"드시고 가세요, 가져가세요?",textbook:"Will you eat here or take it out?",nuance:"미국식. 영국에서는 'Eat in or take away?'",example:{en:"To go, please.",ko:"가져갈게요."}},
-  {en:"Could you make it a little less sweet?",ipa:"/kʊdʒu ˈmeɪk‿ɪɾ‿ə ˈlɪɾl̩ lɛs swit/",ko:"조금 덜 달게 해 주실 수 있나요?",textbook:"Please reduce the amount of sugar.",nuance:"'Could you'로 부드럽게 요청. could you는 [쿠쥬]로 연음.",example:{en:"Could you make it half sweet?",ko:"당도 절반으로 해 주세요."}},
-  {en:"I'm good, thanks.",ipa:"/aɪm ˈɡʊd θæŋks/",ko:"괜찮아요(필요 없어요).",textbook:"No, I do not need anything else.",nuance:"추가 주문·영수증 등을 정중히 거절할 때 가장 자연스러운 말.",example:{en:"Would you like a receipt? — I'm good, thanks.",ko:"영수증 드릴까요? — 괜찮아요."}}
+  {en:"Can I get a large iced latte?",ipa:"/kæn aɪ ɡet ə lɑːrdʒ aɪst ˈlɑːteɪ/",ko:"아이스 라떼 라지 하나 주세요.",textbook:"I would like to order a large iced latte.",nuance:"'Can I get ~?'이 가장 흔한 주문 표현. 'I want'는 무례하게 들릴 수 있어요.",example:{en:"Hi, can I get a large iced latte with oat milk?",ko:"안녕하세요, 오트밀크로 아이스 라떼 라지 하나 주세요."}},
+  {en:"For here or to go?",ipa:"/fɔːr hɪr ɔːr tə ɡoʊ/",ko:"드시고 가세요, 가져가세요?",textbook:"Will you eat here or take it out?",nuance:"미국식. 영국에서는 'Eat in or take away?'",example:{en:"To go, please.",ko:"가져갈게요."}},
+  {en:"Could you make it a little less sweet?",ipa:"/kʊd juː meɪk ɪt ə ˈlɪtl les swiːt/",ko:"조금 덜 달게 해 주실 수 있나요?",textbook:"Please reduce the amount of sugar.",nuance:"'Could you'로 부드럽게 요청. could you는 [쿠쥬]로 연음.",example:{en:"Could you make it half sweet?",ko:"당도 절반으로 해 주세요."}},
+  {en:"I'm good, thanks.",ipa:"/aɪm ɡʊd θæŋks/",ko:"괜찮아요(필요 없어요).",textbook:"No, I do not need anything else.",nuance:"추가 주문·영수증 등을 정중히 거절할 때 가장 자연스러운 말.",example:{en:"Would you like a receipt? — I'm good, thanks.",ko:"영수증 드릴까요? — 괜찮아요."}}
  ],
  dialogue:[
   {s:"A",en:"Hi there! What can I get started for you?",ko:"안녕하세요! 뭐 준비해 드릴까요?"},
@@ -215,7 +215,7 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
   {s:"A",en:"No problem. Anything else?",ko:"그럼요. 더 필요한 거 있으세요?"},
   {s:"B",en:"I'm good, thanks.",ko:"괜찮아요, 감사합니다."}
  ],
- sounds:[{ipa:"ɾ",desc:"get a → [게러]. 모음 사이 t는 부드러운 d/ㄹ처럼 (Flap T)."},{ipa:"dʒ",desc:"could you → [쿠쥬]. d + y가 만나 'ㅈ' 소리로 연음."},{ipa:"æ",desc:"thanks의 a는 입을 옆으로 크게 벌린 '애'."}],
+ sounds:[{ipa:"t",desc:"get a → [게러]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼 발음해요."},{ipa:"dʒ",desc:"could you → [쿠쥬]. d + y가 만나 'ㅈ' 소리로 연음."},{ipa:"æ",desc:"thanks의 a는 입을 옆으로 크게 벌린 '애'."}],
  examTip:""
 };
 
@@ -289,9 +289,9 @@ Topic: "${topic}" | Category: ${mode} | Learner level: ${S.level}${exam?` | Exam
 Create a study note. Use natural expressions locals actually say in ${accent} English, matched to the level.
 Reply with ONLY JSON:
 {"title":"Korean title (short)",
-"expressions":[{"en":"native expression","ipa":"/${accent} IPA of the whole phrase, mark linking with ‿ and flap ɾ where natural/","ko":"Korean meaning","textbook":"stiff textbook way to say it","nuance":"Korean: when/why locals use it, tone, ${accent==="American"?"note British alternative if different":"note American alternative if different"}","example":{"en":"example sentence","ko":"Korean"}}] (7 items),
+"expressions":[{"en":"native expression","ipa":"/${IPA_STYLE()} for the whole phrase/","ko":"Korean meaning","textbook":"stiff textbook way to say it","nuance":"Korean: when/why locals use it, tone, ${accent==="American"?"note British alternative if different":"note American alternative if different"}","example":{"en":"example sentence","ko":"Korean"}}] (7 items),
 "dialogue":[{"s":"A or B","en":"line","ko":"Korean"}] (8 lines using the expressions),
-"sounds":[{"ipa":"symbol","desc":"Korean tip with a word from this note"}] (3-4 pronunciation focus points Koreans struggle with),
+"sounds":[{"ipa":"one basic dictionary symbol such as θ, r, l, f, v, æ, iː","desc":"Korean tip with a word from this note, with Korean sound hints like [게러]"}] (3-4 pronunciation focus points Koreans struggle with),
 "examTip":"${exam?`Korean: ${mode} strategy for this topic + one model answer sentence in English`:""}"}`;
   S.busy=true;renderLearn();
   try{
@@ -303,6 +303,7 @@ Reply with ONLY JSON:
   S.busy=false;renderLearn();
 }
 
+const IPA_STYLE=()=>`${S.settings.accent==="en-GB"?"British":"American"} pronunciation written in standard dictionary-style IPA exactly as printed in Korean English dictionaries and wordbooks (Naver English dictionary / Oxford Learner's style): each word in its normal citation form separated by spaces, ˈ only on the stressed syllable of multi-syllable words, ː for long vowels (iː uː ɑː ɔː ɜː), simple symbols only; NO linking marks ‿, NO flap ɾ, NO syllabic marks, NO narrow or connected-speech transcription`;
 /* ---------- speech ---------- */
 let voices=[];
 function loadVoices(){try{voices=speechSynthesis.getVoices()}catch(e){voices=[]}}
@@ -364,7 +365,7 @@ $("#selAdd").onclick=async()=>{
   let info={};
   if(sampleFn){
     try{
-      const arr=await sampleFn.json(`For Korean learners, give dictionary entries (${S.settings.accent==="en-GB"?"British":"American"} IPA) for these words, each in the context sentence given.
+      const arr=await sampleFn.json(`For Korean learners, give dictionary entries for these words. Pronunciation: ${IPA_STYLE()}., each in the context sentence given.
 ${list.map(([w,src])=>`- ${w} | context: ${src}`).join("\n")}
 Reply with ONLY a JSON array: [{"word":"lowercase word","ipa":"/IPA/","pos":"n./v./adj./adv./phr. etc","ko":"Korean meaning in this context","example":"short natural example","exampleKo":"Korean","tip":"Korean: collocation or pronunciation tip, one line"}]`,{modelTier:"quick"});
       (Array.isArray(arr)?arr:[]).forEach(o=>{if(o&&o.word)info[String(o.word).toLowerCase()]=o});
@@ -518,7 +519,7 @@ function renderPractice(){
   $("#heard").oninput=e=>{S.heard=e.target.value};
   $("#check").onclick=()=>{S.heard=$("#heard").value.trim();S.coach=null;renderPractice()};
   const gi=$("#getIpa");if(gi)gi.onclick=async()=>{if(!sampleFn)return;gi.disabled=true;
-    try{const r=await sampleFn(`Give only the ${S.settings.accent==="en-GB"?"British":"American"} IPA transcription (connected speech, mark linking with ‿ and flap ɾ) of: "${it.en}". Reply with just the IPA between slashes.`,{modelTier:"quick"});
+    try{const r=await sampleFn(`Give only the pronunciation (${IPA_STYLE()}) of: "${it.en}". Reply with just the IPA between slashes.`,{modelTier:"quick"});
       $("#pIpa").textContent=r.text.trim();}catch(e){$("#pIpa").textContent=errMsg(e)}};
   const mb=$("#micBtn");if(mb)mb.onclick=()=>toggleMic(mb);
   const cb=$("#coachBtn");if(cb)cb.onclick=()=>coach(it);
@@ -548,7 +549,7 @@ async function coach(it){
 Target sentence: "${it.en}"
 Speech recognizer heard: "${S.heard}"
 Infer which sounds were likely mispronounced from the recognition errors (e.g. r/l, f/p, v/b, th, z/j, final consonants, vowel length, word stress, missing linking). If they match, give rhythm/stress/linking advice instead.
-Reply with ONLY JSON: {"summary":"Korean, one or two sentences","issues":[{"word":"word","expected":"/IPA/","heard":"what it likely sounded like or empty","tip":"Korean: concrete mouth/tongue tip"}],"linking":"Korean: how to link and stress this sentence, with IPA chunks"}`);
+Reply with ONLY JSON: {"summary":"Korean, one or two sentences","issues":[{"word":"word","expected":"/dictionary-style IPA of the word/","heard":"what it likely sounded like or empty","tip":"Korean: concrete mouth/tongue tip"}],"linking":"Korean: how to link and stress this sentence, using Korean sound hints like [게러] instead of phonetic symbols"}`);
     S.coach=r;
   }catch(e){S.coach={err:errMsg(e)}}
   const o=$("#coachOut");if(o)o.innerHTML=renderCoach();
