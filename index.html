@@ -96,6 +96,13 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
 .mic.on{background:var(--stroke),var(--pc-rose);border-color:transparent}
 /* wordbook */
 .books{display:flex;gap:6px;flex-wrap:wrap}
+.vgrid{display:grid;column-gap:28px}
+@media (min-width:700px){.vgrid{grid-template-columns:1fr 1fr}}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:11px 0;border-top:1px solid var(--rule);align-items:start}
+.vgrid .vrow:first-child{border-top:0}
+@media (min-width:700px){.vgrid .vrow:nth-child(2){border-top:0}}
+.vhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.vhead select{width:auto;min-width:130px;font-size:max(16px,12px)}
 .wordrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:14px 0;border-top:1px solid var(--rule)}
 .wordrow:first-child{border-top:0;padding-top:0}
 .wword{font-size:calc(var(--fs) * 1.25);font-weight:400}
@@ -225,7 +232,15 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
   {s:"B",en:"I'm good, thanks.",ko:"괜찮아요, 감사합니다."}
  ],
  sounds:[{ipa:"t",desc:"get a → [게러]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼 발음해요."},{ipa:"dʒ",desc:"could you → [쿠쥬]. d + y가 만나 'ㅈ' 소리로 연음."},{ipa:"æ",desc:"thanks의 a는 입을 옆으로 크게 벌린 '애'."}],
- examTip:""
+ examTip:"",
+ vocab:[
+  {word:"barista",ipa:"/bəˈriːstə/",pos:"n.",ko:"바리스타",example:"The barista remembered my order.",exampleKo:"바리스타가 내 주문을 기억했다."},
+  {word:"decaf",ipa:"/ˈdiːkæf/",pos:"n.",ko:"디카페인 커피",example:"Can I get that in decaf?",exampleKo:"그거 디카페인으로 주실 수 있나요?"},
+  {word:"refill",ipa:"/ˈriːfɪl/",pos:"n.",ko:"리필",example:"Are refills free here?",exampleKo:"여기 리필 무료예요?"},
+  {word:"pastry",ipa:"/ˈpeɪstri/",pos:"n.",ko:"페이스트리, 빵류",example:"What pastries do you have today?",exampleKo:"오늘 어떤 빵 있어요?"},
+  {word:"extra shot",ipa:"/ˈekstrə ʃɑːt/",pos:"phr.",ko:"샷 추가",example:"Add an extra shot, please.",exampleKo:"샷 추가해 주세요."},
+  {word:"receipt",ipa:"/rɪˈsiːt/",pos:"n.",ko:"영수증",example:"Do you need a receipt?",exampleKo:"영수증 필요하세요?"}
+ ]
 };
 
 /* ---------- state ---------- */
@@ -276,6 +291,7 @@ function ingest(docs){
   if(st){const f=S.settings.fontId;Object.assign(S.settings,st);if(st.fontId&&st.fontId!==f)loadFontFromAsset(st.fontId,st.fontName)}
   applySettings();renderHistory();renderBookSelect();renderSide();
   if(S.tab==="words")renderWords();
+  if(S.tab==="learn"&&!S.busy)renderLearn();
   if(S.tab==="settings")renderSettings();
 }
 function setStatus(t){$("#status").textContent=t}
@@ -302,12 +318,13 @@ Reply with ONLY JSON:
 "expressions":[{"en":"native expression","ipa":"/${IPA_STYLE()} for the whole phrase/","ko":"Korean meaning","textbook":"stiff textbook way to say it","nuance":"Korean: when/why locals use it, tone, ${accent==="American"?"note British alternative if different":"note American alternative if different"}","example":{"en":"example sentence","ko":"Korean"}}] (7 items),
 "dialogue":[{"s":"A or B","en":"line","ko":"Korean"}] (8 lines using the expressions),
 "sounds":[{"ipa":"one basic dictionary symbol such as θ, r, l, f, v, æ, iː","desc":"Korean tip with a word from this note, with Korean sound hints like [게러]"}] (3-4 pronunciation focus points Koreans struggle with),
+"vocab":[{"word":"topic-related word or short collocation","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr.","ko":"Korean meaning","example":"short natural sentence about this topic","exampleKo":"Korean"}] (10 useful words/collocations for this topic at this level, not repeating the expressions),
 "examTip":"${exam?`Korean: ${mode} strategy for this topic + one model answer sentence in English`:""}"}`;
   S.busy=true;renderLearn();
   try{
     const r=await sampleFn.json(prompt);
     const doc={id:uid("l"),type:"lesson",topic,mode:S.mode,level:S.level,createdAt:Date.now(),
-      title:r.title||topic,expressions:r.expressions||[],dialogue:r.dialogue||[],sounds:r.sounds||[],examTip:r.examTip||""};
+      title:r.title||topic,expressions:r.expressions||[],dialogue:r.dialogue||[],sounds:r.sounds||[],vocab:Array.isArray(r.vocab)?r.vocab:[],examTip:r.examTip||""};
     S.lesson=doc;S.pIdx=0;S.heard="";S.coach=null;await store.put(doc);await saveTopic(topic,S.mode);
   }catch(e){S.lessonErr=errMsg(e)}
   S.busy=false;renderLearn();
@@ -462,12 +479,14 @@ function renderLearn(){
   </div>
   ${L.dialogue?.length?`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">실전 대화</h3><button class="btn small noprint" id="playAll">전체 듣기</button></div>
     <div class="dlg" style="margin-top:10px">${L.dialogue.map(d=>`<div class="line"><span class="spk">${esc(d.s)}</span><div><div>${tokens(d.en,d.en)}</div>${st.showKo?`<div class="ko">${esc(d.ko)}</div>`:""}</div><button class="icon noprint" data-say="${esc(d.en)}" aria-label="듣기">${ICON.play}</button></div>`).join("")}</div></div>`:""}
+  ${renderVocab(L)}
   ${L.sounds?.length?`<div class="card"><h3>발음 포인트</h3><div class="sounds">${L.sounds.map(s=>`<div class="sound"><b>/${esc(String(s.ipa).replace(/\//g,""))}/</b><span>${esc(s.desc)}</span></div>`).join("")}</div></div>`:""}
   ${L.examTip?`<div class="card"><h3>시험 전략</h3><div class="note">${esc(L.examTip)}</div></div>`:""}`;
   $("#toPractice").onclick=()=>switchTab("practice");
   $("#dlSheet").onclick=()=>downloadSheet("lesson");
   const d=$("#delLesson");if(d){let armed=false;d.onclick=async()=>{if(!armed){armed=true;d.style.background="var(--pc-rose)";d.title="한 번 더 누르면 삭제";setTimeout(()=>{armed=false;d.style.background=""},2500);return}await store.del(L.id);S.lesson=S.lessons[0]||SAMPLE;renderLearn()}}
   const pa=$("#playAll");if(pa)pa.onclick=()=>playDialogue();
+  bindVocab(L);
 }
 function playDialogue(){
   const lines=S.lesson.dialogue||[];
@@ -481,9 +500,45 @@ document.addEventListener("click",e=>{
   const p=e.target.closest("[data-prac]");if(p){S.pIdx=+p.dataset.prac;S.heard="";S.coach=null;switchTab("practice")}
 });
 
+/* ---------- related vocab ---------- */
+function bookOptions(sel){return `<option value="">기본 단어장</option>`+S.books.map(b=>`<option value="${esc(b.id)}"${sel===b.id?" selected":""}>${esc(b.name)}</option>`).join("")+`<option value="__new">+ 새 단어장</option>`}
+let vBook="";
+const hasWord=(w,book)=>S.words.some(x=>x.word===String(w).toLowerCase()&&(x.book||"")===book);
+function renderVocab(L){
+  const v=L.vocab||[];
+  if(!v.length)return `<div class="card noprint"><div class="vhead"><h3 style="margin:0">관련 어휘</h3><button class="btn small" id="genVocab" ${sampleFn?"":"disabled"}>관련 어휘 만들기</button></div><p class="muted" style="margin:0">이 노트에는 아직 관련 어휘가 없어요.</p></div>`;
+  const left=v.filter(x=>!hasWord(x.word,vBook)).length;
+  return `<div class="card"><div class="vhead"><h3 style="margin:0">관련 어휘 <span class="muted">${v.length}</span></h3>
+    <div class="row noprint"><select id="vBook" aria-label="담을 단어장">${bookOptions(vBook)}</select><button class="btn small fill" id="vAll" ${left?"":"disabled"}>${left?`모두 담기 ${left}`:"모두 담음"}</button></div></div>
+    <div class="vgrid">${v.map((x,i)=>{const got=hasWord(x.word,vBook);return `<div class="vrow"><div style="min-width:0">
+      <div><span class="wword">${esc(x.word)}</span><span class="pos">${esc(x.pos)}</span>${S.settings.showIpa&&x.ipa?`<span class="ipa">${esc(x.ipa)}</span>`:""}</div>
+      ${S.settings.showKo?`<div>${esc(x.ko)}</div>`:""}
+      ${x.example?`<div style="font-size:12.5px;margin-top:2px">${esc(x.example)}</div>${S.settings.showKo&&x.exampleKo?`<div class="muted" style="font-size:12px">${esc(x.exampleKo)}</div>`:""}`:""}
+    </div><div class="row noprint" style="flex-wrap:nowrap;gap:2px"><button class="icon" data-say="${esc(x.word)}" aria-label="듣기">${ICON.play}</button>
+      <button class="x" data-vadd="${i}" ${got?"disabled":""} style="font-size:12px">${got?"담음":"＋ 담기"}</button></div></div>`}).join("")}</div></div>`;
+}
+async function addVocab(L,idxs){
+  let book=vBook;
+  if(book==="__new"){const b={id:uid("b"),type:"book",name:(L.topic||"새")+" 단어장",createdAt:Date.now()};await store.put(b);book=vBook=b.id}
+  let n=0;
+  for(const i of idxs){const x=L.vocab[i];if(!x||hasWord(x.word,book))continue;
+    await store.put({id:uid("w"),type:"word",book,word:String(x.word).toLowerCase(),ipa:x.ipa||"",pos:x.pos||"",ko:x.ko||"",example:x.example||"",exampleKo:x.exampleKo||"",tip:"",src:L.title||"",createdAt:Date.now(),known:false});n++}
+  setStatus(n?`${n}개 어휘를 담았어요`:"이미 담긴 어휘예요");renderLearn();
+}
+function bindVocab(L){
+  const g=$("#genVocab");if(g)g.onclick=async()=>{g.disabled=true;g.textContent="만드는 중…";
+    try{const arr=await sampleFn.json(`For a Korean learner (level ${L.level}) studying the topic "${L.topic}", list 10 useful related words or short collocations not already in these expressions: ${(L.expressions||[]).map(x=>x.en).join(" / ")}.
+Reply with ONLY a JSON array: [{"word":"topic-related word or short collocation","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr.","ko":"Korean meaning","example":"short natural sentence about this topic","exampleKo":"Korean"}]`);
+      L.vocab=Array.isArray(arr)?arr:[];if(!L.sample)await store.put(L);}catch(e){setStatus(errMsg(e))}
+    renderLearn()};
+  const vb=$("#vBook");if(vb)vb.onchange=()=>{vBook=vb.value;if(vBook!=="__new")renderLearn()};
+  const va=$("#vAll");if(va)va.onclick=()=>{va.disabled=true;addVocab(L,L.vocab.map((_,i)=>i))};
+  document.querySelectorAll("[data-vadd]").forEach(b=>b.onclick=()=>{b.disabled=true;addVocab(L,[+b.dataset.vadd])});
+}
+
 /* ---------- practice ---------- */
 function practiceItems(){const L=S.lesson;if(!L)return[];
-  return [...(L.expressions||[]).map(x=>({en:x.en,ipa:x.ipa,ko:x.ko})),...(L.dialogue||[]).map(d=>({en:d.en,ipa:"",ko:d.ko}))]}
+  return [...(L.expressions||[]).map(x=>({en:x.en,ipa:x.ipa,ko:x.ko})),...(L.dialogue||[]).map(d=>({en:d.en,ipa:"",ko:d.ko})),...(L.vocab||[]).map(v=>({en:v.word,ipa:v.ipa,ko:v.ko}))]}
 const norm=s=>s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'\s]/g," ").split(/\s+/).filter(Boolean);
 function diff(target,heard){
   const a=norm(target),b=norm(heard),n=a.length,m=b.length;
@@ -701,6 +756,7 @@ async function downloadSheet(kind,list,name){
     <h2>현지인 표현</h2>${(L.expressions||[]).map((x,i)=>`<div class="it"><b>${i+1}. ${esc(x.en)}</b>${ipa&&x.ipa?`<div class="ipa">${esc(x.ipa)}</div>`:""}<div>${esc(x.ko)}</div>${x.textbook?`<div class="s">교과서식: <s>${esc(x.textbook)}</s></div>`:""}<div class="s">${esc(x.nuance||"")}</div>${x.example?`<div class="s">예) ${esc(x.example.en)} — ${esc(x.example.ko)}</div>`:""}</div>`).join("")}
     ${L.dialogue?.length?`<h2>실전 대화</h2>${L.dialogue.map(d=>`<div class="dl"><b>${esc(d.s)}</b> ${esc(d.en)}<div class="s">${esc(d.ko)}</div></div>`).join("")}`:""}
     ${L.sounds?.length?`<h2>발음 포인트</h2>${L.sounds.map(s=>`<div class="s">/${esc(String(s.ipa).replace(/\//g,""))}/ ${esc(s.desc)}</div>`).join("")}`:""}
+    ${L.vocab?.length?`<h2>관련 어휘</h2><table><tbody>${L.vocab.map(v=>`<tr><td><b>${esc(v.word)}</b> <span class="s">${esc(v.pos)}</span></td><td class="ipa">${esc(v.ipa)}</td><td>${esc(v.ko)}</td><td class="s">${esc(v.example)}</td></tr>`).join("")}</tbody></table>`:""}
     <h2>빈칸 채우기</h2>${(L.expressions||[]).map((x,i)=>`<div class="q">${i+1}. ${esc(x.ko)}<br>${esc(x.en.split(" ").map((w,j)=>j%2?w:"_".repeat(Math.max(3,w.length))).join(" "))}</div>`).join("")}`;
   }else{
     title=name;
