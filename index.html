@@ -525,7 +525,9 @@ function renderPractice(){
   <div class="card">
     <h3>따라 말하기</h3>
     ${dict?`<button class="btn mic${listening?" on":""}" id="micBtn">${ICON.mic} ${listening?"멈추기":"말하기"}</button>`:
-      `<p class="muted" style="margin:0 0 6px">아래 칸을 탭한 뒤 <b>키보드의 마이크 버튼</b>을 눌러 영어로 말하세요. (iPhone·iPad 받아쓰기 언어를 English로)</p>`}
+      `<button class="btn" id="kbMic">${ICON.mic} 말하기</button>
+       <ol class="muted" id="kbHint" style="margin:10px 0 8px;padding-left:18px"><li>‘말하기’를 누르면 키보드가 열려요</li><li>키보드 <b>오른쪽 맨 아래 🎤</b>를 누르고 영어로 말하기</li><li>다 말했으면 🎤를 한 번 더 누르고 ‘분석하기’</li></ol>
+       <p class="muted" style="margin:0 0 6px;font-size:11px">🎤가 안 보이면: 설정 › 일반 › 키보드 › <b>받아쓰기 활성화</b> 켜기 · 지구본으로 <b>English</b> 키보드 선택</p>`}
     <textarea id="heard" lang="en" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="인식된 문장이 여기에 적혀요">${esc(S.heard)}</textarea>
     <div class="row" style="margin-top:8px;justify-content:flex-end"><button class="btn small fill" id="check">분석하기</button></div>
   </div>
@@ -547,6 +549,7 @@ function renderPractice(){
     try{const r=await sampleFn(`Give only the pronunciation (${IPA_STYLE()}) of: "${it.en}". Reply with just the IPA between slashes.`,{modelTier:"quick"});
       $("#pIpa").textContent=r.text.trim();}catch(e){$("#pIpa").textContent=errMsg(e)}};
   const mb=$("#micBtn");if(mb)mb.onclick=()=>toggleMic(mb);
+  const kb=$("#kbMic");if(kb)kb.onclick=()=>{const t=$("#heard");t.value="";S.heard="";t.focus();t.scrollIntoView({block:"center",behavior:"smooth"})};
   const cb=$("#coachBtn");if(cb)cb.onclick=()=>coach(it);
 }
 function toggleMic(btn){
