@@ -234,12 +234,12 @@ const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 �
  sounds:[{ipa:"t",desc:"get a → [게러]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼 발음해요."},{ipa:"dʒ",desc:"could you → [쿠쥬]. d + y가 만나 'ㅈ' 소리로 연음."},{ipa:"æ",desc:"thanks의 a는 입을 옆으로 크게 벌린 '애'."}],
  examTip:"",
  vocab:[
-  {word:"barista",ipa:"/bəˈriːstə/",pos:"n.",ko:"바리스타",example:"The barista remembered my order.",exampleKo:"바리스타가 내 주문을 기억했다."},
-  {word:"decaf",ipa:"/ˈdiːkæf/",pos:"n.",ko:"디카페인 커피",example:"Can I get that in decaf?",exampleKo:"그거 디카페인으로 주실 수 있나요?"},
-  {word:"refill",ipa:"/ˈriːfɪl/",pos:"n.",ko:"리필",example:"Are refills free here?",exampleKo:"여기 리필 무료예요?"},
-  {word:"pastry",ipa:"/ˈpeɪstri/",pos:"n.",ko:"페이스트리, 빵류",example:"What pastries do you have today?",exampleKo:"오늘 어떤 빵 있어요?"},
-  {word:"extra shot",ipa:"/ˈekstrə ʃɑːt/",pos:"phr.",ko:"샷 추가",example:"Add an extra shot, please.",exampleKo:"샷 추가해 주세요."},
-  {word:"receipt",ipa:"/rɪˈsiːt/",pos:"n.",ko:"영수증",example:"Do you need a receipt?",exampleKo:"영수증 필요하세요?"}
+  {word:"nurse a coffee",ipa:"/nɜːrs ə ˈkɔːfi/",pos:"idiom",ko:"커피 한 잔을 오래 붙잡고 마시다",note:"카페에 오래 앉아 한 잔을 아껴 마실 때. 원어민끼리 자주 쓰는 표현.",example:"I nursed one coffee for three hours.",exampleKo:"커피 한 잔으로 세 시간 버텼어."},
+  {word:"room for cream",ipa:"/ruːm fər kriːm/",pos:"phr.",ko:"크림 넣을 공간",note:"블랙커피를 받을 때 잔을 조금 비워 달라는 현지 표현.",example:"Medium drip, with room for cream.",exampleKo:"드립 미디엄, 크림 넣게 조금 비워 주세요."},
+  {word:"a pick-me-up",ipa:"/ə ˈpɪk mi ʌp/",pos:"n.",ko:"기운 나게 하는 것",note:"오후에 마시는 커피 한 잔을 가볍게 부르는 말.",example:"I need a little pick-me-up before the meeting.",exampleKo:"회의 전에 기운 좀 차려야겠어."},
+  {word:"jittery",ipa:"/ˈdʒɪtəri/",pos:"adj.",ko:"(카페인 때문에) 손떨리는",note:"커피를 많이 마셔 초조하고 떨리는 상태. 일상 회화에서 자주 써요.",example:"Three shots made me so jittery.",exampleKo:"샷 세 개 넣었더니 손이 덜덜 떨려."},
+  {word:"caffeine crash",ipa:"/kæˈfiːn kræʃ/",pos:"n.",ko:"카페인 효과가 끝나고 확 처지는 것",note:"오후에 급격히 피곤해질 때 쓰는 구어 표현.",example:"I always hit a caffeine crash around 3.",exampleKo:"난 3시쯤 꼭 카페인 빠지면서 확 처져."},
+  {word:"hit the spot",ipa:"/hɪt ðə spɑːt/",pos:"idiom",ko:"딱 원하던 그 맛이다",note:"먹거나 마신 게 딱 만족스러울 때. 매우 자연스러운 감탄 표현.",example:"Man, this iced latte really hits the spot.",exampleKo:"와, 이 아이스 라떼 진짜 딱이다."}
  ]
 };
 
@@ -318,7 +318,7 @@ Reply with ONLY JSON:
 "expressions":[{"en":"native expression","ipa":"/${IPA_STYLE()} for the whole phrase/","ko":"Korean meaning","textbook":"stiff textbook way to say it","nuance":"Korean: when/why locals use it, tone, ${accent==="American"?"note British alternative if different":"note American alternative if different"}","example":{"en":"example sentence","ko":"Korean"}}] (7 items),
 "dialogue":[{"s":"A or B","en":"line","ko":"Korean"}] (8 lines using the expressions),
 "sounds":[{"ipa":"one basic dictionary symbol such as θ, r, l, f, v, æ, iː","desc":"Korean tip with a word from this note, with Korean sound hints like [게러]"}] (3-4 pronunciation focus points Koreans struggle with),
-"vocab":[{"word":"topic-related word or short collocation","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr.","ko":"Korean meaning","example":"short natural sentence about this topic","exampleKo":"Korean"}] (10 useful words/collocations for this topic at this level, not repeating the expressions),
+"vocab":[{"word":"native-only word, idiom, phrasal verb, slang or set phrase","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr./idiom","ko":"Korean meaning","note":"Korean: nuance, register (casual/slang/formal) and when natives use it, one line","example":"natural sentence a native would say about this topic","exampleKo":"Korean"}] (10 items: advanced vocabulary that ONLY native speakers would typically know: idioms, phrasal verbs, colloquialisms, current slang, insider jargon and nuanced words used naturally in real ${S.settings.accent==="en-GB"?"British":"American"} conversation about this topic. Exclude anything found in textbooks, basic word lists, or TOEIC/TOEFL core vocabulary, and anything a typical Korean learner already knows. Ignore the learner level for this list; do not repeat the expressions),
 "examTip":"${exam?`Korean: ${mode} strategy for this topic + one model answer sentence in English`:""}"}`;
   S.busy=true;renderLearn();
   try{
@@ -513,6 +513,7 @@ function renderVocab(L){
     <div class="vgrid">${v.map((x,i)=>{const got=hasWord(x.word,vBook);return `<div class="vrow"><div style="min-width:0">
       <div><span class="wword">${esc(x.word)}</span><span class="pos">${esc(x.pos)}</span>${S.settings.showIpa&&x.ipa?`<span class="ipa">${esc(x.ipa)}</span>`:""}</div>
       ${S.settings.showKo?`<div>${esc(x.ko)}</div>`:""}
+      ${x.note?`<div class="note" style="margin:4px 0">${esc(x.note)}</div>`:""}
       ${x.example?`<div style="font-size:12.5px;margin-top:2px">${esc(x.example)}</div>${S.settings.showKo&&x.exampleKo?`<div class="muted" style="font-size:12px">${esc(x.exampleKo)}</div>`:""}`:""}
     </div><div class="row noprint" style="flex-wrap:nowrap;gap:2px"><button class="icon" data-say="${esc(x.word)}" aria-label="듣기">${ICON.play}</button>
       <button class="x" data-vadd="${i}" ${got?"disabled":""} style="font-size:12px">${got?"담음":"＋ 담기"}</button></div></div>`}).join("")}</div></div>`;
@@ -522,13 +523,13 @@ async function addVocab(L,idxs){
   if(book==="__new"){const b={id:uid("b"),type:"book",name:(L.topic||"새")+" 단어장",createdAt:Date.now()};await store.put(b);book=vBook=b.id}
   let n=0;
   for(const i of idxs){const x=L.vocab[i];if(!x||hasWord(x.word,book))continue;
-    await store.put({id:uid("w"),type:"word",book,word:String(x.word).toLowerCase(),ipa:x.ipa||"",pos:x.pos||"",ko:x.ko||"",example:x.example||"",exampleKo:x.exampleKo||"",tip:"",src:L.title||"",createdAt:Date.now(),known:false});n++}
+    await store.put({id:uid("w"),type:"word",book,word:String(x.word).toLowerCase(),ipa:x.ipa||"",pos:x.pos||"",ko:x.ko||"",example:x.example||"",exampleKo:x.exampleKo||"",tip:x.note||"",src:L.title||"",createdAt:Date.now(),known:false});n++}
   setStatus(n?`${n}개 어휘를 담았어요`:"이미 담긴 어휘예요");renderLearn();
 }
 function bindVocab(L){
   const g=$("#genVocab");if(g)g.onclick=async()=>{g.disabled=true;g.textContent="만드는 중…";
-    try{const arr=await sampleFn.json(`For a Korean learner (level ${L.level}) studying the topic "${L.topic}", list 10 useful related words or short collocations not already in these expressions: ${(L.expressions||[]).map(x=>x.en).join(" / ")}.
-Reply with ONLY a JSON array: [{"word":"topic-related word or short collocation","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr.","ko":"Korean meaning","example":"short natural sentence about this topic","exampleKo":"Korean"}]`);
+    try{const arr=await sampleFn.json(`For a Korean learner (level ${L.level}) studying the topic "${L.topic}", list 10 items of advanced vocabulary that ONLY native speakers would typically know: idioms, phrasal verbs, colloquialisms, current slang, insider jargon and nuanced words used naturally in real ${S.settings.accent==="en-GB"?"British":"American"} conversation about this topic. Exclude anything found in textbooks, basic word lists, or TOEIC/TOEFL core vocabulary, and anything a typical Korean learner already knows. Ignore the learner level for this list. Do not repeat these expressions: ${(L.expressions||[]).map(x=>x.en).join(" / ")}.
+Reply with ONLY a JSON array: [{"word":"native-only word, idiom, phrasal verb, slang or set phrase","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr./idiom","ko":"Korean meaning","note":"Korean: nuance, register (casual/slang/formal) and when natives use it, one line","example":"natural sentence a native would say about this topic","exampleKo":"Korean"}]`);
       L.vocab=Array.isArray(arr)?arr:[];if(!L.sample)await store.put(L);}catch(e){setStatus(errMsg(e))}
     renderLearn()};
   const vb=$("#vBook");if(vb)vb.onchange=()=>{vBook=vb.value;if(vBook!=="__new")renderLearn()};
