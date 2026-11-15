@@ -249,6 +249,7 @@ const BUNDLED=Array.isArray(window.BUNDLED_LESSONS)?window.BUNDLED_LESSONS.map(l
 const S={mode:"daily",level:"고급",topic:"",lesson:BUNDLED&&BUNDLED.length?BUNDLED[0]:SAMPLE,lessons:[],words:[],books:[],topics:[],
   settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[],hiddenLessons:[]},
   sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
+if(S.lesson&&S.lesson.mode)S.mode=S.lesson.mode;
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const uid=p=>p+"-"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
