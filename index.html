@@ -266,7 +266,7 @@ const store={col:null,
         return;
       }catch(e){}
     }
-    loadLocal();setStatus("이 기기에만 저장 중 (claude.ai에서 열면 계정에 저장)");
+    loadLocal();setStatus(window.__WEB__?"이 기기에 저장 중 · 다른 기기로는 설정 › 백업":"이 기기에만 저장 중 (claude.ai에서 열면 계정에 저장)");
   },
   async put(doc){
     if(this.col){try{const {id,...rest}=doc;await this.col.doc(id).set(rest);return}catch(e){setStatus("저장 실패: 잠시 후 다시 시도하세요")}}
@@ -298,10 +298,14 @@ function setStatus(t){$("#status").textContent=t}
 
 /* ---------- Claude ---------- */
 let sampleFn=null;
-claude.use("sample").then(s=>{sampleFn=s;$("#aiNote").textContent=s?"":"Claude 연결 없음: 예시 노트만 볼 수 있어요"}).catch(()=>{});
-setTimeout(()=>{if(!sampleFn)$("#aiNote").textContent="Claude 연결 확인 중…"},1500);
+function updateAiNote(){const n=$("#aiNote");
+  if(window.__WEB__&&!window.__WEB__.hasKey())n.innerHTML=`<a href="#" id="toKey" style="color:inherit">설정에서 API 키를 넣어 주세요</a>`;
+  else n.textContent=sampleFn?"":"Claude 연결 없음: 예시 노트만 볼 수 있어요";
+  const k=$("#toKey");if(k)k.onclick=e=>{e.preventDefault();switchTab("settings")}}
+claude.use("sample").then(s=>{sampleFn=s;updateAiNote()}).catch(()=>{});
+setTimeout(()=>{if(!sampleFn&&!$("#aiNote").textContent)$("#aiNote").textContent="Claude 연결 확인 중…"},1500);
 const ERR={not_granted:"Claude 사용이 허용되지 않았어요. 아티팩트 권한 메뉴에서 켜 주세요.",rate_limited:"요청이 많아요. 잠시 뒤 다시 눌러 주세요.",invalid_json:"응답 형식이 어긋났어요. 한 번 더 눌러 주세요.",cancelled:"취소했어요."};
-const errMsg=e=>ERR[e?.code]||("오류: "+(e?.message||"알 수 없는 문제"));
+const errMsg=e=>(window.__WEB__&&e?.message&&e.code!=="invalid_json"?e.message:ERR[e?.code])||("오류: "+(e?.message||"알 수 없는 문제"));
 
 async function generateLesson(){
   const topic=$("#topic").value.trim()||S.topic;
@@ -588,7 +592,7 @@ function renderPractice(){
   </div>
   <div class="card">
     <h3>따라 말하기</h3>
-    ${dict?`<button class="btn mic${listening?" on":""}" id="micBtn">${ICON.mic} ${listening?"멈추기":"말하기"}</button>`:
+    ${dict?`<button class="btn mic${listening?" on":""}" id="micBtn">${ICON.mic} ${listening?"멈추기":"말하기"}</button>${window.__WEB__?`<p class="muted" style="margin:8px 0 6px;font-size:11px">말을 마치면 ‘멈추기’를 누르세요. 인식이 안 되면 입력칸을 탭해 키보드 🎤로 말해도 돼요.</p>`:""}`:
       `<button class="btn" id="kbMic">${ICON.mic} 말하기</button>
        <ol class="muted" id="kbHint" style="margin:10px 0 8px;padding-left:18px"><li>‘말하기’를 누르면 키보드가 열려요</li><li>키보드 <b>오른쪽 맨 아래 🎤</b>를 누르고 영어로 말하기</li><li>다 말했으면 🎤를 한 번 더 누르고 ‘분석하기’</li></ol>
        <p class="muted" style="margin:0 0 6px;font-size:11px">🎤가 안 보이면: 설정 › 일반 › 키보드 › <b>받아쓰기 활성화</b> 켜기 · 지구본으로 <b>English</b> 키보드 선택</p>`}
@@ -624,7 +628,7 @@ function toggleMic(btn){
   dict.onState(({state})=>{const was=listening;listening=state==="listening"||state==="starting";
     btn.classList.toggle("on",listening);btn.innerHTML=ICON.mic+(listening?" 멈추기":" 말하기");
     if(was&&state==="idle"){S.heard=$("#heard").value.trim();if(S.heard)renderPractice()}});
-  dict.start({language:"en-US"}).catch(e=>{if(e?.code==="not_granted"){dict=null;renderPractice()}});
+  dict.start({language:S.settings.accent}).catch(e=>{if(e?.code==="not_granted"){dict=null;renderPractice()}});
 }
 function renderCoach(){
   const c=S.coach;if(!c)return"";
@@ -720,6 +724,16 @@ function renderSettings(){
     <span class="label">글자 크기 · ${st.fontScale}px</span>
     <input type="range" id="fs" min="12" max="17" step=".5" value="${st.fontScale}" style="width:100%;accent-color:var(--blue)">
   </div>
+  ${window.__WEB__?`<div class="card"><h3>Claude API 키</h3>
+    <p class="muted" style="margin:0 0 8px">노트·어휘 생성과 발음 코칭에 필요해요. 키는 이 기기에만 저장되고 Anthropic으로만 전송돼요. 사용량만큼 Anthropic 계정에 요금이 청구됩니다.</p>
+    <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="password" id="apiKey" autocomplete="off" placeholder="${window.__WEB__.hasKey()?"저장됨 · 바꾸려면 새 키 입력":"sk-ant-..."}" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--rule-2);padding:7px 2px;font-size:16px;outline:none"><button class="btn small" id="saveKey" style="flex:none">저장</button>${window.__WEB__.hasKey()?`<button class="btn small" id="delKey" style="flex:none">삭제</button>`:""}</div>
+    <p class="muted" style="margin:8px 0 0;font-size:11px">키 발급: console.anthropic.com › API Keys</p>
+  </div>
+  <div class="card"><h3>백업</h3>
+    <p class="muted" style="margin:0 0 8px">노트·단어장·토픽·설정을 파일로 내보내고, 다른 기기에서 가져올 수 있어요.</p>
+    <div class="row"><button class="btn small" id="exportBk">내보내기</button><label class="btn small" for="importBk" style="cursor:pointer">가져오기</label><input type="file" id="importBk" accept=".json,application/json" hidden></div>
+    <p class="muted" id="bkMsg" style="margin:8px 0 0"></p>
+  </div>`:""}
   <div class="card"><h3>내 폰트</h3>
     <p class="muted" style="margin:0 0 8px">TTF·OTF·WOFF 파일을 올리면 본문 글꼴로 적용돼요. 현재: <b>${esc(st.fontName||"기본 (IBM Plex Sans KR Light)")}</b></p>
     <div class="row"><label class="btn small" for="fontFile" style="cursor:pointer">폰트 파일 선택</label>
@@ -729,6 +743,16 @@ function renderSettings(){
     <p style="margin:12px 0 0" class="en">The quick brown fox jumps over the lazy dog. 다람쥐 헌 쳇바퀴에 타고파.</p>
   </div>`;
   v.querySelectorAll("[data-acc]").forEach(b=>b.onclick=()=>{st.accent=b.dataset.acc;saveSettings();renderSettings()});
+  if(window.__WEB__){
+    $("#saveKey").onclick=()=>{const k=$("#apiKey").value.trim();if(!k)return;window.__WEB__.setKey(k);updateAiNote();renderSettings();setStatus("API 키를 저장했어요")};
+    const dk=$("#delKey");if(dk)dk.onclick=()=>{window.__WEB__.setKey("");updateAiNote();renderSettings()};
+    $("#exportBk").onclick=async()=>{const dl=await claude.use("downloads");const d=new Date().toISOString().slice(0,10);
+      try{await dl.save({filename:`연필영어노트-백업-${d}.json`,data:new Blob([JSON.stringify(lsGet())],{type:"application/json"})});$("#bkMsg").textContent="백업 파일을 저장했어요."}catch(e){if(e?.code!=="cancelled")$("#bkMsg").textContent="저장하지 못했어요."}};
+    $("#importBk").onchange=async e=>{const f=e.target.files[0];if(!f)return;
+      try{const arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw 0;
+        const cur=lsGet(),ids=new Set(arr.map(d=>d.id));lsSet([...cur.filter(d=>!ids.has(d.id)),...arr]);loadLocal();
+        $("#bkMsg").textContent=`${arr.length}개 항목을 가져왔어요.`}catch(err){$("#bkMsg").textContent="백업 파일을 읽을 수 없어요."}};
+  }
   v.querySelectorAll("[data-rate]").forEach(b=>b.onclick=()=>{st.rate=+b.dataset.rate;saveSettings();renderSettings()});
   $("#tKo").onclick=()=>{st.showKo=!st.showKo;saveSettings();renderSettings()};
   $("#tIpa").onclick=()=>{st.showIpa=!st.showIpa;saveSettings();renderSettings()};

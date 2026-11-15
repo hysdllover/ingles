@@ -1,0 +1,843 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>연필 영어노트</title>
+<meta name="theme-color" content="#E9EDF0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="영어노트">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gaegu:wght@300;400&family=IBM+Plex+Sans+KR:wght@300;400&family=Noto+Sans:wght@300;400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=IBM+Plex+Sans+KR:wght@300&display=swap">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+<script src="shim.js"></script>
+</head>
+<body>
+<style>
+/* Layout: 종이 위 연필 노트 — iPhone 1열, iPad 사이드(토픽·기록) + 본문 2열. 결은 종이 그레인·색연필 획에만, 구조는 가는 선과 여백으로. */
+:root{
+  --paper:#E9EDF0; --sheet:#F8F9FA; --graphite:#3A434C; --lead:#7A848E; --rule:#DCE2E7; --rule-2:#C9D1D8;
+  --blue:#6F889F; --blue-soft:#DCE5ED;
+  --pc-sage:#C2D2C0; --pc-rose:#E3C6C9; --pc-sand:#E4D8BF; --pc-lilac:#D2CDE1; --pc-sky:#C4D4E2;
+  --f-hand:"UserFont","Gaegu","IBM Plex Sans KR",sans-serif;
+  --f-body:"UserFont","IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;
+  --f-ipa:"Noto Sans","Doulos SIL","Lucida Sans Unicode",sans-serif;
+  --fs:13.5px;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .23 0 0 0 0 .26 0 0 0 0 .3 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --stroke:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='40'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.6 .05' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 -.9 .75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:auto}
+body{background:var(--paper) var(--grain);color:var(--graphite);font:300 var(--fs)/1.65 var(--f-body);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+.wrap{max-width:1240px;margin:0 auto;padding-block:20px 96px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.top{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.brand{font:400 25px/1 var(--f-hand);letter-spacing:.3px}
+.brand small{font:300 10.5px var(--f-body);color:var(--lead);margin-left:10px;letter-spacing:.12em;text-transform:uppercase}
+.status{font-size:11px;color:var(--lead)}
+/* tabs */
+nav.tabs{display:flex;gap:2px;border-bottom:1px solid var(--rule-2);margin-bottom:18px;overflow-x:auto}
+nav.tabs button{background:none;border:0;padding:9px 14px 10px;font-size:13px;font-weight:300;color:var(--lead);cursor:pointer;position:relative;white-space:nowrap;letter-spacing:.02em}
+nav.tabs button[aria-selected="true"]{color:var(--graphite);font-weight:400}
+nav.tabs button[aria-selected="true"]::after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:3px;background:var(--stroke),var(--blue);border-radius:0}
+/* grid */
+.grid{display:grid;gap:18px}
+@media (min-width:900px){.grid{grid-template-columns:300px minmax(0,1fr);gap:24px}.side{position:sticky;top:12px;align-self:start}}
+.col{display:flex;flex-direction:column;gap:16px;min-width:0}
+/* paper card */
+.card{position:relative;background:var(--sheet) var(--grain);padding:20px;border-radius:0;border:1px solid var(--rule);box-shadow:0 1px 0 rgba(58,67,76,.03),0 6px 18px -12px rgba(58,67,76,.18)}
+.card h2,.card h3{font:400 21px/1.2 var(--f-hand);margin:0 0 12px;text-wrap:balance}
+.card h3{font-size:18px}
+.label{font-size:10px;letter-spacing:.14em;color:var(--lead);text-transform:uppercase;margin:16px 0 7px;display:block}
+.muted{color:var(--lead);font-size:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.hl{background:var(--stroke) 0 62%/100% 38% no-repeat,linear-gradient(transparent 62%,var(--pc-sky) 62% 92%,transparent 92%);padding:0 3px}
+/* controls */
+.chip{border:1px solid var(--rule-2);background:transparent;border-radius:0;padding:3px 11px;font-size:12px;cursor:pointer;color:var(--graphite);transition:background .15s,border-color .15s}
+.chip:hover{border-color:var(--blue)}
+.chip[aria-pressed="true"]{border-color:transparent;background:var(--stroke),var(--blue-soft)}
+.seg{display:inline-flex;background:rgba(58,67,76,.05);border-radius:0;padding:2px}
+.seg button{border:0;background:transparent;padding:4px 12px;font-size:12px;cursor:pointer;border-radius:0;color:var(--lead)}
+.seg button[aria-pressed="true"]{background:var(--sheet);color:var(--graphite);box-shadow:0 1px 2px rgba(58,67,76,.12)}
+.btn{border:1px solid var(--rule-2);background:var(--sheet);padding:7px 14px;cursor:pointer;font-size:12.5px;font-weight:400;border-radius:0;color:var(--graphite);display:inline-flex;align-items:center;gap:6px;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--blue)}
+.btn svg{width:15px;height:15px}
+.btn.fill{background:var(--grain),var(--blue);border-color:transparent;color:#fff}
+.btn.fill:hover{background:var(--grain),#627c93}
+.btn.small{padding:5px 11px;font-size:12px}
+.btn:disabled{opacity:.4;cursor:default}
+.icon{border:0;background:transparent;cursor:pointer;padding:5px;color:var(--blue);display:inline-flex;border-radius:0}
+.icon:hover{background:var(--blue-soft)}
+.icon svg{width:17px;height:17px}
+input[type=text],textarea,select{width:100%;background:transparent;border:0;border-bottom:1px solid var(--rule-2);padding:7px 2px;outline:none;border-radius:0;font-size:max(16px,var(--fs));font-weight:300}
+textarea{border:1px solid var(--rule-2);border-radius:0;padding:10px;resize:vertical;min-height:66px;background:rgba(255,255,255,.5)}
+input:focus,textarea:focus,select:focus{border-color:var(--blue)}
+:focus-visible{outline:1.5px solid var(--blue);outline-offset:2px}
+/* lesson */
+.lesson-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.tag{font-size:11px;color:var(--lead);background:rgba(58,67,76,.05);border-radius:0;padding:1px 9px}
+.expr{padding:16px 0;border-top:1px solid var(--rule);display:grid;gap:5px}
+.expr:first-of-type{border-top:0;padding-top:4px}
+.en{font-size:calc(var(--fs) * 1.2);font-weight:400;line-height:1.5}
+.ipa{font:300 12.5px/1.4 var(--f-ipa);color:var(--blue);letter-spacing:.02em}
+.ko{color:var(--lead);font-size:12.5px}
+.vs{font-size:12px;color:var(--lead)}
+.vs s{text-decoration-color:#C99BA1;text-decoration-thickness:1px}
+.note{font-size:12px;line-height:1.65;padding:6px 0 6px 12px;border-left:2px solid var(--pc-sky);color:#4E5862;margin-top:2px}
+.w{cursor:pointer;border-radius:0;padding:0 1px}
+.w:hover{background:var(--blue-soft)}
+.w.sel{background:var(--stroke) 0 45%/100% 52% no-repeat,linear-gradient(transparent 45%,var(--pc-sand) 45% 97%,transparent 97%)}
+.dlg{display:grid;gap:12px}
+.line{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:start}
+.spk{font:400 11px/2.1 var(--f-body);color:var(--blue);letter-spacing:.1em}
+.sounds{display:grid;gap:10px}
+.sound{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;font-size:12.5px;align-items:baseline}
+.sound b{font:300 14px var(--f-ipa);background:var(--stroke),var(--pc-lilac);border-radius:0;padding:1px 0;text-align:center}
+/* practice */
+.target{font-size:calc(var(--fs) * 1.4);line-height:1.5;font-weight:400}
+.diff span{padding:0 3px;border-radius:0;margin-right:3px;display:inline-block}
+.ok{background:var(--stroke) 0 48%/100% 50% no-repeat,linear-gradient(transparent 48%,var(--pc-sage) 48% 98%,transparent 98%)}
+.bad{background:var(--stroke) 0 48%/100% 50% no-repeat,linear-gradient(transparent 48%,var(--pc-rose) 48% 98%,transparent 98%)}
+.miss{color:var(--lead);text-decoration:underline wavy var(--pc-sand)}
+.score{font:400 46px/1 var(--f-hand)}
+.legend{display:flex;gap:10px;font-size:11px;color:var(--lead);flex-wrap:wrap}
+.coach li{margin-bottom:8px}
+.mic.on{background:var(--stroke),var(--pc-rose);border-color:transparent}
+/* wordbook */
+.books{display:flex;gap:6px;flex-wrap:wrap}
+.vgrid{display:grid;column-gap:28px}
+@media (min-width:700px){.vgrid{grid-template-columns:1fr 1fr}}
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:11px 0;border-top:1px solid var(--rule);align-items:start}
+.vgrid .vrow:first-child{border-top:0}
+@media (min-width:700px){.vgrid .vrow:nth-child(2){border-top:0}}
+.vhead{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px}
+.vhead select{width:auto;min-width:130px;font-size:max(16px,12px)}
+.wordrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:14px 0;border-top:1px solid var(--rule)}
+.wordrow:first-child{border-top:0;padding-top:0}
+.wword{font-size:calc(var(--fs) * 1.25);font-weight:400}
+.pos{font-size:11px;color:var(--lead);margin:0 6px}
+.selbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:rgba(248,249,250,.92);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-top:1px solid var(--rule);padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));display:flex;gap:10px;align-items:center;flex-wrap:wrap;justify-content:space-between}
+.selbar select{width:auto;min-width:120px}
+.history{display:grid;max-height:280px;overflow:auto}
+.hrow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;border-bottom:1px solid var(--rule)}
+.hrow:last-child{border-bottom:0}
+.hrow .open{text-align:left;background:none;border:0;padding:8px 4px;cursor:pointer;font-size:12.5px;border-radius:0}
+.hrow .open:hover{background:rgba(58,67,76,.04)}
+.hrow .open[aria-current="true"]{background:var(--stroke),var(--blue-soft)}
+.x{border:0;background:none;color:var(--lead);cursor:pointer;padding:4px 6px;font-size:12px;line-height:1;border-radius:0}
+.x:hover{color:#9A5F66}
+.x.armed{background:var(--pc-rose);color:#6B3E44}
+.tchip{display:inline-flex;align-items:center;border:1px solid var(--rule-2);border-radius:0}
+.tchip .chip{border:0}
+.tchip .x{padding:3px 7px 3px 2px}
+.tchip:has(.chip[aria-pressed="true"]){background:var(--stroke),var(--blue-soft)}
+.loading{font:400 19px var(--f-hand);color:var(--lead)}
+.loading::after{content:"";display:inline-block;width:40px;height:2px;margin-left:8px;vertical-align:middle;background:repeating-linear-gradient(90deg,var(--graphite) 0 6px,transparent 6px 10px);animation:draw 1.2s linear infinite}
+@keyframes draw{from{background-position:0}to{background-position:40px}}
+@media (prefers-reduced-motion:reduce){.loading::after{animation:none}}
+.err{color:#9A5F66;font-size:12px}
+.ex{font-size:11px;color:#8A7A57;background:var(--stroke),var(--pc-sand);border-radius:0;padding:1px 9px;display:inline-block}
+/* A4 print */
+@page{size:A4;margin:16mm 15mm}
+@media print{
+  body{background:#fff}
+  nav.tabs,.side,.selbar,.noprint,header.top .status{display:none!important}
+  .grid{display:block}.card{padding:0;background:none;border:0;box-shadow:none}
+  .wrap{max-width:none;padding:0}
+  .expr,.wordrow{break-inside:avoid}
+}
+</style>
+
+
+<div class="wrap">
+  <header class="top">
+    <div class="brand">연필 영어노트<small>topic · native · IPA</small></div>
+    <div class="status" id="status">기록 저장소 연결 중…</div>
+  </header>
+  <nav class="tabs" role="tablist">
+    <button role="tab" data-tab="learn" aria-selected="true">학습</button>
+    <button role="tab" data-tab="practice" aria-selected="false">발음 연습</button>
+    <button role="tab" data-tab="words" aria-selected="false">단어장</button>
+    <button role="tab" data-tab="settings" aria-selected="false">설정</button>
+  </nav>
+
+  <div class="grid">
+    <aside class="col side">
+      <section class="card">
+        <h2>오늘의 토픽</h2>
+        <span class="label">분야</span>
+        <div class="row" id="modes"></div>
+        <span class="label">추천 토픽</span>
+        <div class="row" id="presets"></div>
+        <span class="label">직접 입력</span>
+        <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="text" id="topic" placeholder="예: 헬스장에서 PT 상담하기"><button class="btn small" id="saveTopic" style="flex:none">토픽 저장</button></div>
+        <span class="label">레벨</span>
+        <div class="seg" id="levels"></div>
+        <div id="examTargetBox" hidden>
+          <span class="label">목표 등급/점수</span>
+          <input type="text" id="examTarget" placeholder="예: OPIc IH, TOEIC 850">
+        </div>
+        <div class="row" style="margin-top:14px;justify-content:space-between">
+          <span class="muted" id="aiNote"></span>
+          <button class="btn fill" id="gen">노트 만들기</button>
+        </div>
+      </section>
+      <section class="card">
+        <h3>지난 노트</h3>
+        <div class="history" id="history"><span class="muted">아직 저장된 노트가 없어요.</span></div>
+      </section>
+    </aside>
+
+    <main class="col">
+      <section id="v-learn"></section>
+      <section id="v-practice" hidden></section>
+      <section id="v-words" hidden></section>
+      <section id="v-settings" hidden></section>
+    </main>
+  </div>
+</div>
+
+<div class="selbar" id="selbar" hidden>
+  <span><b id="selCount">0</b>개 단어 선택</span>
+  <div class="row">
+    <select id="selBook" aria-label="담을 단어장"></select>
+    <button class="btn small" id="selClear">해제</button>
+    <button class="btn small fill" id="selAdd">단어장에 담기</button>
+  </div>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const MODES={
+  daily:{name:"일상",topics:["카페 주문","넷플릭스 잡담","헬스장","병원 진료","스몰토크","데이트 약속","택배·반품"]},
+  biz:{name:"비즈니스",topics:["회의 진행","일정 조율","협상","발표 Q&A","피드백 주고받기","이메일 톤"]},
+  toeic:{name:"TOEIC",topics:["회의·일정","출장·여행","채용·인사","고객 서비스","사무기기·IT","마케팅·판매"]},
+  toefl:{name:"TOEFL",topics:["캠퍼스 생활","강의 토론: 생물학","강의 토론: 역사","의견 말하기","통합형 요약"]},
+  opic:{name:"OPIc",topics:["자기소개","사는 곳·동네","여가·취미","여행 경험","롤플레이: 예약 문의","돌발: 은행·재활용"]},
+  ielts:{name:"IELTS",topics:["Part 1 일상 질문","Part 2 사람 묘사","Part 2 장소 묘사","Part 3 기술과 사회"]}
+};
+const LEVELS=["초급","중급","고급"];
+const ICON={
+  play:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5 9v6h3l5 4V5L8 9H5z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg>',
+  slow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M5 9v6h3l5 4V5L8 9H5z"/><text x="15.5" y="15" font-size="7" fill="currentColor" stroke="none">.7</text></svg>',
+  mic:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M6 11a6 6 0 0 0 12 0M12 17v4"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M4 20l4-1 11-11-3-3L5 16l-1 4z"/></svg>',
+  del:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>'
+};
+const SAMPLE={id:"sample",type:"lesson",sample:true,mode:"daily",topic:"카페 주문",level:"중급",createdAt:0,
+ title:"카페에서 현지인처럼 주문하기",
+ expressions:[
+  {en:"Can I get a large iced latte?",ipa:"/kæn aɪ ɡet ə lɑːrdʒ aɪst ˈlɑːteɪ/",ko:"아이스 라떼 라지 하나 주세요.",textbook:"I would like to order a large iced latte.",nuance:"'Can I get ~?'이 가장 흔한 주문 표현. 'I want'는 무례하게 들릴 수 있어요.",example:{en:"Hi, can I get a large iced latte with oat milk?",ko:"안녕하세요, 오트밀크로 아이스 라떼 라지 하나 주세요."}},
+  {en:"For here or to go?",ipa:"/fɔːr hɪr ɔːr tə ɡoʊ/",ko:"드시고 가세요, 가져가세요?",textbook:"Will you eat here or take it out?",nuance:"미국식. 영국에서는 'Eat in or take away?'",example:{en:"To go, please.",ko:"가져갈게요."}},
+  {en:"Could you make it a little less sweet?",ipa:"/kʊd juː meɪk ɪt ə ˈlɪtl les swiːt/",ko:"조금 덜 달게 해 주실 수 있나요?",textbook:"Please reduce the amount of sugar.",nuance:"'Could you'로 부드럽게 요청. could you는 [쿠쥬]로 연음.",example:{en:"Could you make it half sweet?",ko:"당도 절반으로 해 주세요."}},
+  {en:"I'm good, thanks.",ipa:"/aɪm ɡʊd θæŋks/",ko:"괜찮아요(필요 없어요).",textbook:"No, I do not need anything else.",nuance:"추가 주문·영수증 등을 정중히 거절할 때 가장 자연스러운 말.",example:{en:"Would you like a receipt? — I'm good, thanks.",ko:"영수증 드릴까요? — 괜찮아요."}}
+ ],
+ dialogue:[
+  {s:"A",en:"Hi there! What can I get started for you?",ko:"안녕하세요! 뭐 준비해 드릴까요?"},
+  {s:"B",en:"Can I get a large iced latte with oat milk?",ko:"오트밀크로 아이스 라떼 라지 주세요."},
+  {s:"A",en:"Sure. For here or to go?",ko:"네. 드시고 가세요, 가져가세요?"},
+  {s:"B",en:"To go, please. Could you make it a little less sweet?",ko:"가져갈게요. 좀 덜 달게 해 주세요."},
+  {s:"A",en:"No problem. Anything else?",ko:"그럼요. 더 필요한 거 있으세요?"},
+  {s:"B",en:"I'm good, thanks.",ko:"괜찮아요, 감사합니다."}
+ ],
+ sounds:[{ipa:"t",desc:"get a → [게러]. 미국식에서는 모음 사이 t를 부드러운 ㄹ처럼 발음해요."},{ipa:"dʒ",desc:"could you → [쿠쥬]. d + y가 만나 'ㅈ' 소리로 연음."},{ipa:"æ",desc:"thanks의 a는 입을 옆으로 크게 벌린 '애'."}],
+ examTip:"",
+ vocab:[
+  {word:"nurse a coffee",ipa:"/nɜːrs ə ˈkɔːfi/",pos:"idiom",ko:"커피 한 잔을 오래 붙잡고 마시다",note:"카페에 오래 앉아 한 잔을 아껴 마실 때. 원어민끼리 자주 쓰는 표현.",example:"I nursed one coffee for three hours.",exampleKo:"커피 한 잔으로 세 시간 버텼어."},
+  {word:"room for cream",ipa:"/ruːm fər kriːm/",pos:"phr.",ko:"크림 넣을 공간",note:"블랙커피를 받을 때 잔을 조금 비워 달라는 현지 표현.",example:"Medium drip, with room for cream.",exampleKo:"드립 미디엄, 크림 넣게 조금 비워 주세요."},
+  {word:"a pick-me-up",ipa:"/ə ˈpɪk mi ʌp/",pos:"n.",ko:"기운 나게 하는 것",note:"오후에 마시는 커피 한 잔을 가볍게 부르는 말.",example:"I need a little pick-me-up before the meeting.",exampleKo:"회의 전에 기운 좀 차려야겠어."},
+  {word:"jittery",ipa:"/ˈdʒɪtəri/",pos:"adj.",ko:"(카페인 때문에) 손떨리는",note:"커피를 많이 마셔 초조하고 떨리는 상태. 일상 회화에서 자주 써요.",example:"Three shots made me so jittery.",exampleKo:"샷 세 개 넣었더니 손이 덜덜 떨려."},
+  {word:"caffeine crash",ipa:"/kæˈfiːn kræʃ/",pos:"n.",ko:"카페인 효과가 끝나고 확 처지는 것",note:"오후에 급격히 피곤해질 때 쓰는 구어 표현.",example:"I always hit a caffeine crash around 3.",exampleKo:"난 3시쯤 꼭 카페인 빠지면서 확 처져."},
+  {word:"hit the spot",ipa:"/hɪt ðə spɑːt/",pos:"idiom",ko:"딱 원하던 그 맛이다",note:"먹거나 마신 게 딱 만족스러울 때. 매우 자연스러운 감탄 표현.",example:"Man, this iced latte really hits the spot.",exampleKo:"와, 이 아이스 라떼 진짜 딱이다."}
+ ]
+};
+
+/* ---------- state ---------- */
+const S={mode:"daily",level:"중급",topic:"",lesson:SAMPLE,lessons:[],words:[],books:[],topics:[],
+  settings:{accent:"en-US",rate:1,fontScale:13.5,fontName:"",fontId:"",showKo:true,showIpa:true,hiddenTopics:[]},
+  sel:new Map(),tab:"learn",pIdx:0,heard:"",coach:null,busy:false};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const uid=p=>p+"-"+Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+
+/* ---------- storage (db per-user, fallback localStorage) ---------- */
+const store={col:null,
+  async init(){
+    let db=null,user=null;
+    try{[db,user]=await Promise.all([claude.use("db"),claude.use("user")])}catch(e){}
+    if(db&&user){
+      try{
+        const id=await user.id();
+        this.col=db.collection("data/users/"+id);
+        const t=setTimeout(()=>setStatus("저장소 응답이 늦어요. 이 기기에만 임시 저장합니다."),10000);
+        this.col.onSnapshot(snap=>{clearTimeout(t);ingest(snap.docs.map(d=>({...d.data(),id:d.id})));setStatus("계정에 자동 저장 중")},
+          ()=>{clearTimeout(t);this.col=null;loadLocal();setStatus("이 기기에만 저장 중")});
+        return;
+      }catch(e){}
+    }
+    loadLocal();setStatus(window.__WEB__?"이 기기에 저장 중 · 다른 기기로는 설정 › 백업":"이 기기에만 저장 중 (claude.ai에서 열면 계정에 저장)");
+  },
+  async put(doc){
+    if(this.col){try{const {id,...rest}=doc;await this.col.doc(id).set(rest);return}catch(e){setStatus("저장 실패: 잠시 후 다시 시도하세요")}}
+    upsertLocal(doc);
+  },
+  async del(id){
+    if(this.col){try{await this.col.doc(id).delete();return}catch(e){}}
+    removeLocal(id);
+  }
+};
+function lsGet(){try{return JSON.parse(localStorage.getItem("pencil-en")||"[]")}catch(e){return[]}}
+function lsSet(a){try{localStorage.setItem("pencil-en",JSON.stringify(a))}catch(e){}}
+function loadLocal(){ingest(lsGet())}
+function upsertLocal(doc){const a=lsGet().filter(d=>d.id!==doc.id);a.push(doc);lsSet(a);ingest(a)}
+function removeLocal(id){const a=lsGet().filter(d=>d.id!==id);lsSet(a);ingest(a)}
+function ingest(docs){
+  S.lessons=docs.filter(d=>d.type==="lesson").sort((a,b)=>b.createdAt-a.createdAt);
+  S.words=docs.filter(d=>d.type==="word").sort((a,b)=>b.createdAt-a.createdAt);
+  S.books=docs.filter(d=>d.type==="book").sort((a,b)=>a.createdAt-b.createdAt);
+  S.topics=docs.filter(d=>d.type==="topic").sort((a,b)=>a.createdAt-b.createdAt);
+  const st=docs.find(d=>d.id==="settings");
+  if(st){const f=S.settings.fontId;Object.assign(S.settings,st);if(st.fontId&&st.fontId!==f)loadFontFromAsset(st.fontId,st.fontName)}
+  applySettings();renderHistory();renderBookSelect();renderSide();
+  if(S.tab==="words")renderWords();
+  if(S.tab==="learn"&&!S.busy)renderLearn();
+  if(S.tab==="settings")renderSettings();
+}
+function setStatus(t){$("#status").textContent=t}
+
+/* ---------- Claude ---------- */
+let sampleFn=null;
+function updateAiNote(){const n=$("#aiNote");
+  if(window.__WEB__&&!window.__WEB__.hasKey())n.innerHTML=`<a href="#" id="toKey" style="color:inherit">설정에서 API 키를 넣어 주세요</a>`;
+  else n.textContent=sampleFn?"":"Claude 연결 없음: 예시 노트만 볼 수 있어요";
+  const k=$("#toKey");if(k)k.onclick=e=>{e.preventDefault();switchTab("settings")}}
+claude.use("sample").then(s=>{sampleFn=s;updateAiNote()}).catch(()=>{});
+setTimeout(()=>{if(!sampleFn&&!$("#aiNote").textContent)$("#aiNote").textContent="Claude 연결 확인 중…"},1500);
+const ERR={not_granted:"Claude 사용이 허용되지 않았어요. 아티팩트 권한 메뉴에서 켜 주세요.",rate_limited:"요청이 많아요. 잠시 뒤 다시 눌러 주세요.",invalid_json:"응답 형식이 어긋났어요. 한 번 더 눌러 주세요.",cancelled:"취소했어요."};
+const errMsg=e=>(window.__WEB__&&e?.message&&e.code!=="invalid_json"?e.message:ERR[e?.code])||("오류: "+(e?.message||"알 수 없는 문제"));
+
+async function generateLesson(){
+  const topic=$("#topic").value.trim()||S.topic;
+  if(!topic){$("#topic").focus();return}
+  if(!sampleFn){$("#aiNote").textContent="Claude 연결이 필요해요 (claude.ai에서 열기)";return}
+  const mode=MODES[S.mode].name,exam=["toeic","toefl","opic","ielts"].includes(S.mode);
+  const target=$("#examTarget").value.trim();
+  const accent=S.settings.accent==="en-GB"?"British":"American";
+  const prompt=`You are a native ${accent} English coach for Korean learners.
+Topic: "${topic}" | Category: ${mode} | Learner level: ${S.level}${exam?` | Exam: ${mode}${target?` (target ${target})`:""}`:""}
+Create a study note. Use natural expressions locals actually say in ${accent} English, matched to the level.
+Reply with ONLY JSON:
+{"title":"Korean title (short)",
+"expressions":[{"en":"native expression","ipa":"/${IPA_STYLE()} for the whole phrase/","ko":"Korean meaning","textbook":"stiff textbook way to say it","nuance":"Korean: when/why locals use it, tone, ${accent==="American"?"note British alternative if different":"note American alternative if different"}","example":{"en":"example sentence","ko":"Korean"}}] (7 items),
+"dialogue":[{"s":"A or B","en":"line","ko":"Korean"}] (8 lines using the expressions),
+"sounds":[{"ipa":"one basic dictionary symbol such as θ, r, l, f, v, æ, iː","desc":"Korean tip with a word from this note, with Korean sound hints like [게러]"}] (3-4 pronunciation focus points Koreans struggle with),
+"vocab":[{"word":"native-only word, idiom, phrasal verb, slang or set phrase","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr./idiom","ko":"Korean meaning","note":"Korean: nuance, register (casual/slang/formal) and when natives use it, one line","example":"natural sentence a native would say about this topic","exampleKo":"Korean"}] (10 items: advanced vocabulary that ONLY native speakers would typically know: idioms, phrasal verbs, colloquialisms, current slang, insider jargon and nuanced words used naturally in real ${S.settings.accent==="en-GB"?"British":"American"} conversation about this topic. Exclude anything found in textbooks, basic word lists, or TOEIC/TOEFL core vocabulary, and anything a typical Korean learner already knows. Ignore the learner level for this list; do not repeat the expressions),
+"examTip":"${exam?`Korean: ${mode} strategy for this topic + one model answer sentence in English`:""}"}`;
+  S.busy=true;renderLearn();
+  try{
+    const r=await sampleFn.json(prompt);
+    const doc={id:uid("l"),type:"lesson",topic,mode:S.mode,level:S.level,createdAt:Date.now(),
+      title:r.title||topic,expressions:r.expressions||[],dialogue:r.dialogue||[],sounds:r.sounds||[],vocab:Array.isArray(r.vocab)?r.vocab:[],examTip:r.examTip||""};
+    S.lesson=doc;S.pIdx=0;S.heard="";S.coach=null;await store.put(doc);await saveTopic(topic,S.mode);
+  }catch(e){S.lessonErr=errMsg(e)}
+  S.busy=false;renderLearn();
+}
+
+const IPA_STYLE=()=>`${S.settings.accent==="en-GB"?"British":"American"} pronunciation written in standard dictionary-style IPA exactly as printed in Korean English dictionaries and wordbooks (Naver English dictionary / Oxford Learner's style): each word in its normal citation form separated by spaces, ˈ only on the stressed syllable of multi-syllable words, ː for long vowels (iː uː ɑː ɔː ɜː), simple symbols only; NO linking marks ‿, NO flap ɾ, NO syllabic marks, NO narrow or connected-speech transcription`;
+/* ---------- speech ---------- */
+let voices=[];
+function loadVoices(){try{voices=speechSynthesis.getVoices()}catch(e){voices=[]}}
+try{loadVoices();speechSynthesis.onvoiceschanged=loadVoices}catch(e){}
+let ttsCap=null;claude.use("tts").then(t=>ttsCap=t).catch(()=>{});
+function speak(text,rate){
+  rate=rate||S.settings.rate;
+  const lang=S.settings.accent;
+  if("speechSynthesis" in window){
+    try{
+      speechSynthesis.cancel();
+      const u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=rate*0.95;
+      /* 목소리를 지정하지 않음 → iOS 설정(손쉬운 사용 › 말하기 콘텐츠 › 음성)에서 고른 영어 음성을 사용 */
+      speechSynthesis.speak(u);return;
+    }catch(e){}
+  }
+  if(ttsCap)ttsCap.speak(text,{rate:Math.max(.7,rate),language:"en"}).catch(()=>{});
+}
+let dict=null;claude.use("dictation").then(d=>{dict=d;if(S.tab==="practice")renderPractice()}).catch(()=>{});
+let listening=false;
+
+/* ---------- word tokens ---------- */
+function tokens(en,src){
+  return esc(en).split(/(\s+)/).map(p=>{
+    if(/^\s+$/.test(p)||!p)return p;
+    const clean=p.replace(/&#39;/g,"'").replace(/^[^A-Za-z']+|[^A-Za-z']+$/g,"");
+    if(!clean)return p;
+    const k=clean.toLowerCase();
+    return `<span class="w${S.sel.has(k)?" sel":""}" data-w="${esc(k)}" data-src="${esc(src)}">${p}</span>`;
+  }).join("");
+}
+document.addEventListener("click",e=>{
+  const w=e.target.closest(".w");if(!w)return;
+  const k=w.dataset.w;
+  if(S.sel.has(k))S.sel.delete(k);else S.sel.set(k,w.dataset.src||"");
+  document.querySelectorAll(`.w[data-w="${CSS.escape(k)}"]`).forEach(x=>x.classList.toggle("sel",S.sel.has(k)));
+  updateSelbar();
+});
+function updateSelbar(){$("#selbar").hidden=!S.sel.size;$("#selCount").textContent=S.sel.size}
+function renderBookSelect(){
+  const cur=$("#selBook").value;
+  $("#selBook").innerHTML=`<option value="">기본 단어장</option>`+S.books.map(b=>`<option value="${esc(b.id)}">${esc(b.name)}</option>`).join("")+`<option value="__new">+ 새 단어장</option>`;
+  if([...$("#selBook").options].some(o=>o.value===cur))$("#selBook").value=cur;
+}
+$("#selClear").onclick=()=>{S.sel.clear();document.querySelectorAll(".w.sel").forEach(x=>x.classList.remove("sel"));updateSelbar()};
+$("#selBook").onchange=async e=>{
+  if(e.target.value!=="__new")return;
+  const name=S.lesson?.topic?S.lesson.topic+" 단어장":"새 단어장";
+  const b={id:uid("b"),type:"book",name,createdAt:Date.now()};
+  await store.put(b);renderBookSelect();$("#selBook").value=b.id;
+};
+$("#selAdd").onclick=async()=>{
+  const book=$("#selBook").value==="__new"?"":$("#selBook").value;
+  const list=[...S.sel.entries()].filter(([w])=>!S.words.some(x=>x.word===w&&(x.book||"")===book));
+  if(!list.length){$("#selClear").click();return}
+  const btn=$("#selAdd");btn.disabled=true;btn.textContent="정리 중…";
+  let info={};
+  if(sampleFn){
+    try{
+      const arr=await sampleFn.json(`For Korean learners, give dictionary entries for these words. Pronunciation: ${IPA_STYLE()}., each in the context sentence given.
+${list.map(([w,src])=>`- ${w} | context: ${src}`).join("\n")}
+Reply with ONLY a JSON array: [{"word":"lowercase word","ipa":"/IPA/","pos":"n./v./adj./adv./phr. etc","ko":"Korean meaning in this context","example":"short natural example","exampleKo":"Korean","tip":"Korean: collocation or pronunciation tip, one line"}]`,{modelTier:"quick"});
+      (Array.isArray(arr)?arr:[]).forEach(o=>{if(o&&o.word)info[String(o.word).toLowerCase()]=o});
+    }catch(e){setStatus(errMsg(e)+" 단어만 저장했어요.")}
+  }
+  for(const [w,src] of list){
+    const o=info[w]||{};
+    await store.put({id:uid("w"),type:"word",book,word:w,ipa:o.ipa||"",pos:o.pos||"",ko:o.ko||"",example:o.example||src,exampleKo:o.exampleKo||"",tip:o.tip||"",src,createdAt:Date.now(),known:false});
+  }
+  btn.disabled=false;btn.textContent="단어장에 담기";
+  $("#selClear").click();setStatus(`${list.length}개 단어를 담았어요`);
+};
+
+/* ---------- side panel ---------- */
+function renderSide(){
+  $("#modes").innerHTML=Object.entries(MODES).map(([k,m])=>`<button class="chip" data-mode="${k}" aria-pressed="${S.mode===k}">${m.name}</button>`).join("");
+  const hid=S.settings.hiddenTopics||[];
+  const shown=MODES[S.mode].topics.filter(t=>!hid.includes(S.mode+"|"+t));
+  $("#presets").innerHTML=shown.map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t)}" aria-pressed="${S.topic===t}">${esc(t)}</button><button class="x" data-hidetopic="${esc(t)}" aria-label="${esc(t)} 토픽 삭제">✕</button></span>`).join("")
+    +S.topics.filter(t=>t.mode===S.mode).map(t=>`<span class="tchip"><button class="chip" data-topic="${esc(t.name)}" aria-pressed="${S.topic===t.name}">${esc(t.name)}</button><button class="x" data-deltopic="${esc(t.id)}" aria-label="${esc(t.name)} 토픽 삭제">✕</button></span>`).join("")
+    +(shown.length<MODES[S.mode].topics.length?`<button class="x" id="restoreTopics" style="text-decoration:underline">기본 토픽 복원</button>`:"");
+  $("#levels").innerHTML=LEVELS.map(l=>`<button data-level="${l}" aria-pressed="${S.level===l}">${l}</button>`).join("");
+  $("#examTargetBox").hidden=!["toeic","toefl","opic","ielts"].includes(S.mode);
+}
+$("#modes").onclick=e=>{const b=e.target.closest("[data-mode]");if(!b)return;S.mode=b.dataset.mode;S.topic="";renderSide()};
+async function saveTopic(name,mode){
+  name=(name||"").trim();if(!name)return false;
+  const key=mode+"|"+name,hid=S.settings.hiddenTopics||[];
+  if(MODES[mode].topics.includes(name)){if(!hid.includes(key))return false;S.settings.hiddenTopics=hid.filter(k=>k!==key);saveSettings();return true}
+  if(S.topics.some(t=>t.mode===mode&&t.name===name))return false;
+  await store.put({id:uid("t"),type:"topic",mode,name,createdAt:Date.now()});return true;
+}
+$("#saveTopic").onclick=async()=>{const n=$("#topic").value.trim();if(!n){$("#topic").focus();return}
+  S.topic=n;const ok=await saveTopic(n,S.mode);setStatus(ok?`‘${n}’ 토픽을 ${MODES[S.mode].name}에 저장했어요`:"이미 있는 토픽이에요");renderSide()};
+/* 두 번 눌러 삭제 */
+function armOrRun(btn,run){
+  if(btn.classList.contains("armed")){run();return}
+  document.querySelectorAll(".x.armed").forEach(x=>{x.classList.remove("armed");x.textContent="✕"});
+  btn.classList.add("armed");btn.textContent="삭제";setTimeout(()=>{if(btn.isConnected){btn.classList.remove("armed");btn.textContent="✕"}},2500);
+}
+$("#presets").onclick=e=>{
+  const d=e.target.closest("[data-deltopic]");if(d){armOrRun(d,()=>store.del(d.dataset.deltopic));return}
+  const h=e.target.closest("[data-hidetopic]");if(h){armOrRun(h,()=>{const k=S.mode+"|"+h.dataset.hidetopic;S.settings.hiddenTopics=[...(S.settings.hiddenTopics||[]).filter(x=>x!==k),k];if(S.topic===h.dataset.hidetopic)S.topic="";saveSettings();renderSide()});return}
+  if(e.target.closest("#restoreTopics")){S.settings.hiddenTopics=(S.settings.hiddenTopics||[]).filter(k=>!k.startsWith(S.mode+"|"));saveSettings();renderSide();return}
+  const b=e.target.closest("[data-topic]");if(!b)return;S.topic=b.dataset.topic;$("#topic").value=S.topic;renderSide()};
+$("#levels").onclick=e=>{const b=e.target.closest("[data-level]");if(!b)return;S.level=b.dataset.level;renderSide()};
+$("#topic").oninput=e=>{S.topic=e.target.value.trim()};
+$("#gen").onclick=()=>{S.lessonErr="";switchTab("learn");generateLesson()};
+function renderHistory(){
+  const h=$("#history");
+  if(!S.lessons.length){h.innerHTML=`<span class="muted">아직 저장된 노트가 없어요. 토픽을 고르고 ‘노트 만들기’를 눌러 보세요.</span>`;return}
+  h.innerHTML=S.lessons.map(l=>`<div class="hrow"><button class="open" data-lid="${esc(l.id)}" aria-current="${S.lesson?.id===l.id}">${esc(l.title)} <span class="muted">· ${esc(MODES[l.mode]?.name||"")} ${esc(l.level)}</span></button><button class="x" data-dellesson="${esc(l.id)}" aria-label="노트 삭제">✕</button></div>`).join("");
+}
+$("#history").onclick=e=>{
+  const d=e.target.closest("[data-dellesson]");
+  if(d){armOrRun(d,async()=>{const id=d.dataset.dellesson;await store.del(id);if(S.lesson?.id===id){S.lesson=S.lessons.find(l=>l.id!==id)||SAMPLE;if(S.tab==="learn")renderLearn()}});return}
+  const b=e.target.closest("[data-lid]");if(!b)return;S.lesson=S.lessons.find(l=>l.id===b.dataset.lid);S.pIdx=0;S.heard="";S.coach=null;renderHistory();switchTab("learn")};
+
+/* ---------- learn view ---------- */
+function renderLearn(){
+  const v=$("#v-learn"),L=S.lesson,st=S.settings;
+  if(S.busy){v.innerHTML=`<div class="card"><p class="loading">노트에 연필로 적는 중</p><p class="muted">30초~1분 정도 걸려요.</p></div>`;return}
+  if(!L){v.innerHTML=`<div class="card"><p>토픽을 골라 노트를 만들어 보세요.</p></div>`;return}
+  v.innerHTML=`
+  ${S.lessonErr?`<p class="err">${esc(S.lessonErr)}</p>`:""}
+  <div class="card">
+    <div class="lesson-head">
+      <div><h2><span class="hl">${esc(L.title)}</span></h2>
+        <div class="row"><span class="tag">${esc(MODES[L.mode]?.name||"")}</span><span class="tag">${esc(L.level)}</span><span class="tag">${esc(L.topic)}</span>${L.sample?`<span class="ex">예시 노트</span>`:""}</div></div>
+      <div class="row noprint">
+        <button class="btn small" id="toPractice">발음 연습</button>
+        <button class="btn small" id="dlSheet">A4 학습지</button>
+        ${L.sample?"":`<button class="icon" id="delLesson" title="노트 삭제" aria-label="노트 삭제">${ICON.del}</button>`}
+      </div>
+    </div>
+    <p class="muted noprint" style="margin:8px 0 0">영어 단어를 탭하면 선택돼요. 선택한 단어로 단어장을 만들 수 있어요.</p>
+  </div>
+  <div class="card"><h3>현지인 표현</h3>
+    ${(L.expressions||[]).map((x,i)=>`<div class="expr">
+      <div class="row" style="justify-content:space-between;flex-wrap:nowrap;align-items:flex-start">
+        <div class="en">${tokens(x.en,x.en)}</div>
+        <div class="row noprint" style="flex-wrap:nowrap">
+          <button class="icon" data-say="${esc(x.en)}" aria-label="듣기">${ICON.play}</button>
+          <button class="icon" data-say="${esc(x.en)}" data-rate=".7" aria-label="천천히 듣기">${ICON.slow}</button>
+          <button class="icon" data-prac="${i}" aria-label="발음 연습">${ICON.mic}</button>
+        </div>
+      </div>
+      ${st.showIpa&&x.ipa?`<div class="ipa">${esc(x.ipa)}</div>`:""}
+      ${st.showKo?`<div class="ko">${esc(x.ko)}</div>`:""}
+      ${x.textbook?`<div class="vs">교과서식 <s>${esc(x.textbook)}</s></div>`:""}
+      ${x.nuance?`<div class="note">${esc(x.nuance)}</div>`:""}
+      ${x.example?`<div style="margin-top:4px"><span class="muted">예문</span> ${tokens(x.example.en,x.example.en)} <button class="icon noprint" data-say="${esc(x.example.en)}" aria-label="예문 듣기">${ICON.play}</button>${st.showKo?`<div class="ko">${esc(x.example.ko)}</div>`:""}</div>`:""}
+    </div>`).join("")}
+  </div>
+  ${L.dialogue?.length?`<div class="card"><div class="row" style="justify-content:space-between"><h3 style="margin:0">실전 대화</h3><button class="btn small noprint" id="playAll">전체 듣기</button></div>
+    <div class="dlg" style="margin-top:10px">${L.dialogue.map(d=>`<div class="line"><span class="spk">${esc(d.s)}</span><div><div>${tokens(d.en,d.en)}</div>${st.showKo?`<div class="ko">${esc(d.ko)}</div>`:""}</div><button class="icon noprint" data-say="${esc(d.en)}" aria-label="듣기">${ICON.play}</button></div>`).join("")}</div></div>`:""}
+  ${renderVocab(L)}
+  ${L.sounds?.length?`<div class="card"><h3>발음 포인트</h3><div class="sounds">${L.sounds.map(s=>`<div class="sound"><b>/${esc(String(s.ipa).replace(/\//g,""))}/</b><span>${esc(s.desc)}</span></div>`).join("")}</div></div>`:""}
+  ${L.examTip?`<div class="card"><h3>시험 전략</h3><div class="note">${esc(L.examTip)}</div></div>`:""}`;
+  $("#toPractice").onclick=()=>switchTab("practice");
+  $("#dlSheet").onclick=()=>downloadSheet("lesson");
+  const d=$("#delLesson");if(d){let armed=false;d.onclick=async()=>{if(!armed){armed=true;d.style.background="var(--pc-rose)";d.title="한 번 더 누르면 삭제";setTimeout(()=>{armed=false;d.style.background=""},2500);return}await store.del(L.id);S.lesson=S.lessons[0]||SAMPLE;renderLearn()}}
+  const pa=$("#playAll");if(pa)pa.onclick=()=>playDialogue();
+  bindVocab(L);
+}
+function playDialogue(){
+  const lines=S.lesson.dialogue||[];
+  if(!("speechSynthesis" in window)){if(ttsCap)ttsCap.speak(lines.map((l,i)=>({text:l.en,voice:l.s==="A"?"buttery":"airy",language:"en"}))).catch(()=>{});return}
+  speechSynthesis.cancel();
+  lines.forEach((l,i)=>{const u=new SpeechSynthesisUtterance(l.en);u.lang=S.settings.accent;u.rate=S.settings.rate*.95;
+    u.pitch=l.s==="A"?1:1.12;speechSynthesis.speak(u)});
+}
+document.addEventListener("click",e=>{
+  const s=e.target.closest("[data-say]");if(s){speak(s.dataset.say,s.dataset.rate?+s.dataset.rate*S.settings.rate:0);return}
+  const p=e.target.closest("[data-prac]");if(p){S.pIdx=+p.dataset.prac;S.heard="";S.coach=null;switchTab("practice")}
+});
+
+/* ---------- related vocab ---------- */
+function bookOptions(sel){return `<option value="">기본 단어장</option>`+S.books.map(b=>`<option value="${esc(b.id)}"${sel===b.id?" selected":""}>${esc(b.name)}</option>`).join("")+`<option value="__new">+ 새 단어장</option>`}
+let vBook="";
+const hasWord=(w,book)=>S.words.some(x=>x.word===String(w).toLowerCase()&&(x.book||"")===book);
+function renderVocab(L){
+  const v=L.vocab||[];
+  if(!v.length)return `<div class="card noprint"><div class="vhead"><h3 style="margin:0">관련 어휘</h3><button class="btn small" id="genVocab" ${sampleFn?"":"disabled"}>관련 어휘 만들기</button></div><p class="muted" style="margin:0">이 노트에는 아직 관련 어휘가 없어요.</p></div>`;
+  const left=v.filter(x=>!hasWord(x.word,vBook)).length;
+  return `<div class="card"><div class="vhead"><h3 style="margin:0">관련 어휘 <span class="muted">${v.length}</span></h3>
+    <div class="row noprint"><select id="vBook" aria-label="담을 단어장">${bookOptions(vBook)}</select><button class="btn small fill" id="vAll" ${left?"":"disabled"}>${left?`모두 담기 ${left}`:"모두 담음"}</button></div></div>
+    <div class="vgrid">${v.map((x,i)=>{const got=hasWord(x.word,vBook);return `<div class="vrow"><div style="min-width:0">
+      <div><span class="wword">${esc(x.word)}</span><span class="pos">${esc(x.pos)}</span>${S.settings.showIpa&&x.ipa?`<span class="ipa">${esc(x.ipa)}</span>`:""}</div>
+      ${S.settings.showKo?`<div>${esc(x.ko)}</div>`:""}
+      ${x.note?`<div class="note" style="margin:4px 0">${esc(x.note)}</div>`:""}
+      ${x.example?`<div style="font-size:12.5px;margin-top:2px">${esc(x.example)}</div>${S.settings.showKo&&x.exampleKo?`<div class="muted" style="font-size:12px">${esc(x.exampleKo)}</div>`:""}`:""}
+    </div><div class="row noprint" style="flex-wrap:nowrap;gap:2px"><button class="icon" data-say="${esc(x.word)}" aria-label="듣기">${ICON.play}</button>
+      <button class="x" data-vadd="${i}" ${got?"disabled":""} style="font-size:12px">${got?"담음":"＋ 담기"}</button></div></div>`}).join("")}</div></div>`;
+}
+async function addVocab(L,idxs){
+  let book=vBook;
+  if(book==="__new"){const b={id:uid("b"),type:"book",name:(L.topic||"새")+" 단어장",createdAt:Date.now()};await store.put(b);book=vBook=b.id}
+  let n=0;
+  for(const i of idxs){const x=L.vocab[i];if(!x||hasWord(x.word,book))continue;
+    await store.put({id:uid("w"),type:"word",book,word:String(x.word).toLowerCase(),ipa:x.ipa||"",pos:x.pos||"",ko:x.ko||"",example:x.example||"",exampleKo:x.exampleKo||"",tip:x.note||"",src:L.title||"",createdAt:Date.now(),known:false});n++}
+  setStatus(n?`${n}개 어휘를 담았어요`:"이미 담긴 어휘예요");renderLearn();
+}
+function bindVocab(L){
+  const g=$("#genVocab");if(g)g.onclick=async()=>{g.disabled=true;g.textContent="만드는 중…";
+    try{const arr=await sampleFn.json(`For a Korean learner (level ${L.level}) studying the topic "${L.topic}", list 10 items of advanced vocabulary that ONLY native speakers would typically know: idioms, phrasal verbs, colloquialisms, current slang, insider jargon and nuanced words used naturally in real ${S.settings.accent==="en-GB"?"British":"American"} conversation about this topic. Exclude anything found in textbooks, basic word lists, or TOEIC/TOEFL core vocabulary, and anything a typical Korean learner already knows. Ignore the learner level for this list. Do not repeat these expressions: ${(L.expressions||[]).map(x=>x.en).join(" / ")}.
+Reply with ONLY a JSON array: [{"word":"native-only word, idiom, phrasal verb, slang or set phrase","ipa":"/${IPA_STYLE()}/","pos":"n./v./adj./adv./phr./idiom","ko":"Korean meaning","note":"Korean: nuance, register (casual/slang/formal) and when natives use it, one line","example":"natural sentence a native would say about this topic","exampleKo":"Korean"}]`);
+      L.vocab=Array.isArray(arr)?arr:[];if(!L.sample)await store.put(L);}catch(e){setStatus(errMsg(e))}
+    renderLearn()};
+  const vb=$("#vBook");if(vb)vb.onchange=()=>{vBook=vb.value;if(vBook!=="__new")renderLearn()};
+  const va=$("#vAll");if(va)va.onclick=()=>{va.disabled=true;addVocab(L,L.vocab.map((_,i)=>i))};
+  document.querySelectorAll("[data-vadd]").forEach(b=>b.onclick=()=>{b.disabled=true;addVocab(L,[+b.dataset.vadd])});
+}
+
+/* ---------- practice ---------- */
+function practiceItems(){const L=S.lesson;if(!L)return[];
+  return [...(L.expressions||[]).map(x=>({en:x.en,ipa:x.ipa,ko:x.ko})),...(L.dialogue||[]).map(d=>({en:d.en,ipa:"",ko:d.ko})),...(L.vocab||[]).map(v=>({en:v.word,ipa:v.ipa,ko:v.ko}))]}
+const norm=s=>s.toLowerCase().replace(/[’']/g,"'").replace(/[^a-z0-9'\s]/g," ").split(/\s+/).filter(Boolean);
+function diff(target,heard){
+  const a=norm(target),b=norm(heard),n=a.length,m=b.length;
+  const dp=Array.from({length:n+1},()=>new Array(m+1).fill(0));
+  for(let i=n-1;i>=0;i--)for(let j=m-1;j>=0;j--)dp[i][j]=a[i]===b[j]?dp[i+1][j+1]+1:Math.max(dp[i+1][j],dp[i][j+1]);
+  const raw=[];let i=0,j=0;
+  while(i<n||j<m){
+    if(i<n&&j<m&&a[i]===b[j]){raw.push({t:"ok",w:a[i]});i++;j++}
+    else if(j<m&&(i>=n||dp[i][j+1]>=dp[i+1][j])){raw.push({t:"extra",w:b[j]});j++}
+    else{raw.push({t:"miss",w:a[i]});i++}
+  }
+  const out=[];
+  for(let k=0;k<raw.length;k++){const x=raw[k],y=raw[k+1];
+    if(y&&((x.t==="miss"&&y.t==="extra")||(x.t==="extra"&&y.t==="miss"))){const t=x.t==="miss"?x:y,h=x.t==="extra"?x:y;out.push({t:"bad",w:t.w,h:h.w});k++}
+    else out.push(x)}
+  const ok=out.filter(o=>o.t==="ok").length;
+  return{out,score:n?Math.round(ok/Math.max(n,ok+out.filter(o=>o.t==="extra").length*.5)*100):0};
+}
+function renderPractice(){
+  const v=$("#v-practice"),items=practiceItems();
+  if(!items.length){v.innerHTML=`<div class="card"><p>연습할 노트가 없어요.</p></div>`;return}
+  S.pIdx=Math.min(S.pIdx,items.length-1);
+  const it=items[S.pIdx],r=S.heard?diff(it.en,S.heard):null;
+  v.innerHTML=`
+  <div class="card">
+    <div class="row" style="justify-content:space-between">
+      <span class="muted">${S.pIdx+1} / ${items.length} · ${esc(S.lesson.title)}</span>
+      <div class="row"><button class="btn small" id="pPrev" ${S.pIdx?"":"disabled"}>이전</button><button class="btn small" id="pNext" ${S.pIdx<items.length-1?"":"disabled"}>다음</button></div>
+    </div>
+    <p class="target" style="margin:14px 0 4px">${tokens(it.en,it.en)}</p>
+    <div class="ipa" id="pIpa">${esc(it.ipa||"")}</div>
+    <div class="ko">${esc(it.ko||"")}</div>
+    <div class="row" style="margin-top:12px">
+      <button class="btn small" data-say="${esc(it.en)}">${ICON.play} 듣기</button>
+      <button class="btn small" data-say="${esc(it.en)}" data-rate=".7">천천히</button>
+      ${it.ipa?"":`<button class="btn small" id="getIpa">발음기호 보기</button>`}
+    </div>
+  </div>
+  <div class="card">
+    <h3>따라 말하기</h3>
+    ${dict?`<button class="btn mic${listening?" on":""}" id="micBtn">${ICON.mic} ${listening?"멈추기":"말하기"}</button>${window.__WEB__?`<p class="muted" style="margin:8px 0 6px;font-size:11px">말을 마치면 ‘멈추기’를 누르세요. 인식이 안 되면 입력칸을 탭해 키보드 🎤로 말해도 돼요.</p>`:""}`:
+      `<button class="btn" id="kbMic">${ICON.mic} 말하기</button>
+       <ol class="muted" id="kbHint" style="margin:10px 0 8px;padding-left:18px"><li>‘말하기’를 누르면 키보드가 열려요</li><li>키보드 <b>오른쪽 맨 아래 🎤</b>를 누르고 영어로 말하기</li><li>다 말했으면 🎤를 한 번 더 누르고 ‘분석하기’</li></ol>
+       <p class="muted" style="margin:0 0 6px;font-size:11px">🎤가 안 보이면: 설정 › 일반 › 키보드 › <b>받아쓰기 활성화</b> 켜기 · 지구본으로 <b>English</b> 키보드 선택</p>`}
+    <textarea id="heard" lang="en" autocapitalize="off" autocomplete="off" spellcheck="false" placeholder="인식된 문장이 여기에 적혀요">${esc(S.heard)}</textarea>
+    <div class="row" style="margin-top:8px;justify-content:flex-end"><button class="btn small fill" id="check">분석하기</button></div>
+  </div>
+  ${r?`<div class="card">
+    <div class="row" style="justify-content:space-between;align-items:flex-end">
+      <div><span class="label" style="margin-top:0">전달 정확도</span><span class="score">${r.score}</span><span class="muted"> / 100</span></div>
+      <div class="legend"><span class="ok">맞음</span><span class="bad">다르게 들림</span><span class="miss">빠짐</span></div>
+    </div>
+    <p class="diff" style="font-size:15px;margin:12px 0 4px">${r.out.filter(o=>o.t!=="extra").map(o=>`<span class="${o.t}" ${o.h?`title="들린 소리: ${esc(o.h)}"`:""}>${esc(o.w)}${o.h?` <small class="muted">(${esc(o.h)})</small>`:""}</span>`).join("")}</p>
+    ${r.out.some(o=>o.t==="extra")?`<p class="muted">추가로 들린 단어: ${r.out.filter(o=>o.t==="extra").map(o=>esc(o.w)).join(", ")}</p>`:""}
+    <div class="row" style="margin-top:10px"><button class="btn small" id="coachBtn" ${sampleFn?"":"disabled"}>Claude 발음 코칭</button></div>
+    <div id="coachOut">${renderCoach()}</div>
+  </div>`:""}`;
+  $("#pPrev").onclick=()=>{S.pIdx--;S.heard="";S.coach=null;renderPractice()};
+  $("#pNext").onclick=()=>{S.pIdx++;S.heard="";S.coach=null;renderPractice()};
+  $("#heard").oninput=e=>{S.heard=e.target.value};
+  $("#check").onclick=()=>{S.heard=$("#heard").value.trim();S.coach=null;renderPractice()};
+  const gi=$("#getIpa");if(gi)gi.onclick=async()=>{if(!sampleFn)return;gi.disabled=true;
+    try{const r=await sampleFn(`Give only the pronunciation (${IPA_STYLE()}) of: "${it.en}". Reply with just the IPA between slashes.`,{modelTier:"quick"});
+      $("#pIpa").textContent=r.text.trim();}catch(e){$("#pIpa").textContent=errMsg(e)}};
+  const mb=$("#micBtn");if(mb)mb.onclick=()=>toggleMic(mb);
+  const kb=$("#kbMic");if(kb)kb.onclick=()=>{const t=$("#heard");t.value="";S.heard="";t.focus();t.scrollIntoView({block:"center",behavior:"smooth"})};
+  const cb=$("#coachBtn");if(cb)cb.onclick=()=>coach(it);
+}
+function toggleMic(btn){
+  if(listening){dict.stop().catch(()=>{});return}
+  let base="";S.heard="";$("#heard").value="";
+  dict.onPartial(({text})=>{$("#heard").value=(base+" "+text).trim()});
+  dict.onFinal(({text})=>{base=(base+" "+text).trim();S.heard=base;$("#heard").value=base});
+  dict.onState(({state})=>{const was=listening;listening=state==="listening"||state==="starting";
+    btn.classList.toggle("on",listening);btn.innerHTML=ICON.mic+(listening?" 멈추기":" 말하기");
+    if(was&&state==="idle"){S.heard=$("#heard").value.trim();if(S.heard)renderPractice()}});
+  dict.start({language:S.settings.accent}).catch(e=>{if(e?.code==="not_granted"){dict=null;renderPractice()}});
+}
+function renderCoach(){
+  const c=S.coach;if(!c)return"";
+  if(c.loading)return`<p class="loading">분석 중</p>`;
+  if(c.err)return`<p class="err">${esc(c.err)}</p>`;
+  return`<div style="margin-top:10px">${c.summary?`<div class="note">${esc(c.summary)}</div>`:""}
+  <ul class="coach" style="padding-left:18px;margin:10px 0 0">${(c.issues||[]).map(i=>`<li><b>${esc(i.word)}</b> <span class="ipa">${esc(i.expected)}</span>${i.heard?` <span class="muted">→ ${esc(i.heard)}</span>`:""}<br><span class="ko">${esc(i.tip)}</span></li>`).join("")}</ul>
+  ${c.linking?`<p class="muted"><b>연음·리듬</b> ${esc(c.linking)}</p>`:""}</div>`;
+}
+async function coach(it){
+  S.coach={loading:true};$("#coachOut").innerHTML=renderCoach();
+  try{
+    const r=await sampleFn.json(`You are a ${S.settings.accent==="en-GB"?"British":"American"} English pronunciation coach for a Korean speaker.
+Target sentence: "${it.en}"
+Speech recognizer heard: "${S.heard}"
+Infer which sounds were likely mispronounced from the recognition errors (e.g. r/l, f/p, v/b, th, z/j, final consonants, vowel length, word stress, missing linking). If they match, give rhythm/stress/linking advice instead.
+Reply with ONLY JSON: {"summary":"Korean, one or two sentences","issues":[{"word":"word","expected":"/dictionary-style IPA of the word/","heard":"what it likely sounded like or empty","tip":"Korean: concrete mouth/tongue tip"}],"linking":"Korean: how to link and stress this sentence, using Korean sound hints like [게러] instead of phonetic symbols"}`);
+    S.coach=r;
+  }catch(e){S.coach={err:errMsg(e)}}
+  const o=$("#coachOut");if(o)o.innerHTML=renderCoach();
+}
+
+/* ---------- words ---------- */
+let curBook="all",wFilter="all";
+function renderWords(){
+  const v=$("#v-words");
+  const inBook=S.words.filter(w=>curBook==="all"||(w.book||"")===(curBook==="default"?"":curBook));
+  const list=inBook.filter(w=>wFilter==="all"||(wFilter==="todo"?!w.known:w.known));
+  v.innerHTML=`
+  <div class="card">
+    <div class="row" style="justify-content:space-between"><h2 style="margin:0">단어장</h2>
+      <div class="row"><button class="btn small" id="newBook">+ 새 단어장</button><button class="btn small" id="dlWords" ${list.length?"":"disabled"}>A4 단어 시트</button></div></div>
+    <div class="books" style="margin-top:12px">
+      <button class="chip" data-book="all" aria-pressed="${curBook==="all"}">전체 ${S.words.length}</button>
+      <button class="chip" data-book="default" aria-pressed="${curBook==="default"}">기본 ${S.words.filter(w=>!w.book).length}</button>
+      ${S.books.map(b=>`<button class="chip" data-book="${esc(b.id)}" aria-pressed="${curBook===b.id}">${esc(b.name)} ${S.words.filter(w=>w.book===b.id).length}</button>`).join("")}
+    </div>
+    <div id="bookTools" style="margin-top:10px"></div>
+    <div class="row" style="margin-top:10px">
+      <div class="seg" id="wf"><button data-f="all" aria-pressed="${wFilter==="all"}">모두</button><button data-f="todo" aria-pressed="${wFilter==="todo"}">외우는 중</button><button data-f="done" aria-pressed="${wFilter==="done"}">외움</button></div>
+    </div>
+  </div>
+  <div class="card">
+    ${list.length?list.map(w=>`<div class="wordrow">
+      <div style="min-width:0">
+        <div><span class="wword">${esc(w.word)}</span><span class="pos">${esc(w.pos)}</span> ${w.ipa?`<span class="ipa">${esc(w.ipa)}</span>`:""}</div>
+        <div>${esc(w.ko)}</div>
+        ${w.example?`<div class="muted" style="font-size:12.5px">${esc(w.example)}${w.exampleKo?` · ${esc(w.exampleKo)}`:""}</div>`:""}
+        ${w.tip?`<div class="note">${esc(w.tip)}</div>`:""}
+      </div>
+      <div class="row" style="flex-direction:column;align-items:flex-end;gap:2px">
+        <button class="icon" data-say="${esc(w.word)}" aria-label="듣기">${ICON.play}</button>
+        <button class="chip" data-known="${esc(w.id)}" aria-pressed="${!!w.known}">${w.known?"외움":"외우는 중"}</button>
+        <button class="icon" data-delw="${esc(w.id)}" aria-label="삭제">${ICON.del}</button>
+      </div></div>`).join(""):`<p class="muted">${S.words.length?"이 조건에 맞는 단어가 없어요.":"학습 노트에서 영어 단어를 탭해 선택한 뒤 ‘단어장에 담기’를 누르면 발음기호·뜻·예문과 함께 저장돼요."}</p>`}
+  </div>`;
+  const bt=$("#bookTools"),book=S.books.find(b=>b.id===curBook);
+  if(book){bt.innerHTML=`<div class="row"><input type="text" id="bookName" value="${esc(book.name)}" style="max-width:240px" aria-label="단어장 이름"><button class="btn small" id="renameBook">이름 저장</button><button class="btn small" id="delBook">단어장 삭제</button></div>`;
+    $("#renameBook").onclick=()=>store.put({...book,name:$("#bookName").value.trim()||book.name});
+    let armed=false;$("#delBook").onclick=async e=>{if(!armed){armed=true;e.target.textContent="한 번 더: 단어도 함께 삭제";return}
+      for(const w of S.words.filter(w=>w.book===book.id))await store.del(w.id);await store.del(book.id);curBook="all";renderWords()};}
+  v.querySelectorAll("[data-book]").forEach(b=>b.onclick=()=>{curBook=b.dataset.book;renderWords()});
+  v.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{wFilter=b.dataset.f;renderWords()});
+  v.querySelectorAll("[data-known]").forEach(b=>b.onclick=()=>{const w=S.words.find(x=>x.id===b.dataset.known);store.put({...w,known:!w.known})});
+  v.querySelectorAll("[data-delw]").forEach(b=>b.onclick=()=>store.del(b.dataset.delw));
+  $("#newBook").onclick=async()=>{const b={id:uid("b"),type:"book",name:"새 단어장 "+(S.books.length+1),createdAt:Date.now()};await store.put(b);curBook=b.id;renderWords()};
+  $("#dlWords").onclick=()=>downloadSheet("words",list,book?book.name:(curBook==="default"?"기본 단어장":"전체 단어"));
+}
+
+/* ---------- settings + font ---------- */
+let assetsCap=null;claude.use("assets").then(a=>assetsCap=a).catch(()=>{});
+function applySettings(){
+  const st=S.settings;document.documentElement.style.setProperty("--fs",st.fontScale+"px");
+}
+async function loadFontFromAsset(id,name){
+  try{const f=new FontFace("UserFont",`url(/_blob/${id})`);await f.load();document.fonts.add(f)}catch(e){loadFontLocal()}
+}
+function idb(){return new Promise((res,rej)=>{const r=indexedDB.open("pencil-en",1);r.onupgradeneeded=()=>r.result.createObjectStore("f");r.onsuccess=()=>res(r.result);r.onerror=rej})}
+async function saveFontLocal(buf,name){try{const d=await idb();d.transaction("f","readwrite").objectStore("f").put({buf,name},"font")}catch(e){}}
+async function loadFontLocal(){try{const d=await idb();const g=d.transaction("f").objectStore("f").get("font");
+  g.onsuccess=async()=>{const v=g.result;if(!v)return;const f=new FontFace("UserFont",v.buf);await f.load();document.fonts.add(f);if(!S.settings.fontName){S.settings.fontName=v.name;if(S.tab==="settings")renderSettings()}}}catch(e){}}
+loadFontLocal();
+function saveSettings(){store.put({id:"settings",type:"settings",...S.settings})}
+function renderSettings(){
+  const st=S.settings,v=$("#v-settings");
+  v.innerHTML=`<div class="card"><h2>설정</h2>
+    <span class="label">억양</span>
+    <div class="seg" id="acc"><button data-acc="en-US" aria-pressed="${st.accent==="en-US"}">미국</button><button data-acc="en-GB" aria-pressed="${st.accent==="en-GB"}">영국</button></div>
+    <span class="label">듣기 속도</span>
+    <div class="seg" id="rate">${[.75,.9,1,1.1].map(r=>`<button data-rate="${r}" aria-pressed="${st.rate===r}">${r}×</button>`).join("")}</div>
+    <span class="label">표시</span>
+    <div class="row"><button class="chip" id="tKo" aria-pressed="${st.showKo}">한국어 뜻</button><button class="chip" id="tIpa" aria-pressed="${st.showIpa}">발음기호(IPA)</button></div>
+    <span class="label">글자 크기 · ${st.fontScale}px</span>
+    <input type="range" id="fs" min="12" max="17" step=".5" value="${st.fontScale}" style="width:100%;accent-color:var(--blue)">
+  </div>
+  ${window.__WEB__?`<div class="card"><h3>Claude API 키</h3>
+    <p class="muted" style="margin:0 0 8px">노트·어휘 생성과 발음 코칭에 필요해요. 키는 이 기기에만 저장되고 Anthropic으로만 전송돼요. 사용량만큼 Anthropic 계정에 요금이 청구됩니다.</p>
+    <div class="row" style="flex-wrap:nowrap;align-items:flex-end"><input type="password" id="apiKey" autocomplete="off" placeholder="${window.__WEB__.hasKey()?"저장됨 · 바꾸려면 새 키 입력":"sk-ant-..."}" style="width:100%;background:transparent;border:0;border-bottom:1px solid var(--rule-2);padding:7px 2px;font-size:16px;outline:none"><button class="btn small" id="saveKey" style="flex:none">저장</button>${window.__WEB__.hasKey()?`<button class="btn small" id="delKey" style="flex:none">삭제</button>`:""}</div>
+    <p class="muted" style="margin:8px 0 0;font-size:11px">키 발급: console.anthropic.com › API Keys</p>
+  </div>
+  <div class="card"><h3>백업</h3>
+    <p class="muted" style="margin:0 0 8px">노트·단어장·토픽·설정을 파일로 내보내고, 다른 기기에서 가져올 수 있어요.</p>
+    <div class="row"><button class="btn small" id="exportBk">내보내기</button><label class="btn small" for="importBk" style="cursor:pointer">가져오기</label><input type="file" id="importBk" accept=".json,application/json" hidden></div>
+    <p class="muted" id="bkMsg" style="margin:8px 0 0"></p>
+  </div>`:""}
+  <div class="card"><h3>내 폰트</h3>
+    <p class="muted" style="margin:0 0 8px">TTF·OTF·WOFF 파일을 올리면 본문 글꼴로 적용돼요. 현재: <b>${esc(st.fontName||"기본 (IBM Plex Sans KR Light)")}</b></p>
+    <div class="row"><label class="btn small" for="fontFile" style="cursor:pointer">폰트 파일 선택</label>
+    <input type="file" id="fontFile" accept=".ttf,.otf,.woff,.woff2,font/*" hidden>
+    ${st.fontName?`<button class="btn small" id="fontReset">기본 폰트로</button>`:""}</div>
+    <p class="muted" id="fontMsg" style="margin:8px 0 0">${assetsCap?"업로드한 폰트는 계정에 보관돼 iPhone·iPad 모두에서 쓰여요.":"이 기기에 보관돼요."}</p>
+    <p style="margin:12px 0 0" class="en">The quick brown fox jumps over the lazy dog. 다람쥐 헌 쳇바퀴에 타고파.</p>
+  </div>`;
+  v.querySelectorAll("[data-acc]").forEach(b=>b.onclick=()=>{st.accent=b.dataset.acc;saveSettings();renderSettings()});
+  if(window.__WEB__){
+    $("#saveKey").onclick=()=>{const k=$("#apiKey").value.trim();if(!k)return;window.__WEB__.setKey(k);updateAiNote();renderSettings();setStatus("API 키를 저장했어요")};
+    const dk=$("#delKey");if(dk)dk.onclick=()=>{window.__WEB__.setKey("");updateAiNote();renderSettings()};
+    $("#exportBk").onclick=async()=>{const dl=await claude.use("downloads");const d=new Date().toISOString().slice(0,10);
+      try{await dl.save({filename:`연필영어노트-백업-${d}.json`,data:new Blob([JSON.stringify(lsGet())],{type:"application/json"})});$("#bkMsg").textContent="백업 파일을 저장했어요."}catch(e){if(e?.code!=="cancelled")$("#bkMsg").textContent="저장하지 못했어요."}};
+    $("#importBk").onchange=async e=>{const f=e.target.files[0];if(!f)return;
+      try{const arr=JSON.parse(await f.text());if(!Array.isArray(arr))throw 0;
+        const cur=lsGet(),ids=new Set(arr.map(d=>d.id));lsSet([...cur.filter(d=>!ids.has(d.id)),...arr]);loadLocal();
+        $("#bkMsg").textContent=`${arr.length}개 항목을 가져왔어요.`}catch(err){$("#bkMsg").textContent="백업 파일을 읽을 수 없어요."}};
+  }
+  v.querySelectorAll("[data-rate]").forEach(b=>b.onclick=()=>{st.rate=+b.dataset.rate;saveSettings();renderSettings()});
+  $("#tKo").onclick=()=>{st.showKo=!st.showKo;saveSettings();renderSettings()};
+  $("#tIpa").onclick=()=>{st.showIpa=!st.showIpa;saveSettings();renderSettings()};
+  $("#fs").oninput=e=>{st.fontScale=+e.target.value;applySettings()};
+  $("#fs").onchange=()=>{saveSettings();renderSettings()};
+  $("#fontFile").onchange=async e=>{
+    const file=e.target.files[0];if(!file)return;const msg=$("#fontMsg");msg.textContent="폰트 적용 중…";
+    try{
+      const buf=await file.arrayBuffer();const f=new FontFace("UserFont",buf);await f.load();
+      [...document.fonts].filter(x=>x.family.replace(/"/g,"")==="UserFont").forEach(x=>document.fonts.delete(x));document.fonts.add(f);
+      await saveFontLocal(buf,file.name);st.fontName=file.name;st.fontId="";
+      if(assetsCap){try{const a=await assetsCap.upload(file);st.fontId=a.id}catch(err){}}
+      saveSettings();renderSettings();
+    }catch(err){msg.textContent="이 파일은 폰트로 읽을 수 없어요. TTF·OTF·WOFF 파일인지 확인해 주세요."}
+  };
+  const fr=$("#fontReset");if(fr)fr.onclick=async()=>{
+    [...document.fonts].filter(x=>x.family.replace(/"/g,"")==="UserFont").forEach(x=>document.fonts.delete(x));
+    try{const d=await idb();d.transaction("f","readwrite").objectStore("f").delete("font")}catch(e){}
+    st.fontName="";st.fontId="";saveSettings();renderSettings()};
+}
+
+/* ---------- A4 sheet download ---------- */
+async function fontB64(){
+  if(!S.settings.fontName)return"";
+  try{const d=await idb();const v=await new Promise(r=>{const g=d.transaction("f").objectStore("f").get("font");g.onsuccess=()=>r(g.result);g.onerror=()=>r(null)});
+    if(!v)return"";const u=new Uint8Array(v.buf);let s="";for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)}catch(e){return""}
+}
+async function downloadSheet(kind,list,name){
+  const L=S.lesson,ipa=S.settings.showIpa;
+  let body="",title="";
+  if(kind==="lesson"){
+    title=L.title;
+    body=`<h1>${esc(L.title)}</h1><p class="meta">${esc(MODES[L.mode]?.name||"")} · ${esc(L.level)} · ${esc(L.topic)}</p>
+    <h2>현지인 표현</h2>${(L.expressions||[]).map((x,i)=>`<div class="it"><b>${i+1}. ${esc(x.en)}</b>${ipa&&x.ipa?`<div class="ipa">${esc(x.ipa)}</div>`:""}<div>${esc(x.ko)}</div>${x.textbook?`<div class="s">교과서식: <s>${esc(x.textbook)}</s></div>`:""}<div class="s">${esc(x.nuance||"")}</div>${x.example?`<div class="s">예) ${esc(x.example.en)} — ${esc(x.example.ko)}</div>`:""}</div>`).join("")}
+    ${L.dialogue?.length?`<h2>실전 대화</h2>${L.dialogue.map(d=>`<div class="dl"><b>${esc(d.s)}</b> ${esc(d.en)}<div class="s">${esc(d.ko)}</div></div>`).join("")}`:""}
+    ${L.sounds?.length?`<h2>발음 포인트</h2>${L.sounds.map(s=>`<div class="s">/${esc(String(s.ipa).replace(/\//g,""))}/ ${esc(s.desc)}</div>`).join("")}`:""}
+    ${L.vocab?.length?`<h2>관련 어휘</h2><table><tbody>${L.vocab.map(v=>`<tr><td><b>${esc(v.word)}</b> <span class="s">${esc(v.pos)}</span></td><td class="ipa">${esc(v.ipa)}</td><td>${esc(v.ko)}</td><td class="s">${esc(v.example)}</td></tr>`).join("")}</tbody></table>`:""}
+    <h2>빈칸 채우기</h2>${(L.expressions||[]).map((x,i)=>`<div class="q">${i+1}. ${esc(x.ko)}<br>${esc(x.en.split(" ").map((w,j)=>j%2?w:"_".repeat(Math.max(3,w.length))).join(" "))}</div>`).join("")}`;
+  }else{
+    title=name;
+    body=`<h1>${esc(name)}</h1><p class="meta">${list.length}단어</p><table><thead><tr><th>단어</th><th>발음</th><th>뜻</th><th>예문</th></tr></thead><tbody>${list.map(w=>`<tr><td><b>${esc(w.word)}</b> <span class="s">${esc(w.pos)}</span></td><td class="ipa">${esc(w.ipa)}</td><td>${esc(w.ko)}</td><td class="s">${esc(w.example)}</td></tr>`).join("")}</tbody></table>
+    <h2>뜻 쓰기 테스트</h2><table><tbody>${list.map(w=>`<tr><td><b>${esc(w.word)}</b></td><td style="width:60%"></td></tr>`).join("")}</tbody></table>`;
+  }
+  const ub=await fontB64();
+  const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>
+${ub?`@font-face{font-family:"UserFont";src:url(data:font/ttf;base64,${ub})}`:""}
+@page{size:A4;margin:16mm 15mm}body{font:300 10.5pt/1.55 "UserFont","IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;color:#333b44;max-width:180mm;margin:0 auto;padding:10mm 0}
+h1{font-size:17pt;font-weight:400;margin:0;border-bottom:1.5px solid #7F97AE;padding-bottom:4px}h2{font-size:12pt;font-weight:400;color:#5d7389;margin:16px 0 6px}
+.meta,.s{color:#6E7984;font-size:9pt}.ipa{font-family:"Noto Sans","Lucida Sans Unicode",sans-serif;font-weight:300;color:#5d7389;font-size:9.5pt}
+.it,.dl,.q{break-inside:avoid;padding:5px 0;border-bottom:1px dashed #CAD6E1}.q{line-height:2}
+table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #CAD6E1;padding:5px 4px;text-align:left;vertical-align:top;font-size:9.5pt}th{font-weight:400;color:#6E7984}tr{break-inside:avoid}
+</style></head><body>${body}</body></html>`;
+  const dl=await claude.use("downloads").catch(()=>null);
+  if(!dl){setStatus("이 화면에서는 파일 저장이 안 돼요. claude.ai에서 열어 주세요.");return}
+  try{await dl.save({filename:(title||"sheet").replace(/[\\/:*?"<>|]/g,"")+".html",data:new Blob([html],{type:"text/html"})});setStatus("A4 학습지를 저장했어요. 파일 앱에서 열어 인쇄하세요.")}
+  catch(e){if(e?.code!=="cancelled"&&e?.code!=="declined")setStatus("저장하지 못했어요.")}
+}
+
+/* ---------- tabs ---------- */
+function switchTab(t){
+  S.tab=t;document.querySelectorAll("nav.tabs button").forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===t));
+  ["learn","practice","words","settings"].forEach(k=>$("#v-"+k).hidden=k!==t);
+  ({learn:renderLearn,practice:renderPractice,words:renderWords,settings:renderSettings})[t]();
+  if(window.innerWidth<900&&t!=="learn")window.scrollTo({top:$("nav.tabs").offsetTop-8});
+}
+document.querySelector("nav.tabs").onclick=e=>{const b=e.target.closest("[data-tab]");if(b)switchTab(b.dataset.tab)};
+
+renderSide();renderBookSelect();switchTab("learn");store.init();
+</script>
+</body>
+</html>
