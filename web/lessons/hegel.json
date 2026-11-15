@@ -1,0 +1,530 @@
+{
+ "id": "b-hegel",
+ "createdAt": 1763200001000,
+ "mode": "daily",
+ "topic": "헤겔 철학",
+ "level": "고급",
+ "title": "헤겔 철학을 일상 대화에서 말하기",
+ "expressions": [
+  {
+   "en": "It's all part of the dialectic.",
+   "ipa": "/ɪts ɔːl pɑːrt əv ðə ˌdaɪəˈlektɪk/",
+   "ko": "다 변증법적 과정의 일부야.",
+   "textbook": "This conflict is one stage in a dialectical process.",
+   "nuance": "갈등이 결국 더 나은 결과로 이어진다고 말할 때. 반쯤 농담처럼 쓰는 지식인 말투예요.",
+   "example": {
+    "en": "We argued for hours, but hey, it's all part of the dialectic.",
+    "ko": "몇 시간 싸웠지만 뭐, 다 변증법적 과정의 일부지."
+   }
+  },
+  {
+   "en": "Thesis, antithesis, synthesis, right?",
+   "ipa": "/ˈθiːsɪs ænˈtɪθəsɪs ˈsɪnθəsɪs raɪt/",
+   "ko": "정·반·합, 맞지?",
+   "textbook": "Hegel's dialectic consists of thesis, antithesis, and synthesis.",
+   "nuance": "헤겔 하면 떠올리는 대중적 요약. 사실 헤겔 본인은 이 용어를 거의 안 썼다는 게 원어민 철학 토론의 단골 반박이에요.",
+   "example": {
+    "en": "You think Hegel is just thesis, antithesis, synthesis, right? It's more complicated than that.",
+    "ko": "헤겔이 그냥 정·반·합이라고 생각하지? 그보다 훨씬 복잡해."
+   }
+  },
+  {
+   "en": "History has a way of working itself out.",
+   "ipa": "/ˈhɪstri hæz ə weɪ əv ˈwɜːrkɪŋ ɪtˈself aʊt/",
+   "ko": "역사는 결국 어떻게든 풀려 가게 돼 있어.",
+   "textbook": "History progresses rationally toward its goal.",
+   "nuance": "'have a way of ~ing'는 '결국 ~하게 되는 경향이 있다'. 역사가 이성적으로 전개된다는 헤겔식 낙관을 일상어로 표현.",
+   "example": {
+    "en": "Don't panic about the election. History has a way of working itself out.",
+    "ko": "선거 때문에 너무 불안해하지 마. 역사는 결국 풀려 가게 돼 있어."
+   }
+  },
+  {
+   "en": "The owl of Minerva flies at dusk.",
+   "ipa": "/ði aʊl əv mɪˈnɜːrvə flaɪz æt dʌsk/",
+   "ko": "미네르바의 부엉이는 황혼에 날아오른다.",
+   "textbook": "We can only understand an era after it has ended.",
+   "nuance": "헤겔 『법철학』 서문의 유명한 문장. '지나고 나서야 이해된다'는 뜻으로 원어민 지식인들이 인용해요.",
+   "example": {
+    "en": "We'll only make sense of this decade later. The owl of Minerva flies at dusk.",
+    "ko": "이 시대는 나중에야 이해될 거야. 미네르바의 부엉이는 황혼에 나니까."
+   }
+  },
+  {
+   "en": "You only find yourself through other people.",
+   "ipa": "/juː ˈoʊnli faɪnd jərˈself θruː ˈʌðər ˈpiːpl/",
+   "ko": "사람은 타인을 통해서만 자신을 알게 돼.",
+   "textbook": "Self-consciousness requires recognition by another self-consciousness.",
+   "nuance": "헤겔의 '인정(recognition)' 개념을 일상 말로 푼 표현. 관계·정체성 얘기할 때 자연스럽게 나와요.",
+   "example": {
+    "en": "Living abroad taught me that you only find yourself through other people.",
+    "ko": "외국 살면서 사람은 타인을 통해서만 자신을 알게 된다는 걸 배웠어."
+   }
+  },
+  {
+   "en": "It's a classic master-slave dynamic.",
+   "ipa": "/ɪts ə ˈklæsɪk ˈmæstər sleɪv daɪˈnæmɪk/",
+   "ko": "전형적인 주인과 노예의 관계네.",
+   "textbook": "This relationship resembles Hegel's master-slave dialectic.",
+   "nuance": "한쪽이 지배하는데 사실은 서로 의존하는 관계를 비꼴 때. dynamic(관계 역학)은 원어민이 관계를 분석할 때 쓰는 핵심 명사.",
+   "example": {
+    "en": "He bosses her around, but he can't function without her. It's a classic master-slave dynamic.",
+    "ko": "걔가 그녀를 부려 먹지만 그녀 없이는 아무것도 못 해. 전형적인 주인과 노예의 관계야."
+   }
+  },
+  {
+   "en": "Hegel is notoriously hard to read.",
+   "ipa": "/ˈheɪɡl ɪz noʊˈtɔːriəsli hɑːrd tə riːd/",
+   "ko": "헤겔은 읽기 어렵기로 악명 높아.",
+   "textbook": "Hegel's writings are very difficult to understand.",
+   "nuance": "notoriously는 '나쁜 쪽으로 유명하게'. 원어민들이 어려운 책·사람을 투덜댈 때 아주 흔히 써요.",
+   "example": {
+    "en": "Don't feel bad. Hegel is notoriously hard to read, even for philosophers.",
+    "ko": "기죽지 마. 헤겔은 철학자들한테도 읽기 어렵기로 악명 높아."
+   }
+  }
+ ],
+ "dialogue": [
+  {
+   "s": "A",
+   "en": "Did you finish the Hegel reading?",
+   "ipa": "/dɪd juː ˈfɪnɪʃ ðə ˈheɪɡl ˈriːdɪŋ/",
+   "ko": "헤겔 읽기 과제 다 했어?"
+  },
+  {
+   "s": "B",
+   "en": "Barely. He's notoriously hard to read.",
+   "ipa": "/ˈberli hiːz noʊˈtɔːriəsli hɑːrd tə riːd/",
+   "ko": "겨우. 읽기 어렵기로 악명 높잖아."
+  },
+  {
+   "s": "A",
+   "en": "Isn't it just thesis, antithesis, synthesis?",
+   "ipa": "/ˈɪznt ɪt dʒʌst ˈθiːsɪs ænˈtɪθəsɪs ˈsɪnθəsɪs/",
+   "ko": "그냥 정·반·합 아니야?"
+  },
+  {
+   "s": "B",
+   "en": "That's the CliffsNotes version. He barely used those terms.",
+   "ipa": "/ðæts ðə ˈklɪfs noʊts ˈvɜːrʒn hiː ˈberli juːzd ðoʊz tɜːrmz/",
+   "ko": "그건 요약판이고. 헤겔은 그 용어를 거의 안 썼어."
+  },
+  {
+   "s": "A",
+   "en": "So what's the big idea, then?",
+   "ipa": "/soʊ wʌts ðə bɪɡ aɪˈdiːə ðen/",
+   "ko": "그럼 핵심이 뭔데?"
+  },
+  {
+   "s": "B",
+   "en": "That we only find ourselves through other people.",
+   "ipa": "/ðæt wiː ˈoʊnli faɪnd aʊərˈselvz θruː ˈʌðər ˈpiːpl/",
+   "ko": "우리는 타인을 통해서만 자신을 알게 된다는 거."
+  },
+  {
+   "s": "A",
+   "en": "Like a classic master-slave dynamic?",
+   "ipa": "/laɪk ə ˈklæsɪk ˈmæstər sleɪv daɪˈnæmɪk/",
+   "ko": "전형적인 주인과 노예 관계처럼?"
+  },
+  {
+   "s": "B",
+   "en": "Exactly. And history has a way of working itself out.",
+   "ipa": "/ɪɡˈzæktli ænd ˈhɪstri hæz ə weɪ əv ˈwɜːrkɪŋ ɪtˈself aʊt/",
+   "ko": "바로 그거. 그리고 역사는 결국 풀려 가게 돼 있다는 거지."
+  }
+ ],
+ "sounds": [
+  {
+   "ipa": "ɡ",
+   "desc": "Hegel /ˈheɪɡl/은 [헤이걸]. 한국식 [헤겔]이 아니라 첫 모음이 '에이'로 길어요."
+  },
+  {
+   "ipa": "θ",
+   "desc": "thesis, synthesis, through의 th는 혀끝을 이 사이에. [시시스]가 아니라 바람 섞인 소리."
+  },
+  {
+   "ipa": "ˈ",
+   "desc": "강세 위치: di-a-LEC-tic, no-TO-ri-ous-ly, an-TI-the-sis. 강세 음절만 크고 길게."
+  },
+  {
+   "ipa": "ʒ",
+   "desc": "version /ˈvɜːrʒn/의 s는 [쥬]처럼 울리는 소리. [버전]이 아니라 [버쥔]."
+  }
+ ],
+ "vocab": [
+  {
+   "word": "zeitgeist",
+   "ipa": "/ˈzaɪtɡaɪst/",
+   "pos": "n.",
+   "ko": "시대정신",
+   "note": "독일어에서 온 말이지만 원어민이 일상에서도 '요즘 분위기'라는 뜻으로 써요. 헤겔 철학과 연결되는 단어.",
+   "example": "That show really captured the zeitgeist.",
+   "exampleKo": "그 드라마는 시대정신을 제대로 담았어."
+  },
+  {
+   "word": "sublation",
+   "ipa": "/səˈbleɪʃn/",
+   "pos": "n.",
+   "ko": "지양(止揚)",
+   "note": "독일어 Aufhebung의 영어 번역. 없애면서 동시에 보존해 더 높이 끌어올린다는 헤겔 핵심 개념.",
+   "example": "Sublation means the old idea is cancelled but also preserved.",
+   "exampleKo": "지양은 옛 생각이 폐기되면서 동시에 보존된다는 뜻이야."
+  },
+  {
+   "word": "Hegelian",
+   "ipa": "/heɪˈɡeɪliən/",
+   "pos": "adj.",
+   "ko": "헤겔적인",
+   "note": "'a Hegelian reading of history'처럼 써요. 발음이 [헤이게일리언]인 점 주의.",
+   "example": "That's a very Hegelian way to see it.",
+   "exampleKo": "그건 아주 헤겔적인 시각이네."
+  },
+  {
+   "word": "world-historical figure",
+   "ipa": "/wɜːrld hɪˈstɔːrɪkl ˈfɪɡjər/",
+   "pos": "n.",
+   "ko": "세계사적 개인",
+   "note": "나폴레옹처럼 역사의 흐름을 바꾼 인물을 뜻하는 헤겔 용어. 과장된 칭찬으로 농담처럼도 써요.",
+   "example": "He thinks he's some kind of world-historical figure.",
+   "exampleKo": "걔는 자기가 무슨 세계사적 인물인 줄 알아."
+  },
+  {
+   "word": "the end of history",
+   "ipa": "/ði end əv ˈhɪstri/",
+   "pos": "n.",
+   "ko": "역사의 종언",
+   "note": "헤겔에서 시작해 후쿠야마가 유명하게 만든 말. 시사 토론에서 자주 인용돼요.",
+   "example": "So much for the end of history.",
+   "exampleKo": "역사의 종언이라더니, 웃기지도 않네."
+  },
+  {
+   "word": "the CliffsNotes version",
+   "ipa": "/ðə ˈklɪfs noʊts ˈvɜːrʒn/",
+   "pos": "n.",
+   "ko": "요약판, 핵심만 간단히",
+   "note": "미국 학생용 요약 참고서 브랜드에서 온 표현. '간단히 말하면'의 원어민식 표현.",
+   "example": "Just give me the CliffsNotes version.",
+   "exampleKo": "핵심만 간단히 말해 줘."
+  },
+  {
+   "word": "dense",
+   "ipa": "/dens/",
+   "pos": "adj.",
+   "ko": "(글이) 빽빽하고 난해한",
+   "note": "책·글이 어렵다고 할 때 원어민이 가장 흔히 쓰는 형용사.",
+   "example": "The Phenomenology is incredibly dense.",
+   "exampleKo": "『정신현상학』은 엄청 난해해."
+  },
+  {
+   "word": "a slog",
+   "ipa": "/ə slɑːɡ/",
+   "pos": "n.",
+   "ko": "힘겹게 해내야 하는 일",
+   "note": "끝까지 읽기 힘든 책이나 지루한 일을 말할 때.",
+   "example": "Honestly, the first hundred pages were a slog.",
+   "exampleKo": "솔직히 처음 100쪽은 읽기 고역이었어."
+  },
+  {
+   "word": "go over someone's head",
+   "ipa": "/ɡoʊ ˈoʊvər ˈsʌmwʌnz hed/",
+   "pos": "idiom",
+   "ko": "이해가 안 되다, 너무 어렵다",
+   "note": "'It went over my head.'처럼 과거형으로 자주 써요.",
+   "example": "Most of the lecture went over my head.",
+   "exampleKo": "강의 대부분이 이해가 안 됐어."
+  },
+  {
+   "word": "unpack",
+   "ipa": "/ʌnˈpæk/",
+   "pos": "v.",
+   "ko": "(개념을) 풀어서 설명하다",
+   "note": "'Let's unpack that.'은 원어민이 어려운 말을 하나씩 짚어 볼 때 쓰는 필수 표현.",
+   "example": "Can you unpack what Hegel means by 'spirit'?",
+   "exampleKo": "헤겔이 말하는 '정신'이 뭔지 풀어서 설명해 줄래?"
+  }
+ ],
+ "glossary": {
+  "hegel": {
+   "ipa": "/ˈheɪɡl/",
+   "pos": "n.",
+   "ko": "헤겔(독일 철학자)",
+   "example": "Hegel influenced Marx.",
+   "exampleKo": "헤겔은 마르크스에게 영향을 줬어."
+  },
+  "dialectic": {
+   "ipa": "/ˌdaɪəˈlektɪk/",
+   "pos": "n.",
+   "ko": "변증법",
+   "example": "Hegel's dialectic is famous.",
+   "exampleKo": "헤겔의 변증법은 유명해."
+  },
+  "part": {
+   "ipa": "/pɑːrt/",
+   "pos": "n.",
+   "ko": "일부",
+   "example": "It's part of the process.",
+   "exampleKo": "그것도 과정의 일부야."
+  },
+  "thesis": {
+   "ipa": "/ˈθiːsɪs/",
+   "pos": "n.",
+   "ko": "정(正), 논제",
+   "example": "What's your main thesis?",
+   "exampleKo": "네 주된 논지가 뭐야?"
+  },
+  "antithesis": {
+   "ipa": "/ænˈtɪθəsɪs/",
+   "pos": "n.",
+   "ko": "반(反), 정반대",
+   "example": "He's the antithesis of his brother.",
+   "exampleKo": "걔는 형이랑 정반대야."
+  },
+  "synthesis": {
+   "ipa": "/ˈsɪnθəsɪs/",
+   "pos": "n.",
+   "ko": "합(合), 종합",
+   "example": "It's a synthesis of two ideas.",
+   "exampleKo": "두 생각을 종합한 거야."
+  },
+  "history": {
+   "ipa": "/ˈhɪstri/",
+   "pos": "n.",
+   "ko": "역사",
+   "example": "History repeats itself.",
+   "exampleKo": "역사는 반복돼."
+  },
+  "working": {
+   "ipa": "/ˈwɜːrkɪŋ/",
+   "pos": "v.",
+   "ko": "(work out) 해결되다",
+   "example": "Things are working out.",
+   "exampleKo": "일이 잘 풀리고 있어."
+  },
+  "itself": {
+   "ipa": "/ɪtˈself/",
+   "pos": "pron.",
+   "ko": "그것 자체",
+   "example": "It'll fix itself.",
+   "exampleKo": "저절로 해결될 거야."
+  },
+  "owl": {
+   "ipa": "/aʊl/",
+   "pos": "n.",
+   "ko": "부엉이, 올빼미",
+   "example": "I'm a night owl.",
+   "exampleKo": "난 올빼미형이야."
+  },
+  "minerva": {
+   "ipa": "/mɪˈnɜːrvə/",
+   "pos": "n.",
+   "ko": "미네르바(지혜의 여신)",
+   "example": "Minerva is the goddess of wisdom.",
+   "exampleKo": "미네르바는 지혜의 여신이야."
+  },
+  "flies": {
+   "ipa": "/flaɪz/",
+   "pos": "v.",
+   "ko": "날다",
+   "example": "Time flies.",
+   "exampleKo": "시간 빠르다."
+  },
+  "dusk": {
+   "ipa": "/dʌsk/",
+   "pos": "n.",
+   "ko": "황혼, 해 질 녘",
+   "example": "We walked until dusk.",
+   "exampleKo": "해 질 녘까지 걸었어."
+  },
+  "find": {
+   "ipa": "/faɪnd/",
+   "pos": "v.",
+   "ko": "찾다, 알게 되다",
+   "example": "I need to find myself.",
+   "exampleKo": "나 자신을 찾아야 해."
+  },
+  "through": {
+   "ipa": "/θruː/",
+   "pos": "prep.",
+   "ko": "~을 통해",
+   "example": "I learned it through experience.",
+   "exampleKo": "경험을 통해 배웠어."
+  },
+  "other": {
+   "ipa": "/ˈʌðər/",
+   "pos": "adj.",
+   "ko": "다른",
+   "example": "Think about other people.",
+   "exampleKo": "다른 사람들을 생각해."
+  },
+  "classic": {
+   "ipa": "/ˈklæsɪk/",
+   "pos": "adj.",
+   "ko": "전형적인",
+   "example": "That's a classic mistake.",
+   "exampleKo": "그건 전형적인 실수야."
+  },
+  "master": {
+   "ipa": "/ˈmæstər/",
+   "pos": "n.",
+   "ko": "주인",
+   "example": "Be the master of your time.",
+   "exampleKo": "네 시간의 주인이 돼."
+  },
+  "slave": {
+   "ipa": "/sleɪv/",
+   "pos": "n.",
+   "ko": "노예",
+   "example": "Don't be a slave to your phone.",
+   "exampleKo": "폰의 노예가 되지 마."
+  },
+  "dynamic": {
+   "ipa": "/daɪˈnæmɪk/",
+   "pos": "n.",
+   "ko": "(관계의) 역학, 구도",
+   "example": "Their dynamic is weird.",
+   "exampleKo": "그 둘 관계가 이상해."
+  },
+  "notoriously": {
+   "ipa": "/noʊˈtɔːriəsli/",
+   "pos": "adv.",
+   "ko": "악명 높게",
+   "example": "He's notoriously late.",
+   "exampleKo": "걔는 지각으로 악명 높아."
+  },
+  "hard": {
+   "ipa": "/hɑːrd/",
+   "pos": "adj.",
+   "ko": "어려운",
+   "example": "It's hard to explain.",
+   "exampleKo": "설명하기 어려워."
+  },
+  "read": {
+   "ipa": "/riːd/",
+   "pos": "v.",
+   "ko": "읽다",
+   "example": "It's a tough read.",
+   "exampleKo": "읽기 힘든 책이야."
+  },
+  "finish": {
+   "ipa": "/ˈfɪnɪʃ/",
+   "pos": "v.",
+   "ko": "끝내다",
+   "example": "Did you finish it?",
+   "exampleKo": "다 끝냈어?"
+  },
+  "reading": {
+   "ipa": "/ˈriːdɪŋ/",
+   "pos": "n.",
+   "ko": "읽기 과제",
+   "example": "The reading was long.",
+   "exampleKo": "읽기 과제가 길었어."
+  },
+  "barely": {
+   "ipa": "/ˈberli/",
+   "pos": "adv.",
+   "ko": "겨우, 거의 ~않다",
+   "example": "I barely slept.",
+   "exampleKo": "거의 못 잤어."
+  },
+  "used": {
+   "ipa": "/juːzd/",
+   "pos": "v.",
+   "ko": "사용했다",
+   "example": "He never used that word.",
+   "exampleKo": "그는 그 단어를 쓴 적이 없어."
+  },
+  "terms": {
+   "ipa": "/tɜːrmz/",
+   "pos": "n.",
+   "ko": "용어",
+   "example": "Define your terms.",
+   "exampleKo": "용어 정의부터 해."
+  },
+  "version": {
+   "ipa": "/ˈvɜːrʒn/",
+   "pos": "n.",
+   "ko": "판, 버전",
+   "example": "That's the short version.",
+   "exampleKo": "그건 짧게 말한 거고."
+  },
+  "idea": {
+   "ipa": "/aɪˈdiːə/",
+   "pos": "n.",
+   "ko": "생각 (the big idea: 핵심)",
+   "example": "What's the big idea?",
+   "exampleKo": "핵심이 뭔데?"
+  },
+  "ourselves": {
+   "ipa": "/aʊərˈselvz/",
+   "pos": "pron.",
+   "ko": "우리 자신",
+   "example": "We need to be honest with ourselves.",
+   "exampleKo": "우리 자신에게 솔직해야 해."
+  },
+  "exactly": {
+   "ipa": "/ɪɡˈzæktli/",
+   "pos": "adv.",
+   "ko": "바로 그거야",
+   "example": "Exactly my point.",
+   "exampleKo": "내 말이 바로 그거야."
+  },
+  "argued": {
+   "ipa": "/ˈɑːrɡjuːd/",
+   "pos": "v.",
+   "ko": "말다툼했다",
+   "example": "We argued all night.",
+   "exampleKo": "밤새 다퉜어."
+  },
+  "complicated": {
+   "ipa": "/ˈkɑːmplɪkeɪtɪd/",
+   "pos": "adj.",
+   "ko": "복잡한",
+   "example": "It's complicated.",
+   "exampleKo": "복잡해."
+  },
+  "election": {
+   "ipa": "/ɪˈlekʃn/",
+   "pos": "n.",
+   "ko": "선거",
+   "example": "Who won the election?",
+   "exampleKo": "선거 누가 이겼어?"
+  },
+  "decade": {
+   "ipa": "/ˈdekeɪd/",
+   "pos": "n.",
+   "ko": "10년",
+   "example": "It's been a decade.",
+   "exampleKo": "10년 됐네."
+  },
+  "abroad": {
+   "ipa": "/əˈbrɔːd/",
+   "pos": "adv.",
+   "ko": "해외에서",
+   "example": "I studied abroad.",
+   "exampleKo": "해외에서 공부했어."
+  },
+  "bosses": {
+   "ipa": "/ˈbɔːsɪz/",
+   "pos": "v.",
+   "ko": "(boss around) 부려 먹다",
+   "example": "Stop bossing me around.",
+   "exampleKo": "나 그만 부려 먹어."
+  },
+  "function": {
+   "ipa": "/ˈfʌŋkʃn/",
+   "pos": "v.",
+   "ko": "제대로 기능하다",
+   "example": "I can't function without coffee.",
+   "exampleKo": "커피 없으면 아무것도 못 해."
+  },
+  "philosophers": {
+   "ipa": "/fəˈlɑːsəfərz/",
+   "pos": "n.",
+   "ko": "철학자들",
+   "example": "Even philosophers disagree.",
+   "exampleKo": "철학자들끼리도 의견이 달라."
+  }
+ },
+ "examTip": ""
+}

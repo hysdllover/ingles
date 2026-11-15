@@ -1,0 +1,509 @@
+{
+ "id": "b-kant",
+ "createdAt": 1763200000000,
+ "mode": "daily",
+ "topic": "칸트 철학",
+ "level": "고급",
+ "title": "칸트 철학을 일상 대화에서 말하기",
+ "expressions": [
+  {
+   "en": "Kant would say you're treating people as a means to an end.",
+   "ipa": "/kɑːnt wʊd seɪ jʊr ˈtriːtɪŋ ˈpiːpl æz ə miːnz tə ən end/",
+   "ko": "칸트라면 네가 사람을 수단으로만 대한다고 할걸.",
+   "textbook": "According to Kant, using people only as tools is morally wrong.",
+   "nuance": "'a means to an end'(목적을 위한 수단)은 일상에서도 '이용해 먹는다'는 비판으로 자주 써요. 칸트의 인간성 정식을 가장 자연스럽게 꺼내는 말.",
+   "example": {
+    "en": "You only call him when you need a ride? Kant would say you're treating him as a means to an end.",
+    "ko": "차 필요할 때만 걔한테 연락해? 칸트라면 걔를 수단으로만 대한다고 할걸."
+   }
+  },
+  {
+   "en": "What if everyone did that?",
+   "ipa": "/wʌt ɪf ˈevriwʌn dɪd ðæt/",
+   "ko": "다들 그렇게 하면 어떻게 되겠어?",
+   "textbook": "Can the principle of your action be made into a universal law?",
+   "nuance": "정언명령(보편화 가능성)의 일상 버전. 원어민이 철학 용어 없이 칸트식 논리를 펼 때 쓰는 말.",
+   "example": {
+    "en": "Sure, one person cutting in line isn't a big deal, but what if everyone did that?",
+    "ko": "한 명 새치기하는 건 별거 아니지, 근데 다들 그러면 어떻게 되겠어?"
+   }
+  },
+  {
+   "en": "That's a very Kantian take.",
+   "ipa": "/ðæts ə ˈveri ˈkɑːntiən teɪk/",
+   "ko": "아주 칸트스러운 관점이네.",
+   "textbook": "Your opinion is similar to the philosophy of Immanuel Kant.",
+   "nuance": "take는 '관점, 의견'을 뜻하는 구어. '[철학자]-ian take'는 지적인 대화에서 흔한 패턴(Nietzschean take, Freudian take).",
+   "example": {
+    "en": "Refusing the bonus on principle? That's a very Kantian take.",
+    "ko": "원칙 때문에 보너스를 거절한다고? 아주 칸트스러운 관점이네."
+   }
+  },
+  {
+   "en": "The ends don't justify the means.",
+   "ipa": "/ði endz doʊnt ˈdʒʌstɪfaɪ ðə miːnz/",
+   "ko": "목적이 수단을 정당화하지 않아.",
+   "textbook": "A good result does not make a bad action acceptable.",
+   "nuance": "결과보다 행위의 옳고 그름을 따지는 의무론(칸트)의 핵심을 한 문장으로. 반대 입장은 'The ends justify the means.'",
+   "example": {
+    "en": "Closing the deal matters, but the ends don't justify the means.",
+    "ko": "계약 성사도 중요하지만, 목적이 수단을 정당화하진 않아."
+   }
+  },
+  {
+   "en": "You can't lie, even to spare someone's feelings?",
+   "ipa": "/juː kænt laɪ ˈiːvn tə sper ˈsʌmwʌnz ˈfiːlɪŋz/",
+   "ko": "누군가의 감정을 지켜 주려는 거짓말도 안 된다고?",
+   "textbook": "Is lying forbidden even when it protects another person's emotions?",
+   "nuance": "spare someone's feelings는 '상처 주지 않으려고 배려하다'. 칸트의 '거짓말 절대 금지' 입장을 반박할 때 단골로 나오는 말.",
+   "example": {
+    "en": "So by Kant's logic, you can't lie, even to spare someone's feelings? That's harsh.",
+    "ko": "칸트 논리대로면 감정 지켜 주려는 거짓말도 안 된다고? 너무하네."
+   }
+  },
+  {
+   "en": "We never see things as they are in themselves.",
+   "ipa": "/wiː ˈnevər siː θɪŋz æz ðeɪ ɑːr ɪn ðəmˈselvz/",
+   "ko": "우리는 사물을 그 자체로는 절대 볼 수 없어.",
+   "textbook": "Human beings cannot perceive the thing-in-itself.",
+   "nuance": "물자체(thing-in-itself) 개념을 일상 말로 풀어 쓴 표현. 'as they are in themselves'가 핵심 구.",
+   "example": {
+    "en": "Kant's point is that we never see things as they are in themselves, only as they appear to us.",
+    "ko": "칸트 말은 우리가 사물을 그 자체로는 못 보고, 우리에게 보이는 대로만 본다는 거야."
+   }
+  },
+  {
+   "en": "Dare to think for yourself.",
+   "ipa": "/der tə θɪŋk fɔːr jərˈself/",
+   "ko": "스스로 생각할 용기를 가져.",
+   "textbook": "Have the courage to use your own understanding.",
+   "nuance": "칸트의 「계몽이란 무엇인가」 속 'Sapere aude'의 영어 번역. dare to ~는 '감히 ~하다', 격려하는 말투.",
+   "example": {
+    "en": "Kant's motto was basically, 'Dare to think for yourself.'",
+    "ko": "칸트의 모토는 한마디로 '스스로 생각할 용기를 가져라'였어."
+   }
+  }
+ ],
+ "dialogue": [
+  {
+   "s": "A",
+   "en": "So you told your boss the truth about the mistake?",
+   "ipa": "/soʊ juː toʊld jɔːr bɔːs ðə truːθ əˈbaʊt ðə mɪˈsteɪk/",
+   "ko": "그래서 상사한테 실수에 대해 사실대로 말했어?"
+  },
+  {
+   "s": "B",
+   "en": "Yeah. What if everyone just covered for themselves?",
+   "ipa": "/jeə wʌt ɪf ˈevriwʌn dʒʌst ˈkʌvərd fɔːr ðəmˈselvz/",
+   "ko": "응. 다들 자기 감싸기만 하면 어떻게 되겠어?"
+  },
+  {
+   "s": "A",
+   "en": "Wow, that's a very Kantian take.",
+   "ipa": "/waʊ ðæts ə ˈveri ˈkɑːntiən teɪk/",
+   "ko": "와, 아주 칸트스러운 관점이네."
+  },
+  {
+   "s": "B",
+   "en": "Hey, the ends don't justify the means.",
+   "ipa": "/heɪ ði endz doʊnt ˈdʒʌstɪfaɪ ðə miːnz/",
+   "ko": "야, 목적이 수단을 정당화하진 않잖아."
+  },
+  {
+   "s": "A",
+   "en": "But would you lie to spare someone's feelings?",
+   "ipa": "/bʌt wʊd juː laɪ tə sper ˈsʌmwʌnz ˈfiːlɪŋz/",
+   "ko": "그럼 누구 감정 지켜 주려고 거짓말은 할 거야?"
+  },
+  {
+   "s": "B",
+   "en": "Honestly? Kant would say no, even then.",
+   "ipa": "/ˈɑːnɪstli kɑːnt wʊd seɪ noʊ ˈiːvn ðen/",
+   "ko": "솔직히? 칸트는 그때도 안 된다고 하겠지."
+  },
+  {
+   "s": "A",
+   "en": "That sounds a little rigid to me.",
+   "ipa": "/ðæt saʊndz ə ˈlɪtl ˈrɪdʒɪd tə miː/",
+   "ko": "난 좀 융통성 없게 들리는데."
+  },
+  {
+   "s": "B",
+   "en": "Maybe, but at least it's consistent.",
+   "ipa": "/ˈmeɪbi bʌt æt liːst ɪts kənˈsɪstənt/",
+   "ko": "그럴지도. 근데 적어도 일관성은 있잖아."
+  }
+ ],
+ "sounds": [
+  {
+   "ipa": "ɑː",
+   "desc": "Kant /kɑːnt/는 입을 크게 벌린 [칸트]. can't /kænt/ [캔트]와 구별돼요."
+  },
+  {
+   "ipa": "θ",
+   "desc": "think, truth, themselves의 th는 혀끝을 이 사이에 살짝 물고 바람을 내보내요. [씽크]가 아니에요."
+  },
+  {
+   "ipa": "dʒ",
+   "desc": "justify, rigid의 j·g는 입술을 둥글게 내민 [ㅈ]. 강세는 JUS-ti-fy, RI-gid 첫 음절."
+  },
+  {
+   "ipa": "z",
+   "desc": "ends, means의 끝 s는 [즈]로 울려요. [엔즈], [민즈]."
+  }
+ ],
+ "vocab": [
+  {
+   "word": "categorical imperative",
+   "ipa": "/ˌkætəˈɡɔːrɪkl ɪmˈperətɪv/",
+   "pos": "n.",
+   "ko": "정언명령",
+   "note": "칸트 윤리학의 핵심 용어. 일상에서는 '무조건 지켜야 할 원칙'이라는 뜻으로 반쯤 농담처럼 써요.",
+   "example": "Not checking my phone at dinner is my new categorical imperative.",
+   "exampleKo": "저녁 먹을 때 폰 안 보기가 내 새 정언명령이야."
+  },
+  {
+   "word": "thing-in-itself",
+   "ipa": "/ˌθɪŋ ɪn ɪtˈself/",
+   "pos": "n.",
+   "ko": "물자체",
+   "note": "독일어 Ding an sich의 번역. 영어권 철학 토론에서 그대로 쓰여요.",
+   "example": "We can't know the thing-in-itself, only how it appears.",
+   "exampleKo": "물자체는 알 수 없고, 나타나는 모습만 알 수 있어."
+  },
+  {
+   "word": "a priori",
+   "ipa": "/ˌɑː priˈɔːri/",
+   "pos": "adj.",
+   "ko": "선험적인, 경험에 앞선",
+   "note": "라틴어지만 원어민 지식인 대화에서 '따져 보기도 전에, 당연하게'라는 뜻으로도 써요.",
+   "example": "You can't just assume that a priori.",
+   "exampleKo": "그걸 따져 보지도 않고 당연하게 가정하면 안 되지."
+  },
+  {
+   "word": "deontological",
+   "ipa": "/ˌdiːɑːntəˈlɑːdʒɪkl/",
+   "pos": "adj.",
+   "ko": "의무론적인",
+   "note": "결과보다 의무·규칙을 중시하는 윤리. 철학 좀 아는 원어민들이 칸트를 설명할 때 쓰는 단어.",
+   "example": "Her view is pretty deontological. Rules are rules.",
+   "exampleKo": "그 사람 관점은 꽤 의무론적이야. 규칙은 규칙이라는 거지."
+  },
+  {
+   "word": "a stickler for the rules",
+   "ipa": "/ə ˈstɪklər fɔːr ðə ruːlz/",
+   "pos": "idiom",
+   "ko": "규칙에 깐깐한 사람",
+   "note": "원칙주의자를 가볍게 놀리듯 말할 때. 칸트를 묘사할 때도 자주 붙는 표현.",
+   "example": "Kant was a stickler for the rules, even with himself.",
+   "exampleKo": "칸트는 자기 자신한테도 규칙에 깐깐했어."
+  },
+  {
+   "word": "you could set your watch by him",
+   "ipa": "/juː kʊd set jɔːr wɑːtʃ baɪ hɪm/",
+   "pos": "idiom",
+   "ko": "시계처럼 정확한 사람이다",
+   "note": "칸트가 매일 같은 시각에 산책해 이웃들이 시계를 맞췄다는 일화와 딱 맞는 원어민 관용구.",
+   "example": "He leaves at 7:15 every day. You could set your watch by him.",
+   "exampleKo": "걔는 매일 7시 15분에 나가. 시계처럼 정확해."
+  },
+  {
+   "word": "white lie",
+   "ipa": "/waɪt laɪ/",
+   "pos": "n.",
+   "ko": "선의의 거짓말",
+   "note": "칸트 토론에서 가장 많이 나오는 반례. 'tell a white lie'로 써요.",
+   "example": "Is a white lie really that bad?",
+   "exampleKo": "선의의 거짓말이 정말 그렇게 나빠?"
+  },
+  {
+   "word": "the moral high ground",
+   "ipa": "/ðə ˈmɔːrəl haɪ ɡraʊnd/",
+   "pos": "n.",
+   "ko": "도덕적 우위",
+   "note": "'take the moral high ground'는 '도덕적으로 우월한 척하다'라는 약간 비꼬는 뉘앙스.",
+   "example": "Don't take the moral high ground with me.",
+   "exampleKo": "나한테 도덕적으로 우월한 척하지 마."
+  },
+  {
+   "word": "cop-out",
+   "ipa": "/ˈkɑːp aʊt/",
+   "pos": "n.",
+   "ko": "핑계, 책임 회피",
+   "note": "곤란한 질문을 피하는 답을 비판할 때. 'That's a cop-out.'",
+   "example": "Saying 'it depends' is kind of a cop-out.",
+   "exampleKo": "'상황에 따라 다르지'라고 하는 건 좀 회피야."
+  },
+  {
+   "word": "duty-bound",
+   "ipa": "/ˈduːti baʊnd/",
+   "pos": "adj.",
+   "ko": "의무감에 매인, 해야만 하는",
+   "note": "칸트의 '의무에서 나온 행위'를 일상어로 말할 때. 'feel duty-bound to ~'.",
+   "example": "I felt duty-bound to tell her the truth.",
+   "exampleKo": "그녀에게 사실을 말해야 한다는 의무감이 들었어."
+  }
+ ],
+ "glossary": {
+  "kant": {
+   "ipa": "/kɑːnt/",
+   "pos": "n.",
+   "ko": "칸트(독일 철학자)",
+   "example": "Have you read any Kant?",
+   "exampleKo": "칸트 읽어 봤어?"
+  },
+  "kantian": {
+   "ipa": "/ˈkɑːntiən/",
+   "pos": "adj.",
+   "ko": "칸트적인",
+   "example": "That's a Kantian argument.",
+   "exampleKo": "그건 칸트식 논증이야."
+  },
+  "treating": {
+   "ipa": "/ˈtriːtɪŋ/",
+   "pos": "v.",
+   "ko": "대하는",
+   "example": "Stop treating me like a kid.",
+   "exampleKo": "나 애 취급하지 마."
+  },
+  "people": {
+   "ipa": "/ˈpiːpl/",
+   "pos": "n.",
+   "ko": "사람들",
+   "example": "People are complicated.",
+   "exampleKo": "사람은 복잡해."
+  },
+  "means": {
+   "ipa": "/miːnz/",
+   "pos": "n.",
+   "ko": "수단",
+   "example": "It's just a means to an end.",
+   "exampleKo": "그건 그냥 수단일 뿐이야."
+  },
+  "end": {
+   "ipa": "/end/",
+   "pos": "n.",
+   "ko": "목적; 끝",
+   "example": "What's the end goal?",
+   "exampleKo": "최종 목표가 뭐야?"
+  },
+  "ends": {
+   "ipa": "/endz/",
+   "pos": "n.",
+   "ko": "목적들",
+   "example": "The ends don't justify the means.",
+   "exampleKo": "목적이 수단을 정당화하진 않아."
+  },
+  "everyone": {
+   "ipa": "/ˈevriwʌn/",
+   "pos": "pron.",
+   "ko": "모든 사람",
+   "example": "Everyone makes mistakes.",
+   "exampleKo": "누구나 실수해."
+  },
+  "take": {
+   "ipa": "/teɪk/",
+   "pos": "n.",
+   "ko": "관점, 의견",
+   "example": "What's your take on this?",
+   "exampleKo": "이거 어떻게 생각해?"
+  },
+  "justify": {
+   "ipa": "/ˈdʒʌstɪfaɪ/",
+   "pos": "v.",
+   "ko": "정당화하다",
+   "example": "How do you justify that?",
+   "exampleKo": "그걸 어떻게 정당화해?"
+  },
+  "lie": {
+   "ipa": "/laɪ/",
+   "pos": "v.",
+   "ko": "거짓말하다",
+   "example": "I can't lie to her.",
+   "exampleKo": "그녀한테 거짓말 못 해."
+  },
+  "spare": {
+   "ipa": "/sper/",
+   "pos": "v.",
+   "ko": "(감정·수고를) 덜어 주다",
+   "example": "Spare me the details.",
+   "exampleKo": "자세한 얘긴 됐어."
+  },
+  "feelings": {
+   "ipa": "/ˈfiːlɪŋz/",
+   "pos": "n.",
+   "ko": "감정",
+   "example": "I didn't want to hurt his feelings.",
+   "exampleKo": "걔 감정 상하게 하고 싶지 않았어."
+  },
+  "themselves": {
+   "ipa": "/ðəmˈselvz/",
+   "pos": "pron.",
+   "ko": "그것들 자체, 그들 자신",
+   "example": "They covered for themselves.",
+   "exampleKo": "그들은 자기들끼리 감쌌어."
+  },
+  "dare": {
+   "ipa": "/der/",
+   "pos": "v.",
+   "ko": "감히 ~하다",
+   "example": "Dare to be different.",
+   "exampleKo": "남과 다를 용기를 가져."
+  },
+  "think": {
+   "ipa": "/θɪŋk/",
+   "pos": "v.",
+   "ko": "생각하다",
+   "example": "Think it through.",
+   "exampleKo": "끝까지 잘 생각해 봐."
+  },
+  "yourself": {
+   "ipa": "/jərˈself/",
+   "pos": "pron.",
+   "ko": "너 자신",
+   "example": "Be true to yourself.",
+   "exampleKo": "너 자신에게 솔직해."
+  },
+  "told": {
+   "ipa": "/toʊld/",
+   "pos": "v.",
+   "ko": "말했다 (tell의 과거)",
+   "example": "I told you so.",
+   "exampleKo": "내가 그랬잖아."
+  },
+  "boss": {
+   "ipa": "/bɔːs/",
+   "pos": "n.",
+   "ko": "상사",
+   "example": "My boss is pretty chill.",
+   "exampleKo": "우리 상사는 꽤 느긋해."
+  },
+  "truth": {
+   "ipa": "/truːθ/",
+   "pos": "n.",
+   "ko": "진실",
+   "example": "Just tell me the truth.",
+   "exampleKo": "그냥 사실대로 말해."
+  },
+  "mistake": {
+   "ipa": "/mɪˈsteɪk/",
+   "pos": "n.",
+   "ko": "실수",
+   "example": "It was an honest mistake.",
+   "exampleKo": "고의 아닌 실수였어."
+  },
+  "covered": {
+   "ipa": "/ˈkʌvərd/",
+   "pos": "v.",
+   "ko": "(cover for) 감싸 주다",
+   "example": "She covered for me.",
+   "exampleKo": "그녀가 날 감싸 줬어."
+  },
+  "honestly": {
+   "ipa": "/ˈɑːnɪstli/",
+   "pos": "adv.",
+   "ko": "솔직히",
+   "example": "Honestly, I don't know.",
+   "exampleKo": "솔직히 모르겠어."
+  },
+  "rigid": {
+   "ipa": "/ˈrɪdʒɪd/",
+   "pos": "adj.",
+   "ko": "경직된, 융통성 없는",
+   "example": "The rules are too rigid.",
+   "exampleKo": "규칙이 너무 경직돼 있어."
+  },
+  "consistent": {
+   "ipa": "/kənˈsɪstənt/",
+   "pos": "adj.",
+   "ko": "일관된",
+   "example": "At least he's consistent.",
+   "exampleKo": "적어도 걔는 일관성이 있어."
+  },
+  "sounds": {
+   "ipa": "/saʊndz/",
+   "pos": "v.",
+   "ko": "~하게 들리다",
+   "example": "That sounds fair.",
+   "exampleKo": "공정하게 들리네."
+  },
+  "least": {
+   "ipa": "/liːst/",
+   "pos": "adv.",
+   "ko": "(at least) 적어도",
+   "example": "At least we tried.",
+   "exampleKo": "적어도 시도는 했잖아."
+  },
+  "maybe": {
+   "ipa": "/ˈmeɪbi/",
+   "pos": "adv.",
+   "ko": "아마도",
+   "example": "Maybe you're right.",
+   "exampleKo": "네 말이 맞을지도."
+  },
+  "principle": {
+   "ipa": "/ˈprɪnsəpl/",
+   "pos": "n.",
+   "ko": "원칙",
+   "example": "It's the principle of the thing.",
+   "exampleKo": "원칙의 문제야."
+  },
+  "bonus": {
+   "ipa": "/ˈboʊnəs/",
+   "pos": "n.",
+   "ko": "보너스",
+   "example": "I turned down the bonus.",
+   "exampleKo": "보너스를 거절했어."
+  },
+  "harsh": {
+   "ipa": "/hɑːrʃ/",
+   "pos": "adj.",
+   "ko": "가혹한",
+   "example": "That's a bit harsh.",
+   "exampleKo": "그건 좀 가혹하다."
+  },
+  "motto": {
+   "ipa": "/ˈmɑːtoʊ/",
+   "pos": "n.",
+   "ko": "좌우명",
+   "example": "What's your motto?",
+   "exampleKo": "네 좌우명이 뭐야?"
+  },
+  "appear": {
+   "ipa": "/əˈpɪr/",
+   "pos": "v.",
+   "ko": "~처럼 보이다",
+   "example": "Things aren't what they appear.",
+   "exampleKo": "보이는 게 다가 아니야."
+  },
+  "logic": {
+   "ipa": "/ˈlɑːdʒɪk/",
+   "pos": "n.",
+   "ko": "논리",
+   "example": "I don't follow your logic.",
+   "exampleKo": "네 논리를 모르겠어."
+  },
+  "deal": {
+   "ipa": "/diːl/",
+   "pos": "n.",
+   "ko": "거래; (big deal) 큰일",
+   "example": "It's not a big deal.",
+   "exampleKo": "별일 아니야."
+  },
+  "line": {
+   "ipa": "/laɪn/",
+   "pos": "n.",
+   "ko": "줄 (cut in line: 새치기)",
+   "example": "Don't cut in line.",
+   "exampleKo": "새치기하지 마."
+  },
+  "ride": {
+   "ipa": "/raɪd/",
+   "pos": "n.",
+   "ko": "태워 주기",
+   "example": "Can you give me a ride?",
+   "exampleKo": "나 좀 태워 줄래?"
+  }
+ },
+ "examTip": ""
+}
