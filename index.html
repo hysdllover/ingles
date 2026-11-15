@@ -8,7 +8,7 @@
   --paper:#EBEFF2; --sheet:#F6F8F9; --graphite:#3E4751; --lead:#6E7984; --rule:#C3CCD4;
   --blue:#7F97AE; --blue-soft:#CAD6E1;
   --pc-sage:#B9CBB8; --pc-rose:#DDBDC1; --pc-sand:#DDD0B5; --pc-lilac:#C6C1D8; --pc-sky:#B8CADB;
-  --f-hand:"Gaegu","IBM Plex Sans KR",sans-serif;
+  --f-hand:"UserFont","Gaegu","IBM Plex Sans KR",sans-serif;
   --f-body:"UserFont","IBM Plex Sans KR",-apple-system,"Apple SD Gothic Neo",sans-serif;
   --f-ipa:"Noto Sans","Doulos SIL","Lucida Sans Unicode",sans-serif;
   --fs:13.5px;
@@ -83,7 +83,7 @@ input:focus,textarea:focus,select:focus{border-color:var(--blue)}
 .spk{font:400 16px var(--f-hand);color:var(--blue)}
 .sounds{display:grid;gap:6px}
 .sound{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;font-size:12.5px}
-.sound b{font:400 13px var(--f-ipa);background:var(--pc-lilac);border-radius:4px;padding:0 6px;height:fit-content}
+.sound b{font:300 13px var(--f-ipa);background:var(--pc-lilac);border-radius:4px;padding:0 6px;height:fit-content}
 /* practice */
 .target{font-size:calc(var(--fs) * 1.35);line-height:1.5}
 .diff span{padding:0 2px;border-radius:3px;margin-right:2px;display:inline-block}
@@ -661,6 +661,11 @@ function renderSettings(){
 }
 
 /* ---------- A4 sheet download ---------- */
+async function fontB64(){
+  if(!S.settings.fontName)return"";
+  try{const d=await idb();const v=await new Promise(r=>{const g=d.transaction("f").objectStore("f").get("font");g.onsuccess=()=>r(g.result);g.onerror=()=>r(null)});
+    if(!v)return"";const u=new Uint8Array(v.buf);let s="";for(let i=0;i<u.length;i+=32768)s+=String.fromCharCode.apply(null,u.subarray(i,i+32768));return btoa(s)}catch(e){return""}
+}
 async function downloadSheet(kind,list,name){
   const L=S.lesson,ipa=S.settings.showIpa;
   let body="",title="";
@@ -676,10 +681,12 @@ async function downloadSheet(kind,list,name){
     body=`<h1>${esc(name)}</h1><p class="meta">${list.length}단어</p><table><thead><tr><th>단어</th><th>발음</th><th>뜻</th><th>예문</th></tr></thead><tbody>${list.map(w=>`<tr><td><b>${esc(w.word)}</b> <span class="s">${esc(w.pos)}</span></td><td class="ipa">${esc(w.ipa)}</td><td>${esc(w.ko)}</td><td class="s">${esc(w.example)}</td></tr>`).join("")}</tbody></table>
     <h2>뜻 쓰기 테스트</h2><table><tbody>${list.map(w=>`<tr><td><b>${esc(w.word)}</b></td><td style="width:60%"></td></tr>`).join("")}</tbody></table>`;
   }
-  const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><style>
-@page{size:A4;margin:16mm 15mm}body{font:300 10.5pt/1.55 "IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;color:#333b44;max-width:180mm;margin:0 auto;padding:10mm 0}
+  const ub=await fontB64();
+  const html=`<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(title)}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300&family=IBM+Plex+Sans+KR:wght@300&display=swap"><style>
+${ub?`@font-face{font-family:"UserFont";src:url(data:font/ttf;base64,${ub})}`:""}
+@page{size:A4;margin:16mm 15mm}body{font:300 10.5pt/1.55 "UserFont","IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif;color:#333b44;max-width:180mm;margin:0 auto;padding:10mm 0}
 h1{font-size:17pt;font-weight:400;margin:0;border-bottom:1.5px solid #7F97AE;padding-bottom:4px}h2{font-size:12pt;font-weight:400;color:#5d7389;margin:16px 0 6px}
-.meta,.s{color:#6E7984;font-size:9pt}.ipa{font-family:"Noto Sans","Lucida Sans Unicode",sans-serif;color:#5d7389;font-size:9.5pt}
+.meta,.s{color:#6E7984;font-size:9pt}.ipa{font-family:"Noto Sans","Lucida Sans Unicode",sans-serif;font-weight:300;color:#5d7389;font-size:9.5pt}
 .it,.dl,.q{break-inside:avoid;padding:5px 0;border-bottom:1px dashed #CAD6E1}.q{line-height:2}
 table{width:100%;border-collapse:collapse}td,th{border-bottom:1px solid #CAD6E1;padding:5px 4px;text-align:left;vertical-align:top;font-size:9.5pt}th{font-weight:400;color:#6E7984}tr{break-inside:avoid}
 </style></head><body>${body}</body></html>`;
